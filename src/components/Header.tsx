@@ -2,6 +2,7 @@ import { motion, useScroll, useTransform, AnimatePresence } from 'motion/react';
 import { useEffect, useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import Logotipo from '../imports/Logotipo';
+import GradualBlur from './GradualBlur';
 
 interface HeaderProps {
   currentSection: 'work' | 'about' | 'contact';
@@ -42,14 +43,26 @@ export function Header({ currentSection, onNavigate }: HeaderProps) {
 
   return (
     <>
+      {/* Efecto de difuminado siempre visible en el top */}
+      <div className="fixed top-0 left-0 right-0 z-40 h-[7rem] pointer-events-none overflow-hidden">
+        <GradualBlur
+          target="parent"
+          position="top"
+          height="100%"
+          strength={2.5}
+          divCount={6}
+          curve="bezier"
+          exponential
+          opacity={1}
+          zIndex={0}
+        />
+      </div>
+
       <motion.header
         initial={{ y: 0 }}
         animate={{ y: isVisible ? 0 : -100 }}
         transition={{ duration: 0.3, ease: 'easeInOut' }}
         className="fixed top-0 left-0 right-0 z-50 px-4 md:px-8 py-6 flex items-center justify-between"
-        style={{
-          background: 'linear-gradient(to bottom, rgba(11, 11, 11, 0.9) 0%, rgba(11, 11, 11, 0) 100%)',
-        }}
       >
         {/* Brand */}
         <motion.div
