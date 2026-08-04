@@ -1,10 +1,29 @@
 import { motion } from 'motion/react';
 import { Mail, Instagram, Facebook, Linkedin, Phone, MapPin } from 'lucide-react';
+import Antigravity from './Antigravity/Antigravity';
 
 export function Contact() {
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 md:px-8 py-24 md:py-32">
-      <div className="max-w-4xl w-full">
+    <div className="min-h-screen flex items-center justify-center px-4 md:px-8 py-24 md:py-32 relative overflow-hidden">
+      {/* Antigravity background effect */}
+      <div className="absolute inset-0 z-0">
+        <Antigravity
+          count={300}
+          magnetRadius={6}
+          ringRadius={6}
+          waveSpeed={0.4}
+          waveAmplitude={1}
+          particleSize={0.6}
+          lerpSpeed={0.05}
+          color="#edebf4"
+          autoAnimate={true}
+          particleVariance={1}
+          depthFactor={1.3}
+          fieldStrength={16.7}
+        />
+      </div>
+
+      <div className="max-w-4xl w-full relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
