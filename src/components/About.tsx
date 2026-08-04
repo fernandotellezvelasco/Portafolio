@@ -2,6 +2,7 @@ import { motion } from 'motion/react';
 import svgPaths from '../imports/svg-q4myeocbke';
 import { toast } from 'sonner@2.0.3';
 import Group1 from '../imports/Group10469';
+import ShapeBlur from './ShapeBlur/ShapeBlur';
 
 export function About() {
   const handleCopyEmail = () => {
@@ -52,8 +53,19 @@ export function About() {
         >
           <div className="grid grid-cols-1 md:grid-cols-[290px_1fr] gap-8 md:gap-12 items-start">
             {/* Profile Image */}
-            <div className="w-[290px] h-[453px] mx-auto md:mx-0">
+            <div className="w-[290px] h-[453px] mx-auto md:mx-0 relative">
               <Group1 />
+              <div className="absolute inset-0 pointer-events-none">
+                <ShapeBlur
+                  variation={0}
+                  pixelRatioProp={typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1}
+                  shapeSize={2.0}
+                  roundness={0.5}
+                  borderSize={0.06}
+                  circleSize={0.31}
+                  circleEdge={1.2}
+                />
+              </div>
             </div>
             
             {/* Bio Text */}
