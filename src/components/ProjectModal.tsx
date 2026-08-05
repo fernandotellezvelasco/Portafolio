@@ -1744,9 +1744,9 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                                       Es recomendable previsualizar esta demo desde tu celular para apreciar correctamente la interacción y el diseño nativo.
                                     </p>
                                     <div className="flex flex-col gap-3">
-                                      <a 
-                                        href="https://sprintia.figma.site" 
-                                        target="_blank" 
+                                      <a
+                                        href="https://wafer-font-69797136.figma.site"
+                                        target="_blank"
                                         rel="noopener noreferrer"
                                         onClick={() => setShowDemoAlert(false)}
                                         className="w-full py-3 bg-[springgreen] text-black font-bold rounded-lg hover:opacity-90 transition-colors flex items-center justify-center gap-2"
@@ -1765,9 +1765,6 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                               )}
                             </AnimatePresence>
                           </div>
-                          <a href="https://alias-sprout-48130494.figma.site" target="_blank" rel="noopener noreferrer" className="px-8 py-4 border border-[springgreen] text-[springgreen] font-bold rounded-xl hover:bg-[springgreen]/10 transition-all flex items-center justify-center gap-2">
-                            <Layout className="w-5 h-5" /> Demo Landing
-                          </a>
                         </div>
                       ) : isBegoApp ? (
                          <div className="flex flex-col sm:flex-row gap-4 w-full">
