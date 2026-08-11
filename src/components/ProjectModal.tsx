@@ -9,6 +9,16 @@ import imgWireframesNew from "figma:asset/9b2a9159d45cccd916d8be896f0a982b2f18ec
 import imgBegoMockups from "figma:asset/b0a74d983f855f1ff22c27b5b6930bc537e64178.png";
 import imgBegoAppResult from "figma:asset/453ba25f6c0818bd2c1c52b6a008ca5712308c13.png";
 import imgBegoResultadosCollage from "../assets/bego_resultados_collage_v4.png";
+import imgClarity01 from "../assets/claro/clarity_01_portada_kpis.png";
+import imgClarity02 from "../assets/claro/clarity_02_dead_clicks.png";
+import imgClarity03 from "../assets/claro/clarity_03_rage_clicks.png";
+import imgClarity04 from "../assets/claro/clarity_04_sintesis.png";
+import imgClaroResumenBlanco from "../assets/claro/resumen_blanco.png";
+import imgClaroResumenOscuro from "../assets/claro/resumen_oscuro.png";
+import imgClaroResumenGradiente from "../assets/claro/resumen_gradiente.png";
+import imgClaroWifiBefore01 from "../assets/claro/wifi_before_01_seis_categorias.png";
+import imgClaroWifiAfter01 from "../assets/claro/wifi_after_01_tu_hogar.png";
+import imgClaroWifiAfter02 from "../assets/claro/wifi_after_02_dispositivos_contador.png";
 import imgSprintiaAI from "figma:asset/f650179d481a73cdf367a2cf4be4cc843b739da3.png";
 import imgSprintiaProfile from "figma:asset/3224556a98df4eae05ea136d1ce744ef9da725d1.png";
 import imgSprintiaMatches from "figma:asset/f0e38f1149c5dd91b64c4f426e8792522df8ff60.png";
@@ -130,6 +140,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
   const isCandados = project.title === 'CANDADOS';
   const isSprintia = project.title === 'SPRINTIA';
   const isHeyMovil = project.title === 'HEY MOVIL';
+  const isClaro = project.title === 'CLARO';
 
   // Heatmap Data
   const sprintiaSlides = [
@@ -164,7 +175,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
     { id: 'objective', label: 'Objetivo' },
     { id: 'research', label: 'Investigación' },
     { id: 'process', label: 'Proceso' },
-    ...(isSprintia || isBegoApp || isCandados ? [{ id: 'testing', label: 'Testeo' }] : []),
+    ...(isSprintia || isBegoApp || isCandados || isClaro ? [{ id: 'testing', label: 'Testeo' }] : []),
     { id: 'results', label: 'Resultados' },
     { id: 'lessons', label: 'Lecciones' },
     // Conditionally add links
@@ -177,7 +188,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
     return (
       <section id={id} className={`mb-24 scroll-mt-32 ${className}`}>
         <div className="flex items-center gap-3 mb-8">
-          {Icon && <Icon className={`w-6 h-6 opacity-80 ${isSprintia ? 'text-[springgreen]' : isCandadosFlow ? 'text-[#006470]' : isCandados ? 'text-[#E35053]' : 'text-[#FFEE00]'}`} />}
+          {Icon && <Icon className={`w-6 h-6 opacity-80 ${isSprintia ? 'text-[springgreen]' : isCandadosFlow ? 'text-[#006470]' : isCandados ? 'text-[#E35053]' : isClaro ? 'text-[#E30613]' : 'text-[#FFEE00]'}`} />}
           <h3 className="text-xl md:text-3xl font-bold text-white tracking-tight">
             {title}
           </h3>
@@ -790,7 +801,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                          <button
                            key={item.id}
                            onClick={() => scrollToSection(item.id)}
-                           className={`text-left py-2 text-sm transition-all duration-300 hover:text-white ${activeSection === item.id ? (isSprintia ? 'text-[springgreen] font-medium translate-x-1' : isCandadosFlow ? 'text-[#006470] font-medium translate-x-1' : isCandados ? 'text-[#E35053] font-medium translate-x-1' : 'text-[#FFEE00] font-medium translate-x-1') : 'text-white/40'}`}
+                           className={`text-left py-2 text-sm transition-all duration-300 hover:text-white ${activeSection === item.id ? (isSprintia ? 'text-[springgreen] font-medium translate-x-1' : isCandadosFlow ? 'text-[#006470] font-medium translate-x-1' : isCandados ? 'text-[#E35053] font-medium translate-x-1' : isClaro ? 'text-[#E30613] font-medium translate-x-1' : 'text-[#FFEE00] font-medium translate-x-1') : 'text-white/40'}`}
                          >
                            {item.label}
                          </button>
@@ -815,6 +826,15 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                         <h2 className="text-3xl font-bold text-white mb-4">Descripción del Proyecto</h2>
                         <p className="text-base md:text-lg opacity-80 leading-relaxed max-w-3xl">
                           Sprintia es una plataforma digital enfocada en el fútbol amateur que conecta jugadores, equipos y ligas mediante matchmaking inteligente, reputación deportiva y filtros por nivel y disponibilidad, con el objetivo de reducir conflictos y mejorar la organización y experiencia de juego.
+                        </p>
+                      </div>
+                    )}
+
+                    {isClaro && (
+                      <div className="mb-12">
+                        <h2 className="text-3xl font-bold text-white mb-4">Descripción del Proyecto</h2>
+                        <p className="text-base md:text-lg opacity-80 leading-relaxed max-w-3xl">
+                          Auditoría de experiencia digital del Portal de Pagos de Claro Colombia (claro.com.co) apoyada en Microsoft Clarity, seguida de una propuesta de rediseño del widget "Resumen en Vivo" para la gestión de dispositivos y planes, explorando variantes de tema claro, oscuro y de marca.
                         </p>
                       </div>
                     )}
@@ -898,6 +918,29 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                                  ))}
                                </ul>
                              </div>
+                           ) : isClaro ? (
+                              <div className="space-y-6 text-lg leading-relaxed text-white/80">
+                                 <div className="flex flex-wrap gap-3">
+                                   {['UX Research', 'Análisis de Datos', 'UI Design'].map((role) => (
+                                     <div key={role} className="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm font-medium text-white/90 backdrop-blur-sm shadow-sm hover:bg-white/10 transition-colors cursor-default">
+                                       {role}
+                                     </div>
+                                   ))}
+                                 </div>
+                                 <ul className="space-y-4">
+                                    {[
+                                      "Ejecuté una auditoría de experiencia digital del Portal de Pagos usando Microsoft Clarity, analizando 40 sesiones de usuarios reales durante mayo de 2026.",
+                                      "Identifiqué la causa raíz de las fricciones críticas: un error JS activo desde el segundo 0:01 de carga que bloqueaba el CTA principal 'Pagar mi factura Claro'.",
+                                      "Cuantifiqué el impacto: 10.42% de sesiones con dead clicks y 29.66% de rage clicks concentrados en un solo elemento del Hero, priorizando recomendaciones por severidad.",
+                                      "Propuse un rediseño del widget 'Resumen en Vivo' de gestión de dispositivos y planes, explorando tres variantes de tema (claro, oscuro y de marca)."
+                                    ].map((item, index) => (
+                                      <li key={index} className="flex items-start gap-3 group">
+                                        <CheckCircle className="w-5 h-5 text-[#E30613] shrink-0 mt-0.5 opacity-80 group-hover:opacity-100 transition-opacity" />
+                                        <span className="text-[17px] text-white/80 group-hover:text-white/95 transition-colors">{item}</span>
+                                      </li>
+                                    ))}
+                                 </ul>
+                              </div>
                            ) : isHeyMovil ? (
                               <div className="space-y-6 text-lg leading-relaxed text-white/80">
                                  <div className="flex flex-wrap gap-3">
@@ -1023,6 +1066,8 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                              </div>
                            ) : isSprintia ? (
                             <p className="italic opacity-80 text-[24px]">"Diseñar y desarrollar una plataforma digital que conecte jugadores, equipos y ligas de fútbol amateur mediante matchmaking inteligente con IA, enfocada en mejorar la transparencia, reducir conflictos dentro del deporte y fortalecer la reputación de los jugadores a través de un sistema de reseñas y perfiles digitales, optimizando la experiencia de búsqueda, conexión y participación deportiva."</p>
+                          ) : isClaro ? (
+                            <p className="italic opacity-80 text-[24px]">"Detectar, cuantificar y priorizar las fricciones que impiden a los usuarios completar el pago de su factura en el Portal Claro, y traducir esos hallazgos en una propuesta de rediseño accionable para el widget de gestión de dispositivos y planes."</p>
                           ) : (
                             <p className="italic opacity-80 text-[24px]">{project.description}</p>
                           )}
@@ -1112,6 +1157,34 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                                 </p>
                              </div>
                            )
+                       ) : isClaro ? (
+                          <div className="space-y-6">
+                            <p className="opacity-80 leading-relaxed text-[17px]">
+                              La investigación partió de datos de comportamiento real en lugar de suposiciones. Usando Microsoft Clarity, analicé 40 sesiones grabadas del Portal de Pagos (claro.com.co/personas/autogestion/portal-pagos) durante mayo de 2026, cruzando métricas de scroll, tiempo activo, dead clicks y rage clicks para aislar la causa raíz de la baja conversión.
+                            </p>
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                              {[
+                                { val: '1.396.768', label: 'Sesiones totales' },
+                                { val: '1,79', label: 'Páginas / sesión' },
+                                { val: '25,99%', label: 'Scroll promedio' },
+                                { val: '31 seg', label: 'Tiempo activo' },
+                              ].map((stat, i) => (
+                                <div key={i} className="bg-white/5 border border-white/10 rounded-xl p-4 text-center">
+                                  <div className="text-xl md:text-2xl font-bold text-white">{stat.val}</div>
+                                  <div className="text-[0.7rem] uppercase tracking-wide opacity-50 mt-1">{stat.label}</div>
+                                </div>
+                              ))}
+                            </div>
+                            <div
+                              className="rounded-xl overflow-hidden border border-white/10 relative group cursor-pointer hover:border-[#E30613]/50 transition-colors shadow-lg"
+                              onClick={() => setSelectedImage(imgClarity01)}
+                            >
+                              <ImageWithFallback src={imgClarity01} alt="Reporte Clarity - Portada y KPIs" className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105" />
+                              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                <Search className="text-white w-10 h-10 drop-shadow-lg scale-90 group-hover:scale-100 transition-transform" />
+                              </div>
+                            </div>
+                          </div>
                        ) : (
                           <p className="opacity-80">Análisis de requerimientos y estudio de casos de uso similares para definir la mejor arquitectura de información.</p>
                        )}
@@ -1126,8 +1199,92 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                             isCandadosFlow ? "Diseñé un sistema de monitoreo de alta densidad de información, priorizando la legibilidad de estados críticos y la eficiencia en la gestión de alertas de seguridad." :
                             isCandados ? "Implementé una estrategia de 'Reskinning Sistemático', mapeando átomo por átomo los componentes de Bego hacia el Design System gubernamental, asegurando la integridad de los flujos de negocio." :
                             isSprintia ? "Optimicé el ciclo de diseño integrando Inteligencia Artificial para acelerar la iteración y validación. Este enfoque redujo tiempos operativos, permitiendo priorizar la investigación estratégica y la funcionalidad robusta del producto." :
+                            isClaro ? "A partir de los hallazgos de la auditoría, propuse un rediseño del widget 'Resumen en Vivo' de gestión de dispositivos y planes, explorando tres direcciones de tema para evaluar cuál comunica mejor la marca sin sacrificar legibilidad ni jerarquía del CTA." :
                             "Evolucion�� la solución desde bocetos conceptuales hasta un diseño de alta fidelidad validado, centrando cada iteración en las necesidades reales del usuario."}
                         </p>
+
+                        {isClaro && (
+                             <div className="mt-12 mb-16">
+                                <h4 className="text-white font-bold mb-6 text-2xl flex items-center gap-3">
+                                   <Palette className="w-6 h-6 text-[#E30613]" />
+                                   Exploración de Tema — "Resumen en Vivo"
+                                </h4>
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                   {[
+                                     { img: imgClaroResumenBlanco, label: 'Claro' },
+                                     { img: imgClaroResumenOscuro, label: 'Oscuro Premium' },
+                                     { img: imgClaroResumenGradiente, label: 'Hero Gradiente' },
+                                   ].map((variant, idx) => (
+                                     <div key={idx}>
+                                       <div
+                                         className="rounded-xl overflow-hidden border border-white/10 relative group cursor-pointer hover:border-[#E30613]/50 transition-colors shadow-lg bg-black"
+                                         onClick={() => setSelectedImage(variant.img)}
+                                       >
+                                         <ImageWithFallback src={variant.img} alt={`Resumen en Vivo - ${variant.label}`} className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-105" />
+                                         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                           <Search className="text-white w-8 h-8 drop-shadow-lg scale-90 group-hover:scale-100 transition-transform" />
+                                         </div>
+                                       </div>
+                                       <div className="text-center text-sm opacity-60 mt-3">{variant.label}</div>
+                                     </div>
+                                   ))}
+                                </div>
+                             </div>
+                        )}
+
+                        {isClaro && (
+                             <div className="mt-4 mb-16">
+                                <h4 className="text-white font-bold mb-4 text-2xl flex items-center gap-3">
+                                   <Layers className="w-6 h-6 text-[#E30613]" />
+                                   Rediseño — Asesor de Velocidad Wi-Fi (Claro República Dominicana)
+                                </h4>
+                                <p className="opacity-80 leading-relaxed text-[17px] mb-6 max-w-4xl">
+                                   Como segunda pieza dentro de esta colaboración, se abordó el Asesor de Velocidad y Experiencia Wi-Fi del portal de Claro República Dominicana. En su versión original, el paso de selección de dispositivos presentaba hasta seis categorías visibles al mismo tiempo, cada una con varias casillas de uso adicionales — llegando a más de veinte opciones activas en una sola pantalla antes de poder continuar.
+                                </p>
+                                <p className="opacity-80 leading-relaxed text-[17px] mb-6 max-w-4xl">
+                                   Ese patrón eleva la carga cognitiva: obliga a evaluar y comparar muchas alternativas en paralelo antes de avanzar, lo que ralentiza la decisión en un flujo de autoservicio pensado para resolverse en segundos. Para fundamentar el rediseño recurrí a la <span className="text-white font-medium">Ley de Miller</span> (Miller, 1956), que describe la capacidad limitada de la memoria de trabajo humana: en promedio, una persona puede retener y procesar entre 5 y 9 elementos (7 ± 2) a la vez antes de que la precisión de sus decisiones comience a degradarse. Aplicar este principio implica reducir el número de opciones visibles simultáneamente, agrupar por relevancia y avanzar en pasos más cortos — priorizando profundidad de flujo sobre densidad de pantalla.
+                                </p>
+
+                                <div className="text-sm uppercase tracking-widest opacity-50 mb-4">Antes del rediseño</div>
+                                <div className="max-w-2xl">
+                                   <div
+                                     className="rounded-xl overflow-hidden border border-white/10 relative group cursor-pointer hover:border-[#E30613]/50 transition-colors shadow-lg bg-black"
+                                     onClick={() => setSelectedImage(imgClaroWifiBefore01)}
+                                   >
+                                     <ImageWithFallback src={imgClaroWifiBefore01} alt="Las 6 categorías de dispositivos visibles al mismo tiempo, con más de 20 casillas activas" className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105" />
+                                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                       <Search className="text-white w-8 h-8 drop-shadow-lg scale-90 group-hover:scale-100 transition-transform" />
+                                     </div>
+                                   </div>
+                                   <div className="text-center text-sm opacity-60 mt-3">Las 6 categorías de dispositivos, con más de 20 opciones visibles a la vez</div>
+                                </div>
+
+                                <p className="opacity-80 leading-relaxed text-[17px] mt-10 mb-6 max-w-4xl">
+                                   Para la propuesta, apliqué el mismo principio en dos frentes complementarios. Primero, en la estructura de decisión: en lugar de mostrar las seis categorías de dispositivos abiertas simultáneamente, el paso "Tus Dispositivos" ahora presenta una sola categoría expandida a la vez, con el resto colapsado y accesible con un clic — reduciendo el número de opciones que la persona debe sostener en su memoria de trabajo en cualquier momento dado. Segundo, en la continuidad visual del flujo: se incorporó una imagen contextual distinta en cada uno de los tres pasos (Tu Hogar, Tus Dispositivos, Tus Necesidades), de modo que el usuario reconoce visualmente en qué parte del proceso se encuentra sin tener que releer el indicador de pasos. Esto libera capacidad de memoria de trabajo — que de otro modo se usaría en reorientarse — para lo que realmente importa: decidir.
+                                </p>
+
+                                <div className="text-sm uppercase tracking-widest opacity-50 mb-4">Después del rediseño</div>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                   {[
+                                     { img: imgClaroWifiAfter01, label: 'Paso 1 — Tu Hogar' },
+                                     { img: imgClaroWifiAfter02, label: 'Paso 2 — Tus Dispositivos (una categoría a la vez)' },
+                                   ].map((shot, idx) => (
+                                     <div key={idx}>
+                                       <div
+                                         className="rounded-xl overflow-hidden border border-white/10 relative group cursor-pointer hover:border-[#E30613]/50 transition-colors shadow-lg bg-black"
+                                         onClick={() => setSelectedImage(shot.img)}
+                                       >
+                                         <ImageWithFallback src={shot.img} alt={shot.label} className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105" />
+                                         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                           <Search className="text-white w-8 h-8 drop-shadow-lg scale-90 group-hover:scale-100 transition-transform" />
+                                         </div>
+                                       </div>
+                                       <div className="text-center text-sm opacity-60 mt-3">{shot.label}</div>
+                                     </div>
+                                   ))}
+                                </div>
+                             </div>
+                        )}
 
                         {isHeyMovil && (
                              <div className="mt-12 mb-16 max-w-[864px] mx-auto">
@@ -1490,9 +1647,62 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                         )}
                     </Section>
 
-                    {/* Testeo (Sprintia & Candados) */}
-                    {(isSprintia || isCandadosFlow) && (
-                      <Section id="testing" title={isCandados ? "Testeo de Usabilidad" : "Testeo & Validación"} icon={CheckCircle}>
+                    {/* Testeo (Sprintia, Candados & Claro) */}
+                    {(isSprintia || isCandadosFlow || isClaro) && (
+                      <Section id="testing" title={isCandados ? "Testeo de Usabilidad" : isClaro ? "Auditoría de Comportamiento" : "Testeo & Validación"} icon={CheckCircle}>
+                        {isClaro && (
+                          <div className="space-y-10">
+                            <p className="opacity-80 mb-2 text-lg">
+                              Reporte completo de Microsoft Clarity sobre el Portal de Pagos, con distribución de dead clicks y rage clicks por zona, y la síntesis de hallazgos con recomendaciones priorizadas.
+                            </p>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                              {[
+                                { img: imgClarity01, label: 'Portada & KPIs' },
+                                { img: imgClarity02, label: 'Dead Clicks por Zona' },
+                                { img: imgClarity03, label: 'Rage Clicks por Zona' },
+                                { img: imgClarity04, label: 'Síntesis & Recomendaciones' },
+                              ].map((slide, idx) => (
+                                <div
+                                  key={idx}
+                                  className="rounded-xl overflow-hidden border border-white/10 relative group cursor-pointer hover:border-[#E30613]/50 transition-colors shadow-lg bg-black"
+                                  onClick={() => setSelectedImage(slide.img)}
+                                >
+                                  <ImageWithFallback src={slide.img} alt={slide.label} className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105" />
+                                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                    <Search className="text-white w-10 h-10 drop-shadow-lg scale-90 group-hover:scale-100 transition-transform" />
+                                  </div>
+                                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent px-4 py-3 text-sm font-medium text-white">
+                                    {slide.label}
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+
+                            <div className="bg-[#E30613]/5 border border-[#E30613]/20 rounded-xl p-6 md:p-8">
+                              <h5 className="font-bold text-[#E30613] mb-4 flex items-center gap-3 text-xl">
+                                <Zap className="w-6 h-6" /> Hallazgo Crítico
+                              </h5>
+                              <p className="text-white/80 leading-relaxed text-[17px] mb-4">
+                                Error JS crítico ("null is not an object") activo desde el segundo 0:01 de carga, bloqueando el CTA principal "Pagar mi factura Claro". Es la causa raíz confirmada del 10,42% de sesiones con dead clicks y del 29,66% de rage clicks concentrados en el subtítulo del Hero.
+                              </p>
+                              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+                                {[
+                                  { val: '10,42%', label: 'Dead clicks' },
+                                  { val: '29,66%', label: 'Rage clicks' },
+                                  { val: '9 seg', label: 'Hasta abandono' },
+                                  { val: '75,59%', label: 'Top 3 zonas críticas' },
+                                ].map((stat, i) => (
+                                  <div key={i} className="text-center">
+                                    <div className="text-lg md:text-xl font-bold text-white">{stat.val}</div>
+                                    <div className="text-[0.7rem] uppercase tracking-wide opacity-50 mt-1">{stat.label}</div>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
                         {isCandados && (
                             <div className="space-y-8">
                                 <p className="opacity-80 mb-6 text-lg">
@@ -1583,12 +1793,13 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                     {/* 6. Resultados */}
                     <Section id="results" title="Resultados" icon={Sparkles}>
                        <div className="mb-10">
-                         <div className={`p-6 bg-gradient-to-r from-white/5 to-transparent border-l-4 rounded-r-xl ${isSprintia ? 'border-[springgreen]' : isCandadosFlow ? 'border-[#006470]' : isCandados ? 'border-[#E35053]' : 'border-[#FFEE00]'}`}>
+                         <div className={`p-6 bg-gradient-to-r from-white/5 to-transparent border-l-4 rounded-r-xl ${isSprintia ? 'border-[springgreen]' : isCandadosFlow ? 'border-[#006470]' : isCandados ? 'border-[#E35053]' : isClaro ? 'border-[#E30613]' : 'border-[#FFEE00]'}`}>
                             <p className="text-lg md:text-xl text-white/90 text-[24px]">
                               {isBegoApp ? "El rediseño mejoró notablemente la experiencia de usuario mediante una paleta de alto contraste que reduce la fatiga visual de los transportistas, optimizando la funcionalidad y puliendo cada componente." :
                                isBegoWeb ? "El rediseño fue una mejora notable y actualmente está en proceso de desarrollo, manteniendo iteraciones en tiempo real para abordar áreas de oportunidad junto al departamento de desarrollo." :
                                isCandadosFlow ? "Se logró una plataforma unificada que permite la gestión centralizada de candados inteligentes, con una interfaz clara y eficiente para el monitoreo en tiempo real." :
                                isCandados ? "El diseño se ejecutó exitosamente en colaboración, demostrando la adaptabilidad de la tecnología Bego para operar bajo una identidad institucional con la eficiencia del sector privado." :
+                               isClaro ? "La auditoría tradujo datos de comportamiento en un plan de acción priorizado (corregir el error JS, asignar acción al subtítulo del Hero, optimizar el tiempo de carga) y en una propuesta visual concreta para el widget de gestión de dispositivos, lista para validar con el equipo de desarrollo." :
                                "Evolucionando hacia un MVP funcional mediante la implementación de Supabase para la persistencia de datos, garantizando una arquitectura escalable antes de la entrega técnica a los desarrolladores."}
                             </p>
                          </div>
@@ -1703,14 +1914,15 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
 
                     {/* 7. Lecciones */}
                     <Section id="lessons" title="Lecciones Aprendidas" icon={Lightbulb}>
-                       <div className={`${isSprintia ? 'bg-[springgreen]/5 border-[springgreen]/10' : isCandadosFlow ? 'bg-[#006470]/5 border-[#006470]/10' : isCandados ? 'bg-[#E35053]/5 border-[#E35053]/10' : 'bg-[#FFEE00]/5 border-[#FFEE00]/10'} p-8 rounded-2xl border backdrop-blur-sm relative overflow-hidden`}>
-                          <div className={`absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 ${isSprintia ? 'bg-[springgreen]' : isCandadosFlow ? 'bg-[#006470]' : isCandados ? 'bg-[#E35053]' : 'bg-[#FFEE00]'} opacity-10 rounded-full blur-2xl`}></div>
+                       <div className={`${isSprintia ? 'bg-[springgreen]/5 border-[springgreen]/10' : isCandadosFlow ? 'bg-[#006470]/5 border-[#006470]/10' : isCandados ? 'bg-[#E35053]/5 border-[#E35053]/10' : isClaro ? 'bg-[#E30613]/5 border-[#E30613]/10' : 'bg-[#FFEE00]/5 border-[#FFEE00]/10'} p-8 rounded-2xl border backdrop-blur-sm relative overflow-hidden`}>
+                          <div className={`absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 ${isSprintia ? 'bg-[springgreen]' : isCandadosFlow ? 'bg-[#006470]' : isCandados ? 'bg-[#E35053]' : isClaro ? 'bg-[#E30613]' : 'bg-[#FFEE00]'} opacity-10 rounded-full blur-2xl`}></div>
                           <p className="text-lg leading-relaxed opacity-90 relative z-10">
                             {isBegoApp ? "Aprendí que existen múltiples caminos para lograr un objetivo y que cada proyecto requiere metodologías diferentes. Es crucial diseñar aplicaciones nativas basándose en la investigación para evitar sesgos y tomar decisiones acertadas." :
                              isBegoWeb ? "Perder el miedo a diseñar directamente en alta fidelidad fue una decisión estratégica. Aunque conlleva riesgos, en cronogramas exigentes esta metodología demostró ser altamente funcional para cumplir los objetivos de negocio." :
                              isSprintia ? "Construir un ecosistema digital desde cero integrando tecnologías de vanguardia fue un desafío que validó mi perfil técnico-creativo. Sin embargo, la evaluación heurística representó el reto más crítico, exigiendo una auditoría profunda de las decisiones de diseño. Este proceso fortaleció mi criterio estratégico, enseñándome a priorizar la usabilidad objetiva sobre la estética y a transformar hallazgos en iteraciones que elevaron la madurez del producto." :
                              isCandadosFlow ? "La gestión de grandes volúmenes de datos en tiempo real exige una jerarquía visual impecable. Aprendí a equilibrar la densidad de información con la claridad operativa, asegurando que las alertas críticas nunca pasen desapercibidas." :
                              isCandados ? "Aprendí a capitalizar la madurez de un producto existente para saltar etapas de validación. La consistencia de la arquitectura de información de Bego fue clave para permitir una adaptación visual radical sin romper la experiencia." :
+                             isClaro ? "Los datos de comportamiento no mienten: lo que parecía un problema de diseño visual resultó ser un error técnico bloqueando la conversión. Aprendí a no asumir causas antes de auditar, y a priorizar hallazgos por severidad e impacto real antes de proponer soluciones visuales." :
                              "Cada proyecto presenta desafíos únicos que fortalecen mi capacidad para resolver problemas de diseño de manera estratégica."}
                           </p>
                        </div>

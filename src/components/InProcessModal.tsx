@@ -5,9 +5,20 @@ interface InProcessModalProps {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;
+  title?: string;
+  message?: string;
+  variant?: 'default' | 'claro';
 }
 
-export function InProcessModal({ isOpen, onClose, onConfirm }: InProcessModalProps) {
+export function InProcessModal({
+  isOpen,
+  onClose,
+  onConfirm,
+  title = '¡Estamos remodelando!',
+  message = 'Este proyecto está en proceso de adaptación al nuevo estilo visual del portafolio. Ya integré la nueva identidad y parte del proceso de diseño, pero algunas secciones siguen en el "taller".\n\n¿Te gustaría ver el avance actual?',
+  variant = 'default'
+}: InProcessModalProps) {
+  const isClaro = variant === 'claro';
   return (
     <AnimatePresence>
       {isOpen && (
@@ -27,7 +38,7 @@ export function InProcessModal({ isOpen, onClose, onConfirm }: InProcessModalPro
             className="relative w-full max-w-md bg-[#111] border border-white/10 rounded-2xl p-6 shadow-2xl overflow-hidden"
           >
             {/* Background Gradient */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[#FFEE00]/5 blur-3xl rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+            <div className={`absolute top-0 right-0 w-64 h-64 ${isClaro ? 'bg-[#E30613]/5' : 'bg-[#FFEE00]/5'} blur-3xl rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none`} />
             
             <button 
                 onClick={onClose}
@@ -37,18 +48,16 @@ export function InProcessModal({ isOpen, onClose, onConfirm }: InProcessModalPro
             </button>
 
             <div className="relative z-10 flex flex-col items-center text-center">
-                <div className="w-16 h-16 bg-[#FFEE00]/10 rounded-full flex items-center justify-center mb-6 border border-[#FFEE00]/20">
-                    <Construction className="w-8 h-8 text-[#FFEE00]" />
+                <div className={`w-16 h-16 rounded-full flex items-center justify-center mb-6 border ${isClaro ? 'bg-[#E30613]/10 border-[#E30613]/20' : 'bg-[#FFEE00]/10 border-[#FFEE00]/20'}`}>
+                    <Construction className={`w-8 h-8 ${isClaro ? 'text-[#E30613]' : 'text-[#FFEE00]'}`} />
                 </div>
                 
                 <h3 className="text-2xl font-bold text-white mb-3 text-[36px]">
-                    ¡Estamos remodelando!
+                    {title}
                 </h3>
-                
-                <p className="text-white/70 mb-8 leading-relaxed">
-                    Este proyecto está en proceso de adaptación al nuevo estilo visual del portafolio. Ya integré la nueva identidad y parte del proceso de diseño, pero algunas secciones siguen en el "taller".
-                    <br/><br/>
-                    ¿Te gustaría ver el avance actual?
+
+                <p className="text-white/70 mb-8 leading-relaxed whitespace-pre-line">
+                    {message}
                 </p>
                 
                 <div className="flex gap-3 w-full">
@@ -60,7 +69,7 @@ export function InProcessModal({ isOpen, onClose, onConfirm }: InProcessModalPro
                     </button>
                     <button
                         onClick={onConfirm}
-                        className="flex-1 py-3 px-4 rounded-xl bg-[#FFEE00] text-black font-bold hover:bg-[#FFEE00]/90 transition-all flex items-center justify-center gap-2 text-sm shadow-lg shadow-[#FFEE00]/10"
+                        className={`flex-1 py-3 px-4 rounded-xl font-bold transition-all flex items-center justify-center gap-2 text-sm shadow-lg ${isClaro ? 'bg-[#E30613] text-white hover:bg-[#E30613]/90 shadow-[#E30613]/20' : 'bg-[#FFEE00] text-black hover:bg-[#FFEE00]/90 shadow-[#FFEE00]/10'}`}
                     >
                         Ver adelanto
                         <ArrowRight className="w-4 h-4" />

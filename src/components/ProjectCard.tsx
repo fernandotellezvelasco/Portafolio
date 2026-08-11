@@ -122,12 +122,14 @@ export function ProjectCard({ project, index, onExplore, onVisible }: ProjectCar
                     ? 'SaaS'
                     : project.title === 'HEY MOVIL'
                     ? 'WEB'
+                    : project.title === 'CLARO'
+                    ? 'Plataformas digitales'
                     : 'PORTAFOLIO'}
                 </span>
                 <span className="opacity-50">/</span>
-                <span>{(project.title === 'BEGO WEB' || project.title === 'BEGO APP' || project.title === 'SPRINTIA' || project.title === 'CANDADOS') ? '2025' : project.title === 'HEY MOVIL' ? '2024' : '2023'}</span>
+                <span>{(project.title === 'BEGO WEB' || project.title === 'BEGO APP' || project.title === 'SPRINTIA' || project.title === 'CANDADOS') ? '2025' : project.title === 'HEY MOVIL' ? '2024' : project.title === 'CLARO' ? '2026' : '2023'}</span>
                 <span className="opacity-50">/</span>
-                <span>{project.title === 'GRAFICO Y MULTIMEDIA' ? 'GRAFICO Y DEMO REEL' : project.title === 'SPRINTIA' ? 'PRODUCT VISION LEAD Y DESIGNER' : (project.title === 'BEGO APP' || project.title === 'BEGO WEB') ? 'DISEÑADOR UX/UI' : project.role}</span>
+                <span>{project.title === 'GRAFICO Y MULTIMEDIA' ? 'GRAFICO Y DEMO REEL' : project.title === 'SPRINTIA' ? 'PRODUCT VISION LEAD Y DESIGNER' : (project.title === 'BEGO APP' || project.title === 'BEGO WEB') ? 'DISEÑADOR UX/UI' : project.title === 'CLARO' ? 'PRODUCT DESIGNER' : project.role}</span>
               </div>
             </div>
 

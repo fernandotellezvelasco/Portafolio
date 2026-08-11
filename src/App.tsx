@@ -19,8 +19,27 @@ import imgWireframes1 from "figma:asset/2cc6d581963c8b0c3108196450ca02982bd83eb7
 import imgGrafico from "figma:asset/85630eaced7b58cdfc80052d4fa7810161e36ab1.png";
 import imgCandados from "figma:asset/c151b13501bf9a5361423e642e23bcf45375225c.png";
 import imgHeyMobil from "figma:asset/508a0efb4c95dfef069839e945e23ee8baeedf69.png";
+import imgClaroCover from "./assets/claro/cover.gif";
+import imgClaroBlanco from "./assets/claro/resumen_blanco.png";
+import imgClaroOscuro from "./assets/claro/resumen_oscuro.png";
+import imgClaroGradiente from "./assets/claro/resumen_gradiente.png";
 
 const projects: Project[] = [
+  {
+    id: '7',
+    title: 'CLARO',
+    category: 'UX Audit & Producto',
+    year: '2026',
+    image: imgClaroCover,
+    description: 'Auditoría UX del Portal de Pagos de Claro Colombia mediante Microsoft Clarity, identificando fricciones críticas de conversión, y propuesta de rediseño del widget "Resumen en Vivo" para la experiencia de gestión de dispositivos y planes.',
+    role: 'UX Researcher & Diseñador de Producto',
+    credits: 'Auditoría e Investigación: Luis Fernando Téllez / Herramienta: Microsoft Clarity',
+    galleryImages: [
+      imgClaroBlanco,
+      imgClaroOscuro,
+      imgClaroGradiente,
+    ],
+  },
   {
     id: '2',
     title: 'BEGO APP',
@@ -128,7 +147,7 @@ export default function App() {
 
   const handleExplore = (project: Project) => {
     setSelectedProject(project);
-    if (project.title === 'HEY MOVIL') {
+    if (project.title === 'HEY MOVIL' || project.title === 'CLARO') {
         setIsInProcessModalOpen(true);
     } else {
         setIsModalOpen(true);
@@ -243,6 +262,11 @@ export default function App() {
         isOpen={isInProcessModalOpen}
         onClose={handleCloseInProcess}
         onConfirm={handleConfirmInProcess}
+        title={selectedProject?.title === 'CLARO' ? 'Proyecto en construcción' : undefined}
+        message={selectedProject?.title === 'CLARO'
+          ? 'Este caso de estudio todavía está en construcción. Estoy terminando de pulir la investigación y el rediseño antes de publicarlo por completo — estará listo en unos días.\n\n¿Te gustaría ver el avance actual?'
+          : undefined}
+        variant={selectedProject?.title === 'CLARO' ? 'claro' : 'default'}
       />
     </div>
   );
