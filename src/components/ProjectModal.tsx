@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Play, Search, Layout, Palette, CheckCircle, GitBranch, BarChart3, Layers, Smartphone, Users, Sparkles, ArrowRight, BookOpen, Target, Lightbulb, Link as LinkIcon, Moon, Sun, ChevronLeft, ChevronRight, Lock, Beaker, Zap, Eye, MousePointerClick, Shield } from 'lucide-react';
+import { X, Play, Search, Layout, Palette, CheckCircle, GitBranch, BarChart3, Layers, Smartphone, Users, Sparkles, ArrowRight, BookOpen, Target, Lightbulb, Link as LinkIcon, Moon, Sun, ChevronLeft, ChevronRight, Lock, Beaker, Zap, Eye, MousePointerClick, Shield, Wifi } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import type { Project } from './ProjectCard';
 import imgPortada1 from "figma:asset/1fe2690b9ec451502e9ec00eab0096f3097a5f8d.png";
@@ -126,6 +126,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
   const [wireframeIndex, setWireframeIndex] = useState(0);
   const [begoWebIndex, setBegoWebIndex] = useState(0);
   const [comparisonIndex, setComparisonIndex] = useState(0);
+  const [claroSlide, setClaroSlide] = useState(0);
 
   useEffect(() => {
     if (modalRef.current) {
@@ -1204,7 +1205,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                         </p>
 
                         {isClaro && (
-                             <div className="mt-12 mb-16">
+                             <div id="resumen-vivo-block" className="mt-12 mb-16">
                                 <h4 className="text-white font-bold mb-6 text-2xl flex items-center gap-3">
                                    <Palette className="w-6 h-6 text-[#E30613]" />
                                    Exploración de Tema — "Resumen en Vivo"
@@ -1233,7 +1234,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                         )}
 
                         {isClaro && (
-                             <div className="mt-4 mb-16">
+                             <div id="wifi-redesign-block" className="mt-4 mb-16">
                                 <h4 className="text-white font-bold mb-4 text-2xl flex items-center gap-3">
                                    <Layers className="w-6 h-6 text-[#E30613]" />
                                    Rediseño — Asesor de Velocidad Wi-Fi (Claro República Dominicana)
@@ -1910,6 +1911,99 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                            </div>
                          </div>
                        )}
+
+                       {/* Apple Feature Block — Entregables clave (Claro) */}
+                       {isClaro && (() => {
+                          const claroSlides = [
+                            {
+                              image: imgClarity01,
+                              title: 'Auditoría de Comportamiento',
+                              description: 'Dead clicks, rage clicks y el error técnico que bloqueaba la conversión, detectados con Microsoft Clarity.',
+                              target: 'testing',
+                            },
+                            {
+                              image: imgClaroResumenGradiente,
+                              title: 'Resumen en Vivo',
+                              description: 'Propuesta visual en tres variantes de tema para el widget de gestión de dispositivos y planes.',
+                              target: 'resumen-vivo-block',
+                            },
+                            {
+                              image: imgClaroWifiAfter01,
+                              title: 'Asesor de Velocidad Wi-Fi',
+                              description: 'Rediseño del flujo de selección de dispositivos aplicando la Ley de Miller, Claro República Dominicana.',
+                              target: 'wifi-redesign-block',
+                            },
+                          ];
+                          const slide = claroSlides[claroSlide];
+                          const goPrev = () => setClaroSlide((p) => (p === 0 ? claroSlides.length - 1 : p - 1));
+                          const goNext = () => setClaroSlide((p) => (p === claroSlides.length - 1 ? 0 : p + 1));
+                          return (
+                            <div className="mt-16">
+                              <h3 className="text-2xl font-bold text-white mb-2">Entregables clave</h3>
+                              <p className="opacity-60 mb-8 max-w-2xl">Tres piezas de trabajo, de la evidencia al rediseño.</p>
+
+                              <div className="group/block relative w-full h-[460px] md:h-[600px] rounded-[32px] overflow-hidden bg-black shadow-2xl">
+                                <AnimatePresence mode="wait">
+                                  <motion.div
+                                    key={claroSlide}
+                                    initial={{ opacity: 0, scale: 1.03 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.98 }}
+                                    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                                    className="absolute inset-0 cursor-pointer"
+                                    onClick={() => setSelectedImage(slide.image)}
+                                  >
+                                    <ImageWithFallback src={slide.image} alt={slide.title} className="w-full h-full object-cover" />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
+                                  </motion.div>
+                                </AnimatePresence>
+
+                                {/* Caption glass panel */}
+                                <div className="absolute bottom-5 left-5 right-5 md:right-auto md:max-w-md bg-white/10 backdrop-blur-md rounded-[25px] px-6 py-5 z-10">
+                                  <p className="text-white text-base md:text-lg leading-relaxed">
+                                    <span className="font-bold">{slide.title}.</span>{' '}
+                                    <span className="opacity-80">{slide.description}</span>
+                                  </p>
+                                  <button
+                                    onClick={(e) => { e.stopPropagation(); scrollToSection(slide.target); }}
+                                    className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-white/90 hover:text-white transition-colors"
+                                  >
+                                    Ver en el caso de estudio
+                                    <ArrowRight className="w-3.5 h-3.5" />
+                                  </button>
+                                </div>
+
+                                {/* Prev / Next */}
+                                <button
+                                  onClick={(e) => { e.stopPropagation(); goPrev(); }}
+                                  className="absolute left-5 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md flex items-center justify-center text-white transition-all active:scale-95 opacity-0 group-hover/block:opacity-100 z-10"
+                                  aria-label="Anterior"
+                                >
+                                  <ChevronLeft className="w-5 h-5" />
+                                </button>
+                                <button
+                                  onClick={(e) => { e.stopPropagation(); goNext(); }}
+                                  className="absolute right-5 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md flex items-center justify-center text-white transition-all active:scale-95 opacity-0 group-hover/block:opacity-100 z-10"
+                                  aria-label="Siguiente"
+                                >
+                                  <ChevronRight className="w-5 h-5" />
+                                </button>
+
+                                {/* Dots */}
+                                <div className="absolute top-5 right-5 flex gap-1.5 z-10">
+                                  {claroSlides.map((_, i) => (
+                                    <button
+                                      key={i}
+                                      onClick={(e) => { e.stopPropagation(); setClaroSlide(i); }}
+                                      className={`h-1.5 rounded-full transition-all ${i === claroSlide ? 'w-6 bg-white' : 'w-1.5 bg-white/40 hover:bg-white/60'}`}
+                                      aria-label={`Ir al slide ${i + 1}`}
+                                    />
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
+                          );
+                       })()}
                     </Section>
 
                     {/* 7. Lecciones */}

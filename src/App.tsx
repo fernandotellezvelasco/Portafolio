@@ -1,15 +1,14 @@
 import { useState, useEffect } from 'react';
-import { Header } from './components/Header';
-import { ProjectCard, Project } from './components/ProjectCard';
+import { SiteNav } from './components/SiteNav';
+import { Project } from './components/ProjectCard';
 import { ProjectModal } from './components/ProjectModal';
 import { InProcessModal } from './components/InProcessModal';
-import { ProjectSidebar } from './components/ProjectSidebar';
 import { About } from './components/About';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { motion, AnimatePresence } from 'motion/react';
 import { Toaster } from './components/ui/sonner';
-import { HeroParticles } from './components/HeroParticles';
+import { HeroStage } from './components/HeroStage';
 import { BrandMarquee } from './components/BrandMarquee';
 
 import imgMockupWeb1 from "figma:asset/e74f6c49b3bac2bda76f95ca4f96236bb774a2e6.png";
@@ -146,6 +145,12 @@ export default function App() {
   }, [isModalOpen, isInProcessModalOpen]);
 
   const handleExplore = (project: Project) => {
+    // Este proyecto vive en Behance, no tiene caso de estudio en el sitio
+    if (project.title === 'GRAFICO Y MULTIMEDIA') {
+      window.open('https://www.behance.net/gallery/167666943/Portafolio-2023', '_blank');
+      return;
+    }
+
     setSelectedProject(project);
     if (project.title === 'HEY MOVIL' || project.title === 'CLARO') {
         setIsInProcessModalOpen(true);
@@ -183,17 +188,10 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleScrollToProject = (index: number) => {
-    const element = document.getElementById(`project-${index}`);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
     <div className="min-h-screen bg-[#0B0B0B] text-white">
       <Toaster position="bottom-right" />
-      <Header currentSection={currentSection} onNavigate={handleNavigate} />
+      <SiteNav currentSection={currentSection} onNavigate={handleNavigate} />
 
       <AnimatePresence mode="wait">
         {currentSection === 'work' && (
@@ -203,24 +201,14 @@ export default function App() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
-            className="snap-container"
           >
-            <ProjectSidebar 
-              total={projects.length} 
-              current={activeProjectIndex} 
-              onIndexChange={handleScrollToProject}
+            <HeroStage
+              key="hero-stage"
+              projects={projects}
+              onExplore={handleExplore}
+              onVisible={() => setActiveProjectIndex(-1)}
             />
-            <HeroParticles key="hero-particles" onVisible={() => setActiveProjectIndex(-1)} />
             <BrandMarquee />
-            {projects.map((project, index) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                index={index}
-                onExplore={() => handleExplore(project)}
-                onVisible={(i) => setActiveProjectIndex(i)}
-              />
-            ))}
           </motion.main>
         )}
 

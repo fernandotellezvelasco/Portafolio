@@ -1,7 +1,14 @@
 import { useRef, useEffect, useState } from 'react';
 import { motion } from 'motion/react';
 
-export function HeroParticles({ onVisible }: { onVisible?: (index: number) => void }) {
+export function HeroParticles({
+  onVisible,
+  embedded = false,
+}: {
+  onVisible?: (index: number) => void;
+  /** Cuando el hero vive dentro del escenario 3D (v2): sin sticky/snap propio y sin fade interno por scroll */
+  embedded?: boolean;
+}) {
   const scrollRef = useRef(0);
   const [opacity, setOpacity] = useState(1);
   const [mounted, setMounted] = useState(false);
@@ -22,8 +29,14 @@ export function HeroParticles({ onVisible }: { onVisible?: (index: number) => vo
 
     const handleScroll = () => {
       const currentScroll = window.scrollY;
+      // En modo embedded el escenario 3D controla la animación: el hero no se desvanece solo
+      if (embedded) {
+        scrollRef.current = 0;
+        setOpacity(1);
+        return;
+      }
       scrollRef.current = currentScroll;
-      
+
       // Calculate opacity: 1 at 0px, 0 at 350px
       const newOpacity = Math.max(0, 1 - currentScroll / 350);
       setOpacity(newOpacity);
@@ -36,7 +49,7 @@ export function HeroParticles({ onVisible }: { onVisible?: (index: number) => vo
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleResize);
     };
-  }, [onVisible]);
+  }, [onVisible, embedded]);
 
   // Canvas Animation Logic
   useEffect(() => {
@@ -47,17 +60,20 @@ export function HeroParticles({ onVisible }: { onVisible?: (index: number) => vo
 
     let width = window.innerWidth;
     let height = window.innerHeight;
-    
+
     const handleResize = () => {
-      width = window.innerWidth;
-      height = window.innerHeight;
+      // clientWidth/Height = caja de layout, NO se ve afectada por los transforms 3D del escenario
+      width = Math.max(1, canvas.clientWidth || window.innerWidth);
+      height = Math.max(1, canvas.clientHeight || window.innerHeight);
       canvas.width = width;
       canvas.height = height;
     };
-    
+
     // Initial size
     handleResize();
     window.addEventListener('resize', handleResize);
+    const ro = new ResizeObserver(handleResize);
+    ro.observe(canvas);
 
     // Particle System
     const particleCount = isMobile ? 2000 : 3500;
@@ -194,6 +210,7 @@ export function HeroParticles({ onVisible }: { onVisible?: (index: number) => vo
     return () => {
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
+      ro.disconnect();
       cancelAnimationFrame(animationFrameId);
     };
   }, [isMobile]); // Re-run if isMobile changes to update particle count
@@ -223,7 +240,9 @@ export function HeroParticles({ onVisible }: { onVisible?: (index: number) => vo
       requestAnimationFrame(step);
     };
 
-    const nextSection = document.getElementById('project-0');
+    // v2: el carrusel; v1: la primera sección de proyecto
+    const nextSection =
+      document.getElementById('projects-carousel') || document.getElementById('project-0');
     if (nextSection) {
       const targetY = nextSection.getBoundingClientRect().top + window.scrollY;
       smoothScrollTo(targetY, 500); // 0.5s duration
@@ -233,7 +252,13 @@ export function HeroParticles({ onVisible }: { onVisible?: (index: number) => vo
   };
 
   return (
-    <div className="h-[100dvh] w-full sticky top-0 z-0 bg-[#0B0B0B] snap-start flex flex-col items-center justify-center overflow-hidden">
+    <div
+      className={
+        embedded
+          ? 'h-full w-full relative z-0 bg-[#0B0B0B] flex flex-col items-center justify-center overflow-hidden'
+          : 'h-[100dvh] w-full sticky top-0 z-0 bg-[#0B0B0B] snap-start flex flex-col items-center justify-center overflow-hidden'
+      }
+    >
       <div className="w-full h-full relative flex flex-col items-center justify-center">
       
       {/* 2D Canvas Scene */}
