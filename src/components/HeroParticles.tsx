@@ -187,7 +187,10 @@ export function HeroParticles({
       const shrinkFactor = Math.max(0, 1 - (scroll / 800));
       
       // Sphere radius based on screen size
-      const baseRadius = Math.min(width, height) * (isMobile ? 0.35 : 0.4);
+      /* En móvil la esfera se mide contra el ancho, que es el lado corto: con
+         el factor de escritorio quedaba diminuta dentro de una pantalla alta,
+         así que ahí sí la agrandamos. En escritorio se queda como estaba. */
+      const baseRadius = Math.min(width, height) * (isMobile ? 0.46 : 0.4);
       // La contracción del escenario se suma al encogido propio del hero v1
       const currentRadius = baseRadius * shrinkFactor * escalaEsferaRef.current;
       

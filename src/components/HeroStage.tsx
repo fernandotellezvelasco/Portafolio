@@ -77,6 +77,7 @@ function useRingMetrics() {
     cardW: 330,
     cardH: 330 * CARD_RATIO,
     radius: 346,
+    movil: false,
     viewportW: 0,
     viewportH: 0,
   });
@@ -84,15 +85,28 @@ function useRingMetrics() {
   useEffect(() => {
     const update = () => {
       const vw = window.innerWidth;
-      const cardW = vw < 640 ? 210 : vw < 1024 ? 270 : 330;
+      const vh = window.innerHeight;
+      const movil = vw < 640;
+
+      /* Cards más grandes: además de verse mejor, el blanco de clic crece.
+         En móvil se miden contra el ancho de pantalla (76%) para que la card
+         protagonice, dejando ver apenas el canto de las vecinas.
+         El tope por altura evita que en pantallas bajas se salga de cuadro. */
+      const porAncho = movil ? vw * 0.76 : vw < 1024 ? 320 : 410;
+      const porAlto = (vh * (movil ? 0.66 : 0.72)) / CARD_RATIO;
+      const cardW = Math.round(Math.min(porAncho, porAlto));
       const cardH = cardW * CARD_RATIO;
-      // Radio del cilindro: cuanto menor, más juntas quedan las cards
-      const radius = cardW * 1.05;
+
+      /* Radio del cilindro: cuanto menor, más juntas quedan las cards. En
+         móvil lo acortamos para que las vecinas se asomen pegadas al borde y
+         se entienda que hay más proyectos, sin robarle sitio a la del frente. */
+      const radius = cardW * (movil ? 0.74 : 1.05);
 
       setM({
         cardW,
         cardH,
         radius,
+        movil,
         viewportW: window.innerWidth,
         viewportH: window.innerHeight,
       });
@@ -107,10 +121,21 @@ function useRingMetrics() {
 
 export function HeroStage({ projects, onExplore, onVisible }: HeroStageProps) {
   const trackRef = useRef<HTMLDivElement>(null);
-  const { cardW, cardH, radius, viewportW, viewportH } = useRingMetrics();
+  const { cardW, cardH, radius, movil, viewportW, viewportH } = useRingMetrics();
 
-  // Tamaño con el que la primera card entra en escena (casi todo el alto)
-  const bigScale = viewportH ? (viewportH * 0.85) / cardH : 1.5;
+  /* En móvil la pantalla YA es vertical: rotarla 90° sería girarla hacia un
+     formato que no le corresponde. Ahí el hero sólo hace zoom out y se adapta
+     a la card. El giro es cosa de pantallas horizontales. */
+  const giro = movil ? 0 : ROTACION;
+
+  /* Tamaño con el que la primera card entra en escena: casi todo el alto, pero
+     SIN pasarse del ancho. En móvil, medir sólo contra la altura daba una card
+     más ancha que la pantalla; como el contenedor es flex, el navegador la
+     encogía por su cuenta y el marco dejaba de coincidir con la card. */
+  const bigScale =
+    viewportH && viewportW
+      ? Math.min((viewportH * 0.85) / cardH, (viewportW * 0.94) / cardW)
+      : 1.5;
   const bigCardW = cardW * bigScale;
   const bigCardH = cardH * bigScale;
 
@@ -144,15 +169,30 @@ export function HeroStage({ projects, onExplore, onVisible }: HeroStageProps) {
   const vw = viewportW || 1440;
   const vh = viewportH || 900;
 
-  const heroW = useTransform(p, [0, h(0.11), h(0.3), HANDOFF], [vw, vw, vw * 1.04, bigCardH]);
-  const heroH = useTransform(p, [0, h(0.11), h(0.3), HANDOFF], [vh, vh, vh * 1.04, bigCardW]);
+  /* El marco llega al relevo con la medida de la card. En escritorio lo hace
+     "acostado" (alto × ancho) porque la rotación de 90° lo deja vertical; en
+     móvil, sin rotación, va directo a la medida final de la card. */
+  const finW = movil ? bigCardW : bigCardH;
+  const finH = movil ? bigCardH : bigCardW;
 
-  // El giro completo de horizontal a vertical
-  const heroRotateZ = useTransform(p, [0, h(0.11), HANDOFF], [0, 0, ROTACION]);
+  const heroW = useTransform(p, [0, h(0.11), h(0.3), HANDOFF], [vw, vw, vw * 1.04, finW]);
+  const heroH = useTransform(p, [0, h(0.11), h(0.3), HANDOFF], [vh, vh, vh * 1.04, finH]);
 
-  // Algo de profundidad durante el giro, que se disuelve al aterrizar
-  const heroRotateY = useTransform(p, [0, h(0.11), h(0.56), HANDOFF], [0, 0, TILT.y, 0]);
-  const heroRotateX = useTransform(p, [0, h(0.11), h(0.56), HANDOFF], [0, 0, TILT.x, 0]);
+  // El giro completo de horizontal a vertical (en móvil, ninguno)
+  const heroRotateZ = useTransform(p, [0, h(0.11), HANDOFF], [0, 0, giro]);
+
+  // Algo de profundidad durante el giro, que se disuelve al aterrizar.
+  // Sin giro no hay nada que acompañar, así que en móvil se queda plano.
+  const heroRotateY = useTransform(
+    p,
+    [0, h(0.11), h(0.56), HANDOFF],
+    [0, 0, movil ? 0 : TILT.y, 0]
+  );
+  const heroRotateX = useTransform(
+    p,
+    [0, h(0.11), h(0.56), HANDOFF],
+    [0, 0, movil ? 0 : TILT.x, 0]
+  );
   const heroRadius = useTransform(p, [0, h(0.19), HANDOFF], [0, 26, 28]);
 
   // El texto del hero se retira cuando el marco ya se hizo pequeño
@@ -171,8 +211,18 @@ export function HeroStage({ projects, onExplore, onVisible }: HeroStageProps) {
      reacomoda el contenido al girarlo. Su caja es la de la card (vertical), que
      dentro del marco horizontal encaja justo al estar girada -90°. */
   const projectCounterRotate = useTransform(heroRotateZ, (r: number) => -r);
-  const projectW = useTransform(p, [0, h(0.11), h(0.3), HANDOFF], [vh, vh, vh * 1.04, bigCardW]);
-  const projectH = useTransform(p, [0, h(0.11), h(0.3), HANDOFF], [vw, vw, vw * 1.04, bigCardH]);
+  /* Sin rotación (móvil) el proyecto comparte la caja del marco tal cual; con
+     rotación va con los lados intercambiados, que al contra-rotar encajan. */
+  const projectW = useTransform(
+    p,
+    [0, h(0.11), h(0.3), HANDOFF],
+    movil ? [vw, vw, vw * 1.04, bigCardW] : [vh, vh, vh * 1.04, bigCardW]
+  );
+  const projectH = useTransform(
+    p,
+    [0, h(0.11), h(0.3), HANDOFF],
+    movil ? [vh, vh, vh * 1.04, bigCardH] : [vw, vw, vw * 1.04, bigCardH]
+  );
 
   // Relevo: al llegar aquí el elemento ya es idéntico a la card del anillo
   const heroOpacity = useTransform(p, [0, HANDOFF, HANDOFF + 0.01], [1, 1, 0]);
@@ -186,6 +236,40 @@ export function HeroStage({ projects, onExplore, onVisible }: HeroStageProps) {
     const activo = v < HANDOFF;
     setHeroActivo(prev => (prev === activo ? prev : activo));
   });
+
+  /* El navegador congela el bucle de animación cuando la pestaña deja de estar
+     al frente. Si mientras tanto la página se desplaza —o simplemente al
+     volver— el muelle puede quedarse en un valor viejo: se ve una escena y el
+     sitio está operando con otra. De ahí venían los clics que no respondían.
+
+     Al recuperar visibilidad recalculamos el avance real a partir de la
+     geometría del track (no del valor de Framer, que es justo el que puede
+     estar desfasado) y empujamos el muelle a su sitio. */
+  useEffect(() => {
+    const resincroniza = () => {
+      if (document.visibilityState !== 'visible') return;
+      const track = trackRef.current;
+      if (!track) return;
+      const avance = Math.max(
+        0,
+        Math.min(1, (window.scrollY - track.offsetTop) / track.offsetHeight)
+      );
+      if (Math.abs(p.get() - avance) > 0.001) p.jump(avance);
+    };
+
+    document.addEventListener('visibilitychange', resincroniza);
+    window.addEventListener('focus', resincroniza);
+    window.addEventListener('pageshow', resincroniza);
+    // Al montar: si el navegador restauró el scroll, nadie habría avisado
+    const inicial = window.setTimeout(resincroniza, 120);
+
+    return () => {
+      document.removeEventListener('visibilitychange', resincroniza);
+      window.removeEventListener('focus', resincroniza);
+      window.removeEventListener('pageshow', resincroniza);
+      window.clearTimeout(inicial);
+    };
+  }, [p]);
 
   /* ---------- El fondo: oscuro → blanco ---------- */
 
@@ -400,31 +484,103 @@ function ProjectRing({
 }: RingProps) {
   const count = projects.length;
 
-  /* El navegador solo dispara `click` si la presión y la soltada ocurren sobre
-     el MISMO elemento. Las cards se están moviendo con la inercia del scroll,
-     así que si la card se desplaza entre una y otra, el clic nunca llega y
-     parece que hubiera zonas muertas. Por eso registramos la card al presionar
-     y resolvemos al soltar, aquí en el contenedor, que no se mueve. */
-  const presion = useRef<{ project: Project; x: number; y: number; t: number } | null>(null);
+  /* Quién recibe el clic lo decide ESTE contenedor, midiendo dónde están las
+     cards en pantalla. Las cards no interceptan nada (pointer-events: none).
+
+     Dos intentos anteriores fallaron y conviene dejar escrito por qué:
+
+     1. Sólo la card "del frente" era clicable, según el valor animado del
+        carrusel. Pero el navegador congela las animaciones cuando la pestaña
+        pasa a segundo plano: el valor se quedaba atrás y la card que veías
+        dejaba de ser la que aceptaba clics.
+
+     2. Se hicieron clicables todas. Peor: las cards vecinas ocupan su caja
+        completa aunque se vean de canto, así que se robaban los clics entre
+        ellas — hubo casos de una card con el 0% de su superficie útil.
+
+     Midiendo las cajas reales no hay nada que se desincronice ni que se
+     estorbe: de las cards que contienen el punto, gana la más frontal (la
+     más ancha en pantalla), que es exactamente la que el ojo ve encima. */
+  const contenedorRef = useRef<HTMLDivElement>(null);
+  const presion = useRef<{ x: number; y: number; t: number } | null>(null);
+
+  const cardEnPunto = (x: number, y: number): Project | null => {
+    const cont = contenedorRef.current;
+    if (!cont) return null;
+    let mejor: { project: Project; ancho: number } | null = null;
+
+    cont.querySelectorAll<HTMLElement>('[data-proyecto]').forEach(el => {
+      // Una card desvanecida no debe capturar nada
+      if (Number(getComputedStyle(el).opacity) <= 0.12) return;
+      const r = el.getBoundingClientRect();
+      if (x < r.left || x > r.right || y < r.top || y > r.bottom) return;
+
+      const i = Number(el.dataset.proyecto);
+      const project = projects[i];
+      if (!project) return;
+      // La más ancha es la menos girada: la que está de frente
+      if (!mejor || r.width > mejor.ancho) mejor = { project, ancho: r.width };
+    });
+
+    return mejor ? mejor.project : null;
+  };
+
+  const alPresionar = (e: React.PointerEvent) => {
+    presion.current = { x: e.clientX, y: e.clientY, t: performance.now() };
+  };
+
+  /* Como las cards ya no reciben eventos, tampoco reciben hover: el cursor de
+     mano hay que ponerlo a mano sobre el contenedor. Se comprueba una vez por
+     frame para no medir cajas en cada píxel que se mueve el ratón. */
+  const frameCursor = useRef(0);
+  const alMover = (e: React.PointerEvent) => {
+    if (frameCursor.current) return;
+    const { clientX, clientY } = e;
+    frameCursor.current = requestAnimationFrame(() => {
+      frameCursor.current = 0;
+      const cont = contenedorRef.current;
+      if (!cont) return;
+      cont.style.cursor = cardEnPunto(clientX, clientY) ? 'pointer' : '';
+    });
+  };
+
+  useEffect(
+    () => () => {
+      if (frameCursor.current) cancelAnimationFrame(frameCursor.current);
+    },
+    []
+  );
 
   const alSoltar = (e: React.PointerEvent) => {
     const p = presion.current;
     presion.current = null;
     if (!p) return;
+
     const movimiento = Math.hypot(e.clientX - p.x, e.clientY - p.y);
     const transcurrido = performance.now() - p.t;
-    // Si arrastró mucho o tardó demasiado, no era un clic
-    if (movimiento < 14 && transcurrido < 800) onExplore(p.project, e.clientX, e.clientY);
+    // Si arrastró mucho o tardó demasiado, no era un clic. Los márgenes son
+    // holgados a propósito: un clic con mouse tiembla unos pixeles y mucha
+    // gente mantiene el botón presionado más de lo que uno imagina.
+    if (movimiento >= 24 || transcurrido >= 1500) return;
+
+    // Resolvemos en el punto donde se SOLTÓ: si la card se movió con la
+    // inercia del scroll, vale la que está ahí ahora, que es la que se ve.
+    const project = cardEnPunto(e.clientX, e.clientY) ?? cardEnPunto(p.x, p.y);
+    if (project) onExplore(project, e.clientX, e.clientY);
   };
 
   return (
     <motion.div
+      ref={contenedorRef}
       style={{ opacity, transformStyle: 'preserve-3d' }}
       id="projects-carousel"
       className="absolute inset-0 z-10 flex items-center justify-center"
+      onPointerDown={alPresionar}
       onPointerUp={alSoltar}
-      onPointerLeave={() => {
+      onPointerMove={alMover}
+      onPointerLeave={e => {
         presion.current = null;
+        (e.currentTarget as HTMLElement).style.cursor = '';
       }}
     >
       {/* Zoom de apertura: al entrar a un proyecto el carrusel avanza hacia el
@@ -469,9 +625,6 @@ function ProjectRing({
                 progress={progress}
                 neighborOpacity={neighborOpacity}
                 onExplore={onExplore}
-                onPress={(x, y) => {
-                  presion.current = { project, x, y, t: performance.now() };
-                }}
               />
             ))}
           </div>
@@ -595,8 +748,6 @@ interface RingCardProps {
   progress: MotionValue<number>;
   neighborOpacity: MotionValue<number>;
   onExplore: (project: Project, x: number, y: number) => void;
-  /** Avisa al anillo qué card se presionó y dónde */
-  onPress: (x: number, y: number) => void;
 }
 
 function RingCard({
@@ -607,7 +758,6 @@ function RingCard({
   progress,
   neighborOpacity,
   onExplore,
-  onPress,
 }: RingCardProps) {
   // Posición de esta card respecto al frente del carrusel, en "puestos".
   // 0 = está al frente; ±1 = la vecina; etc.
@@ -630,18 +780,6 @@ function RingCard({
       return distance * (isFront ? 1 : reveal);
     }
   );
-  /* Clicable la card más cercana al centro (|offset| ≤ 0.5: con un umbral menor
-     quedaba una zona muerta justo entre dos proyectos).
-
-     Va en estado de React y NO como valor animado: Framer no re-aplica
-     `pointer-events` cuando cambia un MotionValue, así que las cards se
-     quedaban con el estado que tenían al montar y unas tapaban a otras. */
-  const [esFrente, setEsFrente] = useState(index === 0);
-  useMotionValueEvent(offset, 'change', (o: number) => {
-    const frente = Math.abs(o) <= 0.5;
-    setEsFrente(prev => (prev === frente ? prev : frente));
-  });
-
   // IMPORTANTE: el transform se arma a mano. Si se pasan `rotateY` y `z` como
   // props de motion, Framer los compone en su propio orden (translate antes
   // que rotate) y las cards, en vez de repartirse por el círculo, giran todas
@@ -649,30 +787,27 @@ function RingCard({
   const transform = useMotionTemplate`rotateY(${angle}deg) translateZ(${radius}px)`;
 
   return (
-    /* pointer-events-none en el contenedor 3D: si no, el de una card vecina
-       —que ocupa toda la caja de la card aunque no se vea— puede quedar encima
-       de la del frente y tragarse sus clics. El botón de adentro vuelve a
-       activarlos cuando le toca estar al frente. */
+    /* Nada aquí dentro intercepta el puntero: quién recibe el clic lo decide el
+       contenedor del anillo midiendo las cajas. Así las cards no se roban los
+       clics entre ellas, que era el origen de las zonas muertas.
+
+       El botón sigue siendo <button> por accesibilidad: es enfocable con Tab y
+       se activa con Enter, camino que sí pasa por su propio onClick. */
     <motion.div
       style={{ transform, transformStyle: 'preserve-3d' }}
       className="absolute inset-0 pointer-events-none"
     >
       <motion.button
-        onPointerDown={e => onPress(e.clientX, e.clientY)}
-        // El ratón lo resuelve el anillo al soltar; este onClick queda para el
-        // teclado (Enter/Espacio), donde detail es 0.
+        data-proyecto={index}
+        // Sólo teclado (detail 0). El ratón lo resuelve el anillo al soltar.
         onClick={e => {
           if (e.detail !== 0) return;
-          // Con teclado no hay puntero: la transición nace del centro de la card
           const r = (e.currentTarget as HTMLElement).getBoundingClientRect();
           onExplore(project, r.x + r.width / 2, r.y + r.height / 2);
         }}
-        style={{
-          opacity: cardOpacity,
-          pointerEvents: esFrente ? 'auto' : 'none',
-        }}
+        style={{ opacity: cardOpacity }}
         className="absolute inset-0 rounded-[28px] overflow-hidden cursor-pointer group
-                   bg-[#0B0B0B] shadow-[0_30px_80px_rgba(0,0,0,0.35)]"
+                   pointer-events-none bg-[#0B0B0B] shadow-[0_30px_80px_rgba(0,0,0,0.35)]"
         aria-label={`Ver proyecto ${project.title}`}
       >
         <CardFace project={project} />

@@ -15,7 +15,9 @@
    caja alta y baja (no uppercase), peso medio y negro sobre el fondo blanco. */
 .hero-stage-marquee {
   fill: #0b0b0b;
-  font-size: clamp(2.75rem, 7.5vw, 7rem);
+  /* El mínimo manda en móvil: con 7.5vw la frase quedaba diminuta detrás de
+     las cards y se perdía el efecto de fondo. */
+  font-size: clamp(4rem, 13vw, 9.5rem);
   font-weight: 500;
   text-transform: none;
   letter-spacing: -0.02em;
