@@ -15,6 +15,7 @@ const PillNav = ({
   pillTextColor,
   onMobileMenuClick,
   onItemClick,
+  onLogoClick,
   initialLoadAnimation = true
 }) => {
   const resolvedPillTextColor = pillTextColor ?? baseColor;
@@ -156,16 +157,17 @@ const PillNav = ({
     });
   };
 
-  const toggleMobileMenu = () => {
-    const newState = !isMobileMenuOpen;
-    setIsMobileMenuOpen(newState);
-
+  /* La apertura y el cierre los pinta GSAP, no el estado de React. Por eso el
+     cierre vive en su propia función: al elegir una opción del menú antes se
+     cambiaba el estado pero nadie disparaba la animación, así que el menú se
+     quedaba puesto en pantalla. */
+  const animarMenu = abierto => {
     const hamburger = hamburgerRef.current;
     const menu = mobileMenuRef.current;
 
     if (hamburger) {
       const lines = hamburger.querySelectorAll('.hamburger-line');
-      if (newState) {
+      if (abierto) {
         gsap.to(lines[0], { rotation: 45, y: 3, duration: 0.3, ease });
         gsap.to(lines[1], { rotation: -45, y: -3, duration: 0.3, ease });
       } else {
@@ -175,7 +177,7 @@ const PillNav = ({
     }
 
     if (menu) {
-      if (newState) {
+      if (abierto) {
         gsap.set(menu, { visibility: 'visible' });
         gsap.fromTo(
           menu,
@@ -203,8 +205,20 @@ const PillNav = ({
         });
       }
     }
+  };
 
+  const toggleMobileMenu = () => {
+    const nuevo = !isMobileMenuOpen;
+    setIsMobileMenuOpen(nuevo);
+    animarMenu(nuevo);
     onMobileMenuClick?.();
+  };
+
+  /** Cierra con animación. Se ignora si ya estaba cerrado. */
+  const cerrarMenu = () => {
+    if (!isMobileMenuOpen) return;
+    setIsMobileMenuOpen(false);
+    animarMenu(false);
   };
 
   const isExternalLink = href =>
@@ -235,9 +249,13 @@ const PillNav = ({
         <a
           className="pill-logo"
           href={items?.[0]?.href || '#'}
-          aria-label="Inicio"
+          aria-label="Ir al inicio"
           onMouseEnter={handleLogoEnter}
-          onClick={e => handleNavClick(e, items?.[0])}
+          onClick={e => {
+            e.preventDefault();
+            cerrarMenu();
+            onLogoClick?.();
+          }}
           ref={el => {
             logoRef.current = el;
           }}
@@ -296,7 +314,7 @@ const PillNav = ({
                 href={item.href}
                 className={`mobile-menu-link${activeHref === item.href ? ' is-active' : ''}`}
                 onClick={e => {
-                  setIsMobileMenuOpen(false);
+                  cerrarMenu();
                   handleNavClick(e, item);
                 }}
               >
