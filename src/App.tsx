@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
-import { Header } from './components/Header';
-import { ProjectCard, Project } from './components/ProjectCard';
+import { SiteNav } from './components/SiteNav';
+import { Project } from './components/ProjectCard';
 import { ProjectModal } from './components/ProjectModal';
 import { InProcessModal } from './components/InProcessModal';
-import { ProjectSidebar } from './components/ProjectSidebar';
+import { ProjectTransition } from './components/ProjectTransition';
 import { About } from './components/About';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { motion, AnimatePresence } from 'motion/react';
 import { Toaster } from './components/ui/sonner';
-import { HeroParticles } from './components/HeroParticles';
+import { HeroStage } from './components/HeroStage';
 import { BrandMarquee } from './components/BrandMarquee';
 
 import imgMockupWeb1 from "figma:asset/e74f6c49b3bac2bda76f95ca4f96236bb774a2e6.png";
@@ -18,11 +18,11 @@ import imgMockupSprintia from "figma:asset/713d795dee7cfcab489ee588e192dd8cf5a69
 import imgWireframes1 from "figma:asset/2cc6d581963c8b0c3108196450ca02982bd83eb7.png";
 import imgGrafico from "figma:asset/85630eaced7b58cdfc80052d4fa7810161e36ab1.png";
 import imgCandados from "figma:asset/c151b13501bf9a5361423e642e23bcf45375225c.png";
-import imgHeyMobil from "figma:asset/508a0efb4c95dfef069839e945e23ee8baeedf69.png";
 import imgClaroCover from "./assets/claro/cover.gif";
-import imgClaroBlanco from "./assets/claro/resumen_blanco.png";
-import imgClaroOscuro from "./assets/claro/resumen_oscuro.png";
-import imgClaroGradiente from "./assets/claro/resumen_gradiente.png";
+import imgClaroCard from "./assets/claro/opt/cover_card.webp";
+import imgClaroBlanco from "./assets/claro/opt/resumen_blanco.webp";
+import imgClaroOscuro from "./assets/claro/opt/resumen_oscuro.webp";
+import imgClaroGradiente from "./assets/claro/opt/resumen_gradiente.webp";
 
 const projects: Project[] = [
   {
@@ -34,6 +34,9 @@ const projects: Project[] = [
     description: 'Auditoría UX del Portal de Pagos de Claro Colombia mediante Microsoft Clarity, identificando fricciones críticas de conversión, y propuesta de rediseño del widget "Resumen en Vivo" para la experiencia de gestión de dispositivos y planes.',
     role: 'UX Researcher & Diseñador de Producto',
     credits: 'Auditoría e Investigación: Luis Fernando Téllez / Herramienta: Microsoft Clarity',
+    // En la card del carrusel va una versión vertical, encuadrada en la laptop.
+    // Dentro del caso de estudio se sigue viendo la horizontal (`image`).
+    cardImage: imgClaroCard,
     galleryImages: [
       imgClaroBlanco,
       imgClaroOscuro,
@@ -94,19 +97,6 @@ const projects: Project[] = [
     ],
   },
   {
-    id: '6',
-    title: 'HEY MOVIL',
-    category: 'Landing Page',
-    year: '2024',
-    image: imgHeyMobil,
-    description: 'Planes a la medida de tu empresa. Impulsa la eficiencia de tu empresa con nuestra telefonía móvil: conectividad garantizada al mejor precio. Una landing page diseñada para comunicar claridad y confianza.',
-    role: 'Diseñador',
-    credits: 'Diseño: Sprintia Studio',
-    galleryImages: [
-      imgHeyMobil,
-    ],
-  },
-  {
     id: '5',
     title: 'GRAFICO Y MULTIMEDIA',
     category: 'Diseño Gráfico',
@@ -145,13 +135,34 @@ export default function App() {
     };
   }, [isModalOpen, isInProcessModalOpen]);
 
-  const handleExplore = (project: Project) => {
-    setSelectedProject(project);
-    if (project.title === 'HEY MOVIL' || project.title === 'CLARO') {
-        setIsInProcessModalOpen(true);
-    } else {
-        setIsModalOpen(true);
+  /* Transición al entrar a un proyecto: la estrella crece desde el clic, la
+     esfera de partículas estalla y el caso de estudio aparece detrás. */
+  const [transicion, setTransicion] = useState<{
+    project: Project;
+    origen: { x: number; y: number };
+  } | null>(null);
+
+  const centroPantalla = () => ({
+    x: window.innerWidth / 2,
+    y: window.innerHeight / 2,
+  });
+
+  const handleExplore = (project: Project, origen?: { x: number; y: number }) => {
+    // Este proyecto vive en Behance, no tiene caso de estudio en el sitio
+    if (project.title === 'GRAFICO Y MULTIMEDIA') {
+      window.open('https://www.behance.net/gallery/167666943/Portafolio-2023', '_blank');
+      return;
     }
+
+    setSelectedProject(project);
+
+    // CLARO pregunta antes de entrar: la transición corre al confirmar
+    if (project.title === 'CLARO') {
+      setIsInProcessModalOpen(true);
+      return;
+    }
+
+    setTransicion({ project, origen: origen ?? centroPantalla() });
   };
 
   const handleCloseModal = () => {
@@ -161,7 +172,8 @@ export default function App() {
 
   const handleConfirmInProcess = () => {
     setIsInProcessModalOpen(false);
-    setIsModalOpen(true);
+    if (selectedProject) setTransicion({ project: selectedProject, origen: centroPantalla() });
+    else setIsModalOpen(true);
   };
 
   const handleCloseInProcess = () => {
@@ -183,17 +195,10 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleScrollToProject = (index: number) => {
-    const element = document.getElementById(`project-${index}`);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
     <div className="min-h-screen bg-[#0B0B0B] text-white">
       <Toaster position="bottom-right" />
-      <Header currentSection={currentSection} onNavigate={handleNavigate} />
+      <SiteNav currentSection={currentSection} onNavigate={handleNavigate} />
 
       <AnimatePresence mode="wait">
         {currentSection === 'work' && (
@@ -203,24 +208,14 @@ export default function App() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
-            className="snap-container"
           >
-            <ProjectSidebar 
-              total={projects.length} 
-              current={activeProjectIndex} 
-              onIndexChange={handleScrollToProject}
+            <HeroStage
+              key="hero-stage"
+              projects={projects}
+              onExplore={handleExplore}
+              onVisible={() => setActiveProjectIndex(-1)}
             />
-            <HeroParticles key="hero-particles" onVisible={() => setActiveProjectIndex(-1)} />
             <BrandMarquee />
-            {projects.map((project, index) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                index={index}
-                onExplore={() => handleExplore(project)}
-                onVisible={(i) => setActiveProjectIndex(i)}
-              />
-            ))}
           </motion.main>
         )}
 
@@ -257,6 +252,15 @@ export default function App() {
         onClose={handleCloseModal}
         onNext={handleNextProject}
       />
+
+      {transicion && (
+        <ProjectTransition
+          key={transicion.project.id}
+          origen={transicion.origen}
+          onCubierto={() => setIsModalOpen(true)}
+          onFin={() => setTransicion(null)}
+        />
+      )}
 
       <InProcessModal
         isOpen={isInProcessModalOpen}

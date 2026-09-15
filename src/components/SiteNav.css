@@ -1,0 +1,21 @@
+/* PillNav trae .pill-nav-container en position:absolute sin left/right, pensado
+   para vivir dentro de un contenedor propio. Dentro de nuestro wrapper fijo eso
+   lo anclaba al centro y lo hacía crecer hacia la derecha (se salía de pantalla).
+   Aquí lo devolvemos al flujo para que el flex del wrapper lo centre de verdad. */
+.site-nav-shell .pill-nav-container {
+  position: relative;
+  top: 0;
+}
+
+.site-nav-shell {
+  padding-top: 1rem;
+  /* Que el flex no lo comprima mientras GSAP mide el ancho de la barra */
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .site-nav-shell {
+    width: 100%;
+  }
+}

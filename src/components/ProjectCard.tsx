@@ -12,6 +12,18 @@ export interface Project {
   role: string;
   credits?: string;
   galleryImages?: string[];
+  /**
+   * Portada alternativa, en vertical, solo para la card del carrusel.
+   * Dentro del caso de estudio se sigue usando `image`.
+   */
+  cardImage?: string;
+  /**
+   * Cómo encaja la portada dentro de la card del carrusel.
+   * 'cover' (por defecto) llena la card recortando lo que sobra.
+   * 'contain' muestra la imagen completa sobre un fondo desenfocado: útil
+   * cuando la portada es horizontal y se perdería al recortarla.
+   */
+  coverFit?: 'cover' | 'contain';
 }
 
 interface ProjectCardProps {

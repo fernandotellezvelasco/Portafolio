@@ -1,0 +1,22 @@
+/* Bloque 1 (v2) — estilos del texto marquee de fondo */
+
+/* El jacket de CurvedLoop trae min-height:100vh; dentro del escenario
+   ya estamos en un contenedor de 100dvh, así que lo neutralizamos. */
+#hero-stage .curved-loop-jacket {
+  min-height: 0;
+}
+
+#hero-stage .curved-loop-svg {
+  aspect-ratio: auto;
+  overflow: visible;
+}
+
+/* Tipografía del texto de fondo: como en los frames 02–04 de Figma —
+   caja alta y baja (no uppercase), peso medio y negro sobre el fondo blanco. */
+.hero-stage-marquee {
+  fill: #0b0b0b;
+  font-size: clamp(2.75rem, 7.5vw, 7rem);
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: -0.02em;
+}
