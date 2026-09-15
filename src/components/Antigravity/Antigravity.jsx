@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unknown-property */
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import * as THREE from 'three';
 
 const AntigravityInner = ({
@@ -12,6 +12,10 @@ const AntigravityInner = ({
   particleSize = 2,
   lerpSpeed = 0.1,
   color = '#FF9FFC',
+  /* Paleta opcional. Con ella cada partícula toma su propio color a lo largo
+     del degradado, como en antigravity.google, donde el campo no es de un
+     solo tono sino una constelación de colores de marca. */
+  colors = null,
   autoAnimate = false,
   particleVariance = 1,
   rotationSpeed = 0,
@@ -23,6 +27,27 @@ const AntigravityInner = ({
   const meshRef = useRef(null);
   const { viewport } = useThree();
   const dummy = useMemo(() => new THREE.Object3D(), []);
+
+  /* Color por instancia. Se reparte la paleta a lo largo del campo y se
+     interpola entre parada y parada, así que el degradado se lee como tal y no
+     como cuatro grupos de color. El desorden inicial es a propósito: en
+     antigravity.google los colores están salpicados, no ordenados. */
+  useEffect(() => {
+    const mesh = meshRef.current;
+    if (!mesh || !colors || colors.length === 0) return;
+
+    const paradas = colors.map(c => new THREE.Color(c));
+    const tono = new THREE.Color();
+
+    for (let i = 0; i < count; i++) {
+      const p = (i / Math.max(1, count - 1)) * (paradas.length - 1);
+      const desde = Math.floor(p);
+      const hasta = Math.min(paradas.length - 1, desde + 1);
+      tono.copy(paradas[desde]).lerp(paradas[hasta], p - desde);
+      mesh.setColorAt(i, tono);
+    }
+    if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
+  }, [colors, count]);
 
   const lastMousePos = useRef({ x: 0, y: 0 });
   const lastMouseMoveTime = useRef(0);
@@ -163,7 +188,7 @@ const AntigravityInner = ({
       {particleShape === 'sphere' && <sphereGeometry args={[0.2, 16, 16]} />}
       {particleShape === 'box' && <boxGeometry args={[0.3, 0.3, 0.3]} />}
       {particleShape === 'tetrahedron' && <tetrahedronGeometry args={[0.3]} />}
-      <meshBasicMaterial color={color} />
+      <meshBasicMaterial color={colors && colors.length ? '#ffffff' : color} />
     </instancedMesh>
   );
 };
