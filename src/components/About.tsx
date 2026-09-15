@@ -3,6 +3,8 @@ import svgPaths from '../imports/svg-q4myeocbke';
 import { toast } from 'sonner@2.0.3';
 import Group1 from '../imports/Group10469';
 import ShapeBlur from './ShapeBlur/ShapeBlur';
+import { Experiencia, Educacion, LoQueHago } from './about/Credenciales';
+import { Herramientas } from './about/Herramientas';
 
 export function About() {
   const handleCopyEmail = () => {
@@ -109,57 +111,18 @@ export function About() {
           </div>
         </motion.div>
 
-        {/* Credentials Grid */}
+        {/* Credenciales: experiencia, educación, lo que hago y la pila */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="mb-12 md:mb-16"
+          className="mb-12 md:mb-16 flex flex-col gap-12 md:gap-16"
         >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-            {/* Experiencia Column */}
-            <div className="flex flex-col gap-3 md:gap-4">
-              <div className="opacity-50 uppercase tracking-[0.15em] md:tracking-[0.16em] text-[0.75rem] md:text-[1rem]">
-                Experiencia
-              </div>
-              <div className="flex flex-col gap-2 opacity-80 text-[0.875rem] md:text-[1rem]">
-                <p>Diseño Web</p>
-                <p>Apps Móviles</p>
-                <p>Estrategia de Producto</p>
-                <p>Identidad de Marca</p>
-                <p>Diseño gráfico</p>
-                <p>Animación</p>
-              </div>
-            </div>
-
-            {/* Industrias Column */}
-            <div className="flex flex-col gap-3 md:gap-4">
-              <div className="opacity-50 uppercase tracking-[0.15em] md:tracking-[0.16em] text-[0.75rem] md:text-[1rem]">
-                Industrias
-              </div>
-              <div className="flex flex-col gap-2 opacity-80 text-[0.875rem] md:text-[1rem]">
-                <p>Tecnología</p>
-                <p>Deporte</p>
-                <p>Productos comerciales</p>
-                <p>Diseño</p>
-                <p>Logistica</p>
-              </div>
-            </div>
-
-            {/* Logros Column */}
-            <div className="flex flex-col gap-3 md:gap-4">
-              <div className="opacity-50 uppercase tracking-[0.15em] md:tracking-[0.16em] text-[0.75rem] md:text-[1rem]">
-                Logros
-              </div>
-              <div className="flex flex-col gap-2 opacity-80 text-[0.875rem] md:text-[1rem]">
-                <p>Certificado en marketing digital por Google Actívate</p>
-                <p>Certificado en Udemi UX/UI Design</p>
-                <p>Certificado por Google en UX/UI Design por COURSERA</p>
-                <p>Licenciatura en diseño Gráfico en Universidad Tecnologica de Mexico</p>
-              </div>
-            </div>
-          </div>
+          <Experiencia />
+          <Educacion />
+          <LoQueHago />
+          <Herramientas />
         </motion.div>
 
         {/* CTA Section */}
