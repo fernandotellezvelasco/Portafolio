@@ -110,7 +110,9 @@ export function HeroParticles({
     window.addEventListener('resize', handleResize);
 
     // Particle System
-    const particleCount = isMobile ? 7000 : 16000;
+    /* En móvil bajamos el censo: 7000 partículas eran el cuello de botella del
+       scroll y a 5000 la esfera se ve igual de densa en una pantalla chica. */
+    const particleCount = isMobile ? 5000 : 16000;
 
     /* Cada partícula guarda su posición en la esfera unitaria y, precalculados,
        el seno y coseno de tres patrones espaciales. Con ellos la onda viajera
@@ -219,7 +221,23 @@ export function HeroParticles({
       const st2 = Math.sin(tiempo * 0.62 + 1.1), ct2 = Math.cos(tiempo * 0.62 + 1.1);
       const st3 = Math.sin(tiempo * 0.41 + 2.3), ct3 = Math.cos(tiempo * 0.41 + 2.3);
 
-      for (let i = 0; i < particleCount; i++) {
+      /* Conforme la esfera se encoge camino al relevo, dibujamos menos
+         partículas: al 22% de su tamaño caben en un pañuelo y se apelotonan
+         sin que se note. Justo ahí es donde el scroll se sentía trabado en
+         móvil, porque el navegador está además rehaciendo el layout del marco
+         del hero en cada fotograma.
+
+         Vamos de una en una hasta saltar de cuatro en cuatro. Es un salto,
+         no un recorte: tomar las primeras N dejaría media esfera vacía,
+         porque están ordenadas de polo a polo. */
+      const encogida = shrinkFactor * escalaEsferaRef.current;
+      const salto =
+        encogida > 0.8 ? 1 : encogida > 0.55 ? 2 : encogida > 0.32 ? 3 : 4;
+
+      // Al saltar partículas el punto crece un poco, así la esfera no se vacía
+      const grosor = 1.05 + (salto - 1) * 0.22;
+
+      for (let i = 0; i < particleCount; i += salto) {
         const o = i * 9;
 
         /* 0. Ondas viajeras sobre la superficie: la esfera deja de ser perfecta
@@ -273,7 +291,7 @@ export function HeroParticles({
         
         // 5. Draw
         if (scale > 0) {
-          const size = 1.05 * scale;
+          const size = grosor * scale;
           /* Iluminación de borde: brillan las partículas que quedan de canto
              (su normal es perpendicular a la cámara) y se apagan las que miran
              de frente. Eso es lo que forma el anillo luminoso del contorno y
