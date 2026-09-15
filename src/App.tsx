@@ -11,6 +11,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Toaster } from './components/ui/sonner';
 import { HeroStage } from './components/HeroStage';
 import { BrandMarquee } from './components/BrandMarquee';
+import { irAProyectos, irAInicio } from './lib/navegacion';
 
 import imgMockupWeb1 from "figma:asset/e74f6c49b3bac2bda76f95ca4f96236bb774a2e6.png";
 import imgBegoApp from "figma:asset/d1374282898f5472e24c2dc24988e6dc9d913c65.png";
@@ -192,13 +193,31 @@ export default function App() {
 
   const handleNavigate = (section: 'work' | 'about' | 'contact') => {
     setCurrentSection(section);
+
+    /* "Proyectos" lleva al carrusel, no al principio del escenario: el menú
+       decía proyectos y dejaba al usuario en la pantalla de bienvenida.
+       Si veníamos de otra sección hay que esperar a que el escenario se monte
+       para poder medir dónde está. */
+    if (section === 'work') {
+      irAProyectos();
+      return;
+    }
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  /** El logotipo siempre devuelve a la pantalla de bienvenida */
+  const handleLogo = () => {
+    const veniaDeOtraSeccion = currentSection !== 'work';
+    setCurrentSection('work');
+    if (veniaDeOtraSeccion) requestAnimationFrame(() => setTimeout(irAInicio, 90));
+    else irAInicio();
   };
 
   return (
     <div className="min-h-screen bg-[#0B0B0B] text-white">
       <Toaster position="bottom-right" />
-      <SiteNav currentSection={currentSection} onNavigate={handleNavigate} />
+      <SiteNav currentSection={currentSection} onNavigate={handleNavigate} onLogoClick={handleLogo} />
 
       <AnimatePresence mode="wait">
         {currentSection === 'work' && (
@@ -239,7 +258,7 @@ export default function App() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <Contact />
+            <Contact onVerProyectos={() => handleNavigate('work')} />
           </motion.div>
         )}
       </AnimatePresence>

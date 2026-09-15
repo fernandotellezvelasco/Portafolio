@@ -8,6 +8,8 @@ type Section = 'work' | 'about' | 'contact';
 interface SiteNavProps {
   currentSection: Section;
   onNavigate: (section: Section) => void;
+  /** El logotipo lleva a la bienvenida, no a la sección de proyectos */
+  onLogoClick: () => void;
 }
 
 const ITEMS: { label: string; href: string; section: Section }[] = [
@@ -20,7 +22,7 @@ const ITEMS: { label: string; href: string; section: Section }[] = [
  * Header de la v2: PillNav de React Bits adaptado a la navegación por estado
  * del portafolio (sin react-router). Queda fijo arriba y centrado, como en el video.
  */
-export function SiteNav({ currentSection, onNavigate }: SiteNavProps) {
+export function SiteNav({ currentSection, onNavigate, onLogoClick }: SiteNavProps) {
   const activeHref = ITEMS.find(i => i.section === currentSection)?.href ?? '#work';
 
   const handleItemClick = (item?: { href?: string }) => {
@@ -37,6 +39,7 @@ export function SiteNav({ currentSection, onNavigate }: SiteNavProps) {
           items={ITEMS}
           activeHref={activeHref}
           onItemClick={handleItemClick}
+          onLogoClick={onLogoClick}
           ease="power3.easeOut"
           baseColor="#0B0B0B"
           pillColor="#FFFFF8"

@@ -66,7 +66,7 @@ const REDES = [
 const MASCARA_LUZ =
   'radial-gradient(ellipse 90% 110% at 50% 50%, rgba(0,0,0,1) 0%, rgba(0,0,0,0.92) 40%, rgba(0,0,0,0.7) 70%, rgba(0,0,0,0.4) 90%, rgba(0,0,0,0.15) 100%)';
 
-export function Contact() {
+export function Contact({ onVerProyectos }: { onVerProyectos: () => void }) {
   const { movil, reducido } = useEntorno();
   const anio = new Date().getFullYear();
 
@@ -171,6 +171,10 @@ export function Contact() {
                     >
                       <a
                         href="#work"
+                        onClick={e => {
+                          e.preventDefault();
+                          onVerProyectos();
+                        }}
                         className="group inline-flex h-11 cursor-pointer items-center gap-2 rounded-xl
                                    border border-white/15 bg-white/[0.04] px-5 text-sm font-medium
                                    text-white/85 transition-colors hover:border-white/35 hover:text-white"
