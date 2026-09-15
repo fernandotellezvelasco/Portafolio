@@ -18,35 +18,11 @@ export function Footer() {
             Portafolio
           </motion.div>
 
-          {/* Legal links */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="flex items-center gap-3 md:gap-6 opacity-50 text-[0.7rem] md:text-[0.875rem]"
-          >
-            <a
-              href="#"
-              className="uppercase tracking-[0.15em] md:tracking-[0.2em] hover:opacity-100 transition-opacity"
-            >
-              Cookies
-            </a>
-            <span>/</span>
-            <a
-              href="#"
-              className="uppercase tracking-[0.15em] md:tracking-[0.2em] hover:opacity-100 transition-opacity"
-            >
-              Términos
-            </a>
-            <span>/</span>
-            <a
-              href="#"
-              className="uppercase tracking-[0.15em] md:tracking-[0.2em] hover:opacity-100 transition-opacity"
-            >
-              Privacidad
-            </a>
-          </motion.div>
+          {/* Aquí vivían Cookies, Términos y Privacidad, los tres apuntando a
+              "#". Un portafolio personal no recaba datos ni vende nada, así que
+              esas páginas no hacen falta — y un enlace que no lleva a ningún
+              lado se nota, sobre todo en un sitio cuyo objetivo es que te
+              contraten. */}
 
           {/* Copyright & Email */}
           <motion.div
@@ -61,8 +37,8 @@ export function Footer() {
             </span>
             <span>/</span>
             <a
-              href="mailto:hello@portafolio.com"
-              className="uppercase tracking-[0.15em] md:tracking-[0.2em] hover:opacity-100 transition-opacity"
+              href="mailto:fernandotellezvelasco@gmail.com"
+              className="inline-block py-1.5 uppercase tracking-[0.15em] md:tracking-[0.2em] hover:opacity-100 transition-opacity"
             >
               Escríbenos
             </a>
