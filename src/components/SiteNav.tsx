@@ -1,5 +1,6 @@
 import PillNav from './PillNav';
 import './PillNav.css';
+import './SiteNav.css';
 import logo from '../assets/logotipo.svg';
 
 type Section = 'work' | 'about' | 'contact';
@@ -29,7 +30,7 @@ export function SiteNav({ currentSection, onNavigate }: SiteNavProps) {
 
   return (
     <div className="fixed top-0 left-0 right-0 z-50 flex justify-center pointer-events-none">
-      <div className="relative pointer-events-auto">
+      <div className="site-nav-shell pointer-events-auto">
         <PillNav
           logo={logo}
           logoAlt="Portafolio de Fernando Téllez"

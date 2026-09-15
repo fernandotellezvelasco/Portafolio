@@ -98,21 +98,23 @@ const PillNav = ({
       const navItems = navItemsRef.current;
 
       if (logo) {
-        gsap.set(logo, { scale: 0 });
-        gsap.to(logo, {
-          scale: 1,
-          duration: 0.6,
-          ease
-        });
+        gsap.fromTo(
+          logo,
+          { scale: 0 },
+          { scale: 1, duration: 0.6, ease, clearProps: 'transform' }
+        );
       }
 
       if (navItems) {
-        gsap.set(navItems, { width: 0, overflow: 'hidden' });
-        gsap.to(navItems, {
-          width: 'auto',
-          duration: 0.6,
-          ease
-        });
+        // Animamos opacidad/desplazamiento en vez de `width`: animar el ancho
+        // obligaba a medir 'auto' con el elemento colapsado y, si la animación
+        // se interrumpía (p. ej. pestaña en segundo plano), la barra se quedaba
+        // recortada a la mitad. Así el estado final siempre es correcto.
+        gsap.fromTo(
+          navItems,
+          { opacity: 0, x: -14 },
+          { opacity: 1, x: 0, duration: 0.6, ease, clearProps: 'opacity,transform' }
+        );
       }
     }
 

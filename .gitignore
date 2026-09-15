@@ -1,1 +1,8 @@
 node_modules
+
+# Metadatos de macOS
+.DS_Store
+
+# Carpetas de trabajo local
+.vite
+*.local
