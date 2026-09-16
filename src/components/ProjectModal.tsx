@@ -1,4 +1,5 @@
 import { motion, AnimatePresence } from 'motion/react';
+import BorderGlow from './BorderGlow';
 import { X, Play, Search, Layout, Palette, CheckCircle, GitBranch, BarChart3, Layers, Smartphone, Users, Sparkles, ArrowRight, BookOpen, Target, Lightbulb, Link as LinkIcon, Moon, Sun, ChevronLeft, ChevronRight, Lock, Beaker, Zap, Eye, MousePointerClick, Shield, Wifi } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import type { Project } from './ProjectCard';
@@ -189,8 +190,8 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
     return (
       <section id={id} className={`mb-24 scroll-mt-32 ${className}`}>
         <div className="flex items-center gap-3 mb-8">
-          {Icon && <Icon className={`w-6 h-6 opacity-80 ${isSprintia ? 'text-[springgreen]' : isCandadosFlow ? 'text-[#006470]' : isCandados ? 'text-[#E35053]' : isClaro ? 'text-[#E30613]' : 'text-[#FFEE00]'}`} />}
-          <h3 className="text-xl md:text-3xl font-bold text-white tracking-tight">
+          {Icon && <Icon className="w-5 h-5 text-white/55" aria-hidden="true" />}
+          <h3 className="text-[1.15rem] md:text-[1.5rem] font-medium text-white tracking-tight">
             {title}
           </h3>
         </div>
@@ -215,11 +216,11 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
           whileHover={{ y: -5 }}
           className="bg-white/5 rounded-xl p-6 border border-white/5 flex flex-col items-center text-center group hover:bg-white/10 transition-colors"
         >
-          <div className={`mb-4 p-3 bg-white/5 rounded-full transition-colors ${isSprintia ? 'group-hover:bg-[springgreen]/20' : isCandadosFlow ? 'group-hover:bg-[#006470]/20' : isCandados ? 'group-hover:bg-[#E35053]/20' : 'group-hover:bg-[#FFEE00]/20'}`}>
-            <phase.icon className={`w-6 h-6 text-white transition-colors ${isSprintia ? 'group-hover:text-[springgreen]' : isCandadosFlow ? 'group-hover:text-[#006470]' : isCandados ? 'group-hover:text-[#E35053]' : 'group-hover:text-[#FFEE00]'}`} />
+          <div className={`mb-4 p-3 bg-white/5 rounded-full transition-colors ${isSprintia ? 'group-hover:bg-white/20' : isCandadosFlow ? 'group-hover:bg-white/20' : isCandados ? 'group-hover:bg-white/20' : 'group-hover:bg-white/20'}`}>
+            <phase.icon className={`w-6 h-6 text-white transition-colors ${isSprintia ? 'group-hover:text-white/70' : isCandadosFlow ? 'group-hover:text-white/70' : isCandados ? 'group-hover:text-white/70' : 'group-hover:text-white/70'}`} />
           </div>
           <h3 className="mb-2 font-medium opacity-90">{phase.title}</h3>
-          <div className={`mb-4 text-sm font-bold ${isSprintia ? 'text-[springgreen]' : isCandadosFlow ? 'text-[#006470]' : isCandados ? 'text-[#E35053]' : 'text-[#FFEE00]'}`}>{(isSprintia || isBegoWeb || isCandados) && phase.title === 'Pruebas' ? 'En proceso' : phase.time}</div>
+          <div className={`mb-4 text-sm font-bold ${isSprintia ? 'text-white/70' : isCandadosFlow ? 'text-white/70' : isCandados ? 'text-white/70' : 'text-white/70'}`}>{(isSprintia || isBegoWeb || isCandados) && phase.title === 'Pruebas' ? 'En proceso' : phase.time}</div>
           <div className="flex flex-wrap gap-2 justify-center">
             {phase.tags.filter(tag => !(isBegoWeb && (tag === 'Flujos de usuario' || tag === 'Wireframes'))).map(tag => (
               <span key={tag} className="px-2 py-0.5 rounded-full bg-white/5 text-[0.7rem] text-white/60 border border-white/10">
@@ -238,13 +239,12 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
       {/* Typography Section */}
       <div className="space-y-4">
         <div className="flex items-center gap-2">
-            <Palette className={`w-5 h-5 ${isSprintia ? 'text-[springgreen]' : isCandadosFlow ? 'text-[#006470]' : isInterfacesFlow ? 'text-[#611232]' : isCandados ? 'text-[#006470]' : 'text-[#FFEE00]'}`} />
+            <Palette className={`w-5 h-5 ${isSprintia ? 'text-white/70' : isCandadosFlow ? 'text-white/70' : isInterfacesFlow ? 'text-white/70' : isCandados ? 'text-white/70' : 'text-white/70'}`} />
             <div className="text-xs font-bold tracking-widest text-[rgb(255,255,249)] uppercase text-[24px]">Diseño</div>
         </div>
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 items-start">
           {/* Typography Display */}
-          <div className="bg-[#060606] rounded-2xl p-8 relative overflow-hidden border border-white/10 group hover:border-white/20 transition-colors">
-          <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${isSprintia ? 'from-[springgreen]/10' : isCandadosFlow ? 'from-[#006470]/10' : isInterfacesFlow ? 'from-[#611232]/20' : isCandados ? 'from-[#006470]/10' : 'from-[#FFEE00]/10'} to-transparent blur-3xl rounded-full`}></div>
+          <div className="bg-white/[0.03] rounded-[20px] p-8 relative overflow-hidden border border-white/[0.08] group hover:border-white/20 transition-colors">
           <div className="relative">
             <div className={`text-sm uppercase tracking-widest opacity-40 mb-4 ${isCandadosFlow ? 'font-[Poppins]' : 'font-[Gotham]'}`}>Tipografía</div>
             <div className="mb-6">
@@ -260,7 +260,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
           </div>
         </div>
         {/* Style Overview */}
-        <div className="bg-[#060606] rounded-2xl p-8 border border-white/10 group hover:border-white/20 transition-colors h-full">
+        <div className="bg-white/[0.03] rounded-[20px] p-8 border border-white/[0.08] group hover:border-white/20 transition-colors h-full">
            <div className="text-sm uppercase tracking-widest opacity-40 mb-4 font-[Avenir]">Glyphs</div>
            <div className="grid grid-cols-[auto_1fr] gap-6 items-center">
             <div className="text-[4rem] leading-none opacity-90 font-[Avenir]">Aa</div>
@@ -276,7 +276,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
 
       {/* Colors & Glass */}
       <div className={`grid grid-cols-1 ${isCandados ? '' : 'xl:grid-cols-2'} gap-8`}>
-        <div className="bg-[#060606] rounded-2xl p-8 border border-white/10">
+        <div className="bg-white/[0.03] rounded-[20px] p-8 border border-white/10">
           <div className="text-sm uppercase tracking-widest opacity-40 mb-6">Paleta de Color</div>
           <div className="flex gap-4">
              {(isSprintia ? [
@@ -316,11 +316,11 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
         </div>
         
         {!isCandados && (
-        <div className="bg-[#060606] rounded-2xl p-8 border border-white/10 overflow-hidden relative">
+        <div className="bg-white/[0.03] rounded-[20px] p-8 border border-white/10 overflow-hidden relative">
            <div className="text-sm uppercase tracking-widest opacity-40 mb-6">Glassmorphism</div>
            <div className="flex justify-center gap-4 relative z-10">
               <div className="w-20 h-24 rounded-lg bg-white/5 backdrop-blur-md border border-white/10 transform -rotate-6 translate-y-2"></div>
-              <div className={`w-20 h-24 rounded-lg backdrop-blur-md transform z-10 shadow-xl ${isSprintia ? 'bg-[springgreen]/10 border-[springgreen]/20' : isCandadosFlow ? 'bg-[#006470]/10 border-[#006470]/20' : isInterfacesFlow ? 'bg-[#611232]/10 border-[#611232]/20' : isCandados ? 'bg-[#006470]/10 border-[#006470]/20' : 'bg-[#FFEE00]/10 border-[#FFEE00]/20'}`}></div>
+              <div className={`w-20 h-24 rounded-lg backdrop-blur-md transform z-10 shadow-xl ${isSprintia ? 'bg-white/10 border-white/25/20' : isCandadosFlow ? 'bg-white/10 border-white/25/20' : isInterfacesFlow ? 'bg-white/10 border-white/25/20' : isCandados ? 'bg-white/10 border-white/25/20' : 'bg-white/10 border-white/25/20'}`}></div>
               <div className="w-20 h-24 rounded-lg backdrop-blur-md border border-white/10 transform rotate-6 translate-y-2" style={{ backgroundImage: "linear-gradient(237.924deg, rgba(237, 237, 237, 0.12) 10.815%, rgba(237, 237, 237, 0.1) 42.163%, rgba(237, 237, 237, 0.02) 89.185%)" }}></div>
            </div>
            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent pointer-events-none"></div>
@@ -329,14 +329,14 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
       </div>
 
       {/* Design System */}
-      <div className="bg-[#060606] rounded-2xl p-6 md:p-8 border border-white/10">
+      <div className="bg-white/[0.03] rounded-[20px] p-6 md:p-8 border border-white/10">
         <div className="text-sm uppercase tracking-widest opacity-40 mb-6">Design System</div>
         <div className="mb-12">
             {isBegoApp ? (
                 <div className="mb-6 max-w-4xl bg-white/5 border border-white/10 rounded-xl p-5 md:p-6 relative overflow-hidden">
-                    <div className="absolute top-0 left-0 w-1 h-full bg-[#FFEE00]" />
+                    <div className="absolute top-0 left-0 w-1 h-full bg-white" />
                     <div className="flex gap-4">
-                        <Sparkles className="w-5 h-5 text-[#FFEE00] shrink-0 mt-1" />
+                        <Sparkles className="w-5 h-5 text-white/70 shrink-0 mt-1" />
                         <p className="text-white/90 leading-relaxed text-[17px]">
                             Al enfrentar fricciones con el equipo de desarrollo debido a la falta de claridad en los componentes heredados, el Líder de UX nos encomendó la creación de un nuevo estándar. En colaboración con el equipo asumimos el reto, pero tomé la iniciativa de ir más allá de lo solicitado: propuse y desarrollé un Design System interactivo. Esta herramienta no solo visualizaba el comportamiento de los componentes, sino que entregaba el código CSS y permitía su previsualización en Figma con un solo clic, cerrando la brecha técnica y elevando la eficiencia operativa conjunta en un 90%.
                         </p>
@@ -354,7 +354,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                     rel="noopener noreferrer"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#FFEE00] text-black rounded-lg text-sm font-bold shadow-lg shadow-[#FFEE00]/10 hover:shadow-[#FFEE00]/20 transition-all"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-[#0B0B0B] rounded-xl text-sm font-medium shadow-lg shadow-white/10 hover:shadow-white/20 transition-all"
                 >
                     <LinkIcon className="w-4 h-4" />
                     Design System Interactivo
@@ -364,24 +364,24 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
         {isSprintia ? (
             <div className="flex flex-col gap-6 mt-8">
                  <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-                     <div className="bg-[#0A0A0A] rounded-2xl p-6 border border-white/5 overflow-hidden flex justify-center items-center">
+                     <div className="bg-white/[0.03] rounded-[20px] p-6 border border-white/5 overflow-hidden flex justify-center items-center">
                         <div className="scale-[0.8] sm:scale-90 md:scale-100 origin-center transform-gpu">
                             <SprintiaButtons />
                         </div>
                      </div>
-                     <div className="bg-[#0A0A0A] rounded-2xl p-6 border border-white/5 overflow-hidden flex justify-center items-center">
+                     <div className="bg-white/[0.03] rounded-[20px] p-6 border border-white/5 overflow-hidden flex justify-center items-center">
                         <div className="w-[382px] scale-[0.8] sm:scale-90 md:scale-100 origin-center transform-gpu">
                             <SprintiaInputs />
                         </div>
                      </div>
                  </div>
                  <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-                     <div className="bg-[#0A0A0A] rounded-2xl p-6 border border-white/5 overflow-hidden flex justify-center items-center">
+                     <div className="bg-white/[0.03] rounded-[20px] p-6 border border-white/5 overflow-hidden flex justify-center items-center">
                         <div className="scale-[0.8] sm:scale-90 md:scale-100 origin-center transform-gpu">
                             <SprintiaCards />
                         </div>
                      </div>
-                     <div className="bg-[#0A0A0A] rounded-2xl p-6 border border-white/5 overflow-hidden flex justify-center items-center">
+                     <div className="bg-white/[0.03] rounded-[20px] p-6 border border-white/5 overflow-hidden flex justify-center items-center">
                          <div className="w-[382px] scale-[0.8] sm:scale-90 md:scale-100 origin-center transform-gpu">
                             <SprintiaIcons />
                          </div>
@@ -409,13 +409,13 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                 </div>
             </div>
         ) : (
-            <AtomicDesignVisual accentColor={isSprintia ? '#00FF7F' : isInterfacesFlow ? '#E35053' : isCandados ? '#006470' : '#FFEE00'} />
+            <AtomicDesignVisual accentColor={isSprintia ? '#00FF7F' : isInterfacesFlow ? '#FFFFFF' : isCandados ? '#FFFFFF' : '#FFFFFF'} />
         )}
       </div>
 
       {/* Wireframes & Mockups */}
       {!isBegoApp && (
-      <div className={`bg-[#060606] rounded-2xl p-6 md:p-8 border border-white/10 ${(isSprintia || isHeyMovil) ? 'hidden' : ''}`}>
+      <div className={`bg-white/[0.03] rounded-[20px] p-6 md:p-8 border border-white/10 ${(isSprintia || isHeyMovil) ? 'hidden' : ''}`}>
         <div className="text-sm uppercase tracking-widest opacity-40 mb-6">Wireframes & Mockups</div>
         <p className="text-white/80 leading-relaxed text-[17px] mb-8 max-w-4xl">
            {isBegoApp 
@@ -461,18 +461,18 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                          {isInterfacesFlow ? (
                             <>
                                <div className="flex justify-center transform scale-90 md:scale-100 origin-center">
-                                   <MockupPhone image={imgGobiernoMobile} label="Mobile App" accentColor="#611232">
+                                   <MockupPhone image={imgGobiernoMobile} label="Mobile App" accentColor="#FFFFFF">
                                        <Group162565 />
                                    </MockupPhone>
                                </div>
                                <div className="w-full">
-                                   <MockupDesktop image={imgGobiernoDesktop} label="Desktop Platform" delay={0.2} accentColor="#611232" />
+                                   <MockupDesktop image={imgGobiernoDesktop} label="Desktop Platform" delay={0.2} accentColor="#FFFFFF" />
                                </div>
                             </>
                          ) : (
                             <>
                                  <div className="flex justify-center transform scale-90 md:scale-100 origin-center">
-                                     <MockupPhone image={imgCandadosMobile} label="Mobile App" accentColor="#006470" />
+                                     <MockupPhone image={imgCandadosMobile} label="Mobile App" accentColor="#FFFFFF" />
                                  </div>
                                  <div className="rounded-xl overflow-hidden border border-white/10 shadow-2xl relative group bg-[#060606]">
                                      <div className="bg-[#111] px-4 py-3 flex gap-2 border-b border-white/5 items-center">
@@ -627,7 +627,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
       )}
 
       {isHeyMovil && (
-          <div className="bg-[#060606] rounded-2xl p-6 md:p-8 border border-white/10">
+          <div className="bg-white/[0.03] rounded-[20px] p-6 md:p-8 border border-white/10">
                  <div className="text-sm uppercase tracking-widest opacity-40 mb-6">Wireframes & Mockups</div>
                  <p className="text-white/80 leading-relaxed text-[17px] mb-8 max-w-4xl">
                      Desde la conceptualización en baja fidelidad hasta el diseño final, cada paso se alineó con el objetivo de negocio.
@@ -699,7 +699,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
               {isCandados && !gobiernoStep ? (
                 <div className="min-h-screen flex flex-col items-center justify-center p-6 md:p-8 animate-in fade-in duration-500 py-20 md:py-8">
                     <div className="max-w-4xl w-full">
-                        <h2 className="text-3xl md:text-5xl font-bold text-center mb-4 text-white">Gobierno de México</h2>
+                        <h2 className="text-[1.75rem] md:text-[2.5rem] font-medium text-center mb-4 text-white">Gobierno de México</h2>
                         <p className="text-white/60 text-center mb-8 md:mb-12 text-base md:text-lg max-w-3xl mx-auto">
                           Como parte de una estrategia de alianza futura, colaboré en la adaptación de interfaces y el desarrollo de dos iniciativas clave. CANDADOS destaca como el proyecto más avanzado y robusto. Selecciona el módulo que deseas explorar.
                         </p>
@@ -707,28 +707,34 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                             <button 
                                 onClick={() => setGobiernoStep('interfaces')}
-                                className="group relative overflow-hidden bg-[#1A1A1A] hover:bg-[#222] border border-white/10 rounded-2xl p-6 md:p-8 text-left transition-all hover:border-[#E35053]/50 h-full flex flex-col"
+                                className="group relative text-left h-full w-full"
                             >
-                                <div className="absolute top-0 right-0 w-24 h-24 md:w-32 md:h-32 bg-gradient-to-br from-[#E35053]/10 to-transparent blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
-                                <Layout className="w-10 h-10 md:w-12 md:h-12 text-[#E35053] mb-4 md:mb-6" />
-                                <h3 className="text-2xl md:text-[40px] leading-tight font-bold text-white mb-2 md:mb-4">Interfaces Gobierno</h3>
+                              <BorderGlow edgeSensitivity={28} glowColor="0 0 100" backgroundColor="#0D0D0D" borderRadius={20} glowRadius={36} glowIntensity={0.8} coneSpread={25} colors={['#ffffff', '#d4d4d8', '#a1a1aa']} fillOpacity={0.3} className="h-full">
+                              <div className="flex flex-col h-full p-6 md:p-8">
+                                <Layout className="w-10 h-10 md:w-12 md:h-12 text-white/70 mb-4 md:mb-6" />
+                                <h3 className="text-[1.5rem] md:text-[2rem] leading-tight font-medium text-white mb-2 md:mb-4">Interfaces Gobierno</h3>
                                 <p className="text-sm md:text-base text-white/60 leading-relaxed">Adaptación integral de la arquitectura Bego para el sector público, optimizando procesos gubernamentales mediante una experiencia digital escalable.</p>
-                                <div className="mt-auto pt-6 md:pt-8 flex items-center text-[#E35053] font-medium opacity-100 md:opacity-0 group-hover:opacity-100 transition-all transform md:translate-y-2 group-hover:translate-y-0 text-sm md:text-base">
+                                <div className="mt-auto pt-6 md:pt-8 flex items-center text-white/70 font-medium opacity-100 md:opacity-0 group-hover:opacity-100 transition-all transform md:translate-y-2 group-hover:translate-y-0 text-sm md:text-base">
                                     Explorar <ArrowRight className="w-4 h-4 ml-2" />
                                 </div>
+                              </div>
+                              </BorderGlow>
                             </button>
 
                             <button 
                                 onClick={() => setGobiernoStep('candados')}
-                                className="group relative overflow-hidden bg-[#1A1A1A] hover:bg-[#222] border border-white/10 rounded-2xl p-6 md:p-8 text-left transition-all hover:border-[#006470]/50 h-full flex flex-col"
+                                className="group relative text-left h-full w-full"
                             >
-                                <div className="absolute top-0 right-0 w-24 h-24 md:w-32 md:h-32 bg-gradient-to-br from-[#006470]/10 to-transparent blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
-                                <Lock className="w-10 h-10 md:w-12 md:h-12 text-[#006470] mb-4 md:mb-6" />
-                                <h3 className="text-2xl md:text-[40px] leading-tight font-bold text-white mb-2 md:mb-4">Candados</h3>
+                              <BorderGlow edgeSensitivity={28} glowColor="0 0 100" backgroundColor="#0D0D0D" borderRadius={20} glowRadius={36} glowIntensity={0.8} coneSpread={25} colors={['#ffffff', '#d4d4d8', '#a1a1aa']} fillOpacity={0.3} className="h-full">
+                              <div className="flex flex-col h-full p-6 md:p-8">
+                                <Lock className="w-10 h-10 md:w-12 md:h-12 text-white/70 mb-4 md:mb-6" />
+                                <h3 className="text-[1.5rem] md:text-[2rem] leading-tight font-medium text-white mb-2 md:mb-4">Candados</h3>
                                 <p className="text-sm md:text-base text-white/60 leading-relaxed">Plataforma de seguridad inteligente para el ecosistema gubernamental, especializada en la gestión crítica de permisos y control de accesos de alta confidencialidad.</p>
-                                <div className="mt-auto pt-6 md:pt-8 flex items-center text-[#006470] font-medium opacity-100 md:opacity-0 group-hover:opacity-100 transition-all transform md:translate-y-2 group-hover:translate-y-0 text-sm md:text-base">
+                                <div className="mt-auto pt-6 md:pt-8 flex items-center text-white/70 font-medium opacity-100 md:opacity-0 group-hover:opacity-100 transition-all transform md:translate-y-2 group-hover:translate-y-0 text-sm md:text-base">
                                     Explorar <ArrowRight className="w-4 h-4 ml-2" />
                                 </div>
+                              </div>
+                              </BorderGlow>
                             </button>
                         </div>
                     </div>
@@ -769,18 +775,20 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                   <motion.h1 
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="text-4xl md:text-6xl font-bold mb-8 tracking-tighter"
+                    className="text-[2rem] md:text-[3rem] font-medium mb-8 tracking-tight"
                   >
                     {isCandadosFlow ? 'CANDADOS' : isCandados ? 'INTERFACES GOBIERNO' : project.title}
                   </motion.h1>
 
                   {/* Meta Stats */}
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-6 border-y border-white/10 py-6 mb-8">
+                  {/* Rol, año y categoría. La duración salió de aquí: en la
+                      mitad de los proyectos era "En proceso" o "Variable", que
+                      no le dice nada a quien lee. */}
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-6 border-y border-white/10 py-6 mb-8">
                      {[
-                       { label: 'Duración', val: isBegoApp ? '4 Meses' : isBegoWeb ? '3 Meses' : isCandadosFlow ? '6 Meses' : isCandados ? 'En proceso' : isSprintia ? 'En curso' : 'Variable' },
                        { label: 'Rol', val: (isBegoApp || isBegoWeb || isCandados) ? 'Diseñador UX/UI' : project.role },
                        { label: 'Año', val: project.year },
-                       { label: 'Categoría', val: isCandadosFlow ? 'SAAS / SEGURIDAD' : (isBegoWeb || isCandados) ? 'WEB RESPONSIVO' : project.category }
+                       { label: 'Categoría', val: isCandadosFlow ? 'SAAS / SEGURIDAD' : isBegoWeb ? 'WEB RESPONSIVO' : project.category }
                      ].map((stat, i) => (
                        <div key={i}>
                          <div className="text-xs uppercase tracking-widest opacity-50 mb-1">{stat.label}</div>
@@ -802,7 +810,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                          <button
                            key={item.id}
                            onClick={() => scrollToSection(item.id)}
-                           className={`text-left py-2 text-sm transition-all duration-300 hover:text-white ${activeSection === item.id ? (isSprintia ? 'text-[springgreen] font-medium translate-x-1' : isCandadosFlow ? 'text-[#006470] font-medium translate-x-1' : isCandados ? 'text-[#E35053] font-medium translate-x-1' : isClaro ? 'text-[#E30613] font-medium translate-x-1' : 'text-[#FFEE00] font-medium translate-x-1') : 'text-white/40'}`}
+                           className={`text-left py-2 text-sm transition-all duration-300 hover:text-white ${activeSection === item.id ? (isSprintia ? 'text-white/70 font-medium translate-x-1' : isCandadosFlow ? 'text-white/70 font-medium translate-x-1' : isCandados ? 'text-white/70 font-medium translate-x-1' : isClaro ? 'text-white/70 font-medium translate-x-1' : 'text-white/70 font-medium translate-x-1') : 'text-white/40'}`}
                          >
                            {item.label}
                          </button>
@@ -815,7 +823,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                     
                     {isBegoApp && (
                       <div className="mb-12">
-                        <h2 className="text-3xl font-bold text-white mb-4">Descripción del Proyecto</h2>
+                        <h2 className="text-[1.5rem] md:text-[1.75rem] font-medium text-white mb-4">Descripción del Proyecto</h2>
                         <p className="text-base md:text-lg opacity-80 leading-relaxed max-w-3xl">
                           BeGo Driver es una app móvil para transportistas que permite encontrar y aceptar cargas, gestionar viajes y dar seguimiento a servicios de transporte de forma digital, ayudando a reducir tiempos muertos y optimizar la operación logística.
                         </p>
@@ -824,7 +832,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
 
                     {isSprintia && (
                       <div className="mb-12">
-                        <h2 className="text-3xl font-bold text-white mb-4">Descripción del Proyecto</h2>
+                        <h2 className="text-[1.5rem] md:text-[1.75rem] font-medium text-white mb-4">Descripción del Proyecto</h2>
                         <p className="text-base md:text-lg opacity-80 leading-relaxed max-w-3xl">
                           Sprintia es una plataforma digital enfocada en el fútbol amateur que conecta jugadores, equipos y ligas mediante matchmaking inteligente, reputación deportiva y filtros por nivel y disponibilidad, con el objetivo de reducir conflictos y mejorar la organización y experiencia de juego.
                         </p>
@@ -833,7 +841,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
 
                     {isClaro && (
                       <div className="mb-12">
-                        <h2 className="text-3xl font-bold text-white mb-4">Descripción del Proyecto</h2>
+                        <h2 className="text-[1.5rem] md:text-[1.75rem] font-medium text-white mb-4">Descripción del Proyecto</h2>
                         <p className="text-base md:text-lg opacity-80 leading-relaxed max-w-3xl">
                           Auditoría de experiencia digital del Portal de Pagos de Claro Colombia (claro.com.co) apoyada en Microsoft Clarity, seguida de una propuesta de rediseño del widget "Resumen en Vivo" para la gestión de dispositivos y planes, explorando variantes de tema claro, oscuro y de marca.
                         </p>
@@ -883,7 +891,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                                   "Implementé componentes booleanos avanzados para optimizar estados y estilos, agilizando el mantenimiento y la colaboración en el equipo de diseño."
                                 ].map((item, index) => (
                                   <li key={index} className="flex items-start gap-3 group">
-                                    <CheckCircle className="w-5 h-5 text-[#FFEE00] shrink-0 mt-0.5 opacity-80 group-hover:opacity-100 transition-opacity" />
+                                    <CheckCircle className="w-5 h-5 text-white/70 shrink-0 mt-0.5 opacity-80 group-hover:opacity-100 transition-opacity" />
                                     <span className="text-[17px] text-white/80 group-hover:text-white/95 transition-colors">{item}</span>
                                   </li>
                                 ))}
@@ -898,8 +906,8 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                                    { title: 'Desarrollador IA', desc: 'Frontend con Make y Horizon impulsado por IA.' },
                                    { title: 'Product Designer', desc: 'UX/UI, branding, Design System y arquitectura de info.' }
                                  ].map((card, i) => (
-                                   <div key={i} className="flex-1 min-w-[200px] p-4 bg-white/5 border border-white/10 rounded-xl backdrop-blur-sm hover:bg-[springgreen]/5 hover:border-[springgreen]/20 transition-all group">
-                                     <h4 className="font-bold text-white mb-1 group-hover:text-[springgreen] transition-colors">{card.title}</h4>
+                                   <div key={i} className="flex-1 min-w-[200px] p-4 bg-white/5 border border-white/10 rounded-xl backdrop-blur-sm hover:bg-white/5 hover:border-white/25/20 transition-all group">
+                                     <h4 className="font-medium text-white mb-1 group-hover:text-white/70 transition-colors">{card.title}</h4>
                                      <p className="text-xs text-white/60">{card.desc}</p>
                                    </div>
                                  ))}
@@ -913,7 +921,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                                    "Trabajé desde la creación de contenido multimedia hasta la construcción del branding e identidad visual, integrando diseño, negocio y tecnología."
                                  ].map((item, index) => (
                                    <li key={index} className="flex items-start gap-3 group">
-                                     <CheckCircle className="w-5 h-5 text-[springgreen] shrink-0 mt-0.5 opacity-80 group-hover:opacity-100 transition-opacity" />
+                                     <CheckCircle className="w-5 h-5 text-white/70 shrink-0 mt-0.5 opacity-80 group-hover:opacity-100 transition-opacity" />
                                      <span className="text-[17px] text-white/80 group-hover:text-white/95 transition-colors">{item}</span>
                                    </li>
                                  ))}
@@ -936,7 +944,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                                       "Propuse un rediseño del widget 'Resumen en Vivo' de gestión de dispositivos y planes, explorando tres variantes de tema (claro, oscuro y de marca)."
                                     ].map((item, index) => (
                                       <li key={index} className="flex items-start gap-3 group">
-                                        <CheckCircle className="w-5 h-5 text-[#E30613] shrink-0 mt-0.5 opacity-80 group-hover:opacity-100 transition-opacity" />
+                                        <CheckCircle className="w-5 h-5 text-white/70 shrink-0 mt-0.5 opacity-80 group-hover:opacity-100 transition-opacity" />
                                         <span className="text-[17px] text-white/80 group-hover:text-white/95 transition-colors">{item}</span>
                                       </li>
                                     ))}
@@ -958,7 +966,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                                       "Diseñé una interfaz limpia y moderna que transmite confianza institucional sin perder el dinamismo de una startup tecnológica."
                                     ].map((item, index) => (
                                       <li key={index} className="flex items-start gap-3 group">
-                                        <CheckCircle className="w-5 h-5 text-[#FFEE00] shrink-0 mt-0.5 opacity-80 group-hover:opacity-100 transition-opacity" />
+                                        <CheckCircle className="w-5 h-5 text-white/70 shrink-0 mt-0.5 opacity-80 group-hover:opacity-100 transition-opacity" />
                                         <span className="text-[17px] text-white/80 group-hover:text-white/95 transition-colors">{item}</span>
                                       </li>
                                     ))}
@@ -968,7 +976,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                               <div className="space-y-6">
                                  <p className="opacity-80 text-[24px]">Colaboré en el diseño integral desde cero, iterando estratégicamente en UX y UI para garantizar una adaptación responsive óptima en móvil y escritorio.</p>
                                  <div className="bg-[#003d44]/20 p-6 rounded-xl border border-[#003d44]/30">
-                                    <h4 className="text-[#006470] font-semibold mb-2 flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-[#006470]"></div> CANDADOS</h4>
+                                    <h4 className="text-white/70 font-semibold mb-2 flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-white"></div> CANDADOS</h4>
                                     <p className="text-sm opacity-90">Plataforma inteligente para la gestión de seguridad, monitoreo de dispositivos y control de accesos críticos en tiempo real.</p>
                                  </div>
                                 <div className="flex flex-wrap gap-3 pt-2">
@@ -983,7 +991,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                               <div className="space-y-6">
                                  <p className="opacity-80 text-[24px]">Colaboré en el Reskinning Sistemático de la suite de servicios Bego para su integración gubernamental.</p>
                                  <div className="bg-[#751E25]/20 p-6 rounded-xl border border-[#751E25]/30">
-                                    <h4 className="text-[#E35053] font-semibold mb-2 flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-[#E35053]"></div> INTERFACES GOBIERNO</h4>
+                                    <h4 className="text-white/70 font-semibold mb-2 flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-white"></div> INTERFACES GOBIERNO</h4>
                                     <p className="text-sm opacity-90">Ante la directriz de 'no investigación' para esta fase de demo, mi rol se centró en la traducción fiel de los flujos operativos existentes hacia una nueva interfaz institucional.</p>
                                  </div>
                                 <div className="flex flex-wrap gap-3 pt-2">
@@ -1017,8 +1025,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                                 whileHover={{ y: -5 }}
                                 className="p-6 rounded-xl bg-white/5 border border-white/10 relative overflow-hidden group"
                               >
-                                <div className="absolute top-0 right-0 w-24 h-24 bg-[#FFEE00]/10 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                                <card.icon className="w-8 h-8 mb-4 text-[#FFEE00]" />
+                                <card.icon className="w-8 h-8 mb-4 text-white/70" />
                                 <h4 className="font-semibold mb-2 text-lg">{card.title}</h4>
                                 <p className="text-sm opacity-60 leading-relaxed">{card.desc}</p>
                               </motion.div>
@@ -1040,11 +1047,11 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                               <p className="italic opacity-80 text-[24px]">"Conectar cargadores con transportistas usando inteligencia artificial para optimizar las operaciones logísticas en una plataforma nativa."</p>
                               
                               <div>
-                                <h4 className="text-white font-bold mb-3 text-lg">Definiendo el problema</h4>
+                                <h4 className="text-white font-medium mb-3 text-lg">Definiendo el problema</h4>
                                 <p className="opacity-80 leading-relaxed text-[17px]">
                                   La falta de visibilidad en seguridad y los retornos en vacío generaban ineficiencias críticas. Además, una interfaz poco intuitiva complicaba la operación para los transportistas, frenando la adopción y el flujo logístico.
                                 </p>
-                                <h4 className="text-white font-bold mb-3 text-lg mt-6">Posible solución</h4>
+                                <h4 className="text-white font-medium mb-3 text-lg mt-6">Posible solución</h4>
                                 <p className="opacity-80 leading-relaxed text-[17px]">
                                   Rediseño UX/UI centrado en roles que optimiza la visibilidad operativa y toma de decisiones en tiempo real. Se reestructuró la arquitectura para facilitar el monitoreo de viajes y seguridad.
                                 </p>
@@ -1061,7 +1068,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                              <div className="space-y-6">
                                 <p className="italic opacity-80 text-[24px]">"Demostrar la viabilidad técnica y operativa de los servicios de Bego dentro del ecosistema gubernamental, adaptando una plataforma validada a una nueva identidad institucional."</p>
                                 <div className="bg-[#751E25]/20 p-6 rounded-xl border border-[#751E25]/30">
-                                   <h4 className="text-[#E35053] font-semibold mb-2 flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-[#E35053]"></div> ALIANZA ESTRATÉGICA</h4>
+                                   <h4 className="text-white/70 font-semibold mb-2 flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-white"></div> ALIANZA ESTRATÉGICA</h4>
                                    <p className="text-sm opacity-90">El objetivo fue adaptar la plataforma existente para cumplir con la normativa visual federal, facilitando así la negociación de una alianza estratégica sin incurrir en costos de desarrollo de nuevas funcionalidades.</p>
                                 </div>
                              </div>
@@ -1105,14 +1112,14 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                                 
                                 <div>
                                     <h4 className="flex items-center gap-3 text-lg font-medium mb-6 opacity-90 text-[rgba(255,255,255,0.8)]">
-                                       <Users className="w-5 h-5 text-[springgreen]" />
+                                       <Users className="w-5 h-5 text-white/70" />
                                        Empatizar
                                     </h4>
                                     <p className="opacity-80 leading-relaxed text-[17px] mb-6">
                                        En la etapa de Empatizar, realizamos encuestas estratégicas a jugadores para comprender a profundidad sus necesidades. Evaluamos sus expectativas antes de usar la app, identificamos fricciones durante la experiencia de uso y medimos su percepción de valor posterior, obteniendo insights clave para optimizar la solución.
                                     </p>
                                     <div 
-                                       className="rounded-xl overflow-hidden border border-white/10 relative group mb-8 cursor-pointer max-w-3xl hover:border-[springgreen]/50 transition-colors shadow-lg"
+                                       className="rounded-xl overflow-hidden border border-white/10 relative group mb-8 cursor-pointer max-w-3xl hover:border-white/25 transition-colors shadow-lg"
                                        onClick={() => setSelectedImage(imgSprintiaEmpatizar)}
                                     >
                                        <ImageWithFallback src={imgSprintiaEmpatizar} alt="Encuestas de Empatía" className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105" />
@@ -1133,14 +1140,14 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                                <div className="space-y-6 mt-8">
                                  <div>
                                    <h4 className="flex items-center gap-3 text-lg font-medium mb-6 opacity-90 text-[rgba(255,255,255,0.8)]">
-                                     <Shield className="w-5 h-5 text-[#006470]" />
+                                     <Shield className="w-5 h-5 text-white/70" />
                                      Sinergia Hardware + Software
                                    </h4>
                                    <p className="opacity-80 leading-relaxed text-[17px] mb-6">
                                      La investigación concluyó que la mitigación efectiva de riesgos requiere la fusión de hardware y software. Un candado satelital actuando como sensor autónomo, integrado a una plataforma inteligente capaz de procesar telemetría en tiempo real, crea un escudo digital. Esta arquitectura permite detectar anomalías instantáneas—como aperturas fuera de geocerca—eliminando el error humano y garantizando una respuesta inmediata ante incidentes.
                                    </p>
                                    <div 
-                                     className="rounded-xl overflow-hidden border border-white/10 relative group cursor-pointer hover:border-[#006470]/50 transition-colors shadow-lg"
+                                     className="rounded-xl overflow-hidden border border-white/10 relative group cursor-pointer hover:border-white/25 transition-colors shadow-lg"
                                      onClick={() => setSelectedImage(imgCandadosMap)}
                                    >
                                      <ImageWithFallback src={imgCandadosMap} alt="Seguridad Logística" className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105" />
@@ -1171,13 +1178,13 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                                 { val: '31 seg', label: 'Tiempo activo' },
                               ].map((stat, i) => (
                                 <div key={i} className="bg-white/5 border border-white/10 rounded-xl p-4 text-center">
-                                  <div className="text-xl md:text-2xl font-bold text-white">{stat.val}</div>
+                                  <div className="text-xl md:text-[1.25rem] font-medium text-white">{stat.val}</div>
                                   <div className="text-[0.7rem] uppercase tracking-wide opacity-50 mt-1">{stat.label}</div>
                                 </div>
                               ))}
                             </div>
                             <div
-                              className="rounded-xl overflow-hidden border border-white/10 relative group cursor-pointer hover:border-[#E30613]/50 transition-colors shadow-lg"
+                              className="rounded-xl overflow-hidden border border-white/10 relative group cursor-pointer hover:border-white/25 transition-colors shadow-lg"
                               onClick={() => setSelectedImage(imgClarity01)}
                             >
                               <ImageWithFallback src={imgClarity01} alt="Reporte Clarity - Portada y KPIs" className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105" />
@@ -1206,8 +1213,8 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
 
                         {isClaro && (
                              <div id="resumen-vivo-block" className="mt-12 mb-16">
-                                <h4 className="text-white font-bold mb-6 text-2xl flex items-center gap-3">
-                                   <Palette className="w-6 h-6 text-[#E30613]" />
+                                <h4 className="text-white font-medium mb-6 text-[1.25rem] flex items-center gap-3">
+                                   <Palette className="w-6 h-6 text-white/70" />
                                    Exploración de Tema — "Resumen en Vivo"
                                 </h4>
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -1218,7 +1225,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                                    ].map((variant, idx) => (
                                      <div key={idx}>
                                        <div
-                                         className="rounded-xl overflow-hidden border border-white/10 relative group cursor-pointer hover:border-[#E30613]/50 transition-colors shadow-lg bg-black"
+                                         className="rounded-xl overflow-hidden border border-white/10 relative group cursor-pointer hover:border-white/25 transition-colors shadow-lg bg-black"
                                          onClick={() => setSelectedImage(variant.img)}
                                        >
                                          <ImageWithFallback src={variant.img} alt={`Resumen en Vivo - ${variant.label}`} className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-105" />
@@ -1235,8 +1242,8 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
 
                         {isClaro && (
                              <div id="wifi-redesign-block" className="mt-4 mb-16">
-                                <h4 className="text-white font-bold mb-4 text-2xl flex items-center gap-3">
-                                   <Layers className="w-6 h-6 text-[#E30613]" />
+                                <h4 className="text-white font-medium mb-4 text-[1.25rem] flex items-center gap-3">
+                                   <Layers className="w-6 h-6 text-white/70" />
                                    Rediseño — Asesor de Velocidad Wi-Fi (Claro República Dominicana)
                                 </h4>
                                 <p className="opacity-80 leading-relaxed text-[17px] mb-6 max-w-4xl">
@@ -1249,7 +1256,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                                 <div className="text-sm uppercase tracking-widest opacity-50 mb-4">Antes del rediseño</div>
                                 <div className="max-w-2xl">
                                    <div
-                                     className="rounded-xl overflow-hidden border border-white/10 relative group cursor-pointer hover:border-[#E30613]/50 transition-colors shadow-lg bg-black"
+                                     className="rounded-xl overflow-hidden border border-white/10 relative group cursor-pointer hover:border-white/25 transition-colors shadow-lg bg-black"
                                      onClick={() => setSelectedImage(imgClaroWifiBefore01)}
                                    >
                                      <ImageWithFallback src={imgClaroWifiBefore01} alt="Las 6 categorías de dispositivos visibles al mismo tiempo, con más de 20 casillas activas" className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105" />
@@ -1272,7 +1279,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                                    ].map((shot, idx) => (
                                      <div key={idx}>
                                        <div
-                                         className="rounded-xl overflow-hidden border border-white/10 relative group cursor-pointer hover:border-[#E30613]/50 transition-colors shadow-lg bg-black"
+                                         className="rounded-xl overflow-hidden border border-white/10 relative group cursor-pointer hover:border-white/25 transition-colors shadow-lg bg-black"
                                          onClick={() => setSelectedImage(shot.img)}
                                        >
                                          <ImageWithFallback src={shot.img} alt={shot.label} className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105" />
@@ -1302,8 +1309,8 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                         {isSprintia && (
                              <div className="mt-12 mb-16 flex flex-col gap-6">
                                 <div>
-                                   <h4 className="text-white font-bold mb-4 text-2xl flex items-center gap-3 text-[30px]">
-                                      <Palette className="w-6 h-6 text-[springgreen]" />
+                                   <h4 className="text-white font-medium mb-4 flex items-center gap-3 text-[1.25rem]">
+                                      <Palette className="w-6 h-6 text-white/70" />
                                       Branding y Logotipo
                                    </h4>
                                    <p className="opacity-80 leading-relaxed text-lg max-w-4xl text-[17px]">
@@ -1318,9 +1325,9 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                             <div className="mt-8 mb-16 space-y-12">
                                 {/* Pantallas Principales */}
                                 <div>
-                                    <h4 className="text-white font-bold mb-6 text-xl">Arquitectura y Visualización de Datos</h4>
+                                    <h4 className="text-white font-medium mb-6 text-xl">Arquitectura y Visualización de Datos</h4>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        <div className="group rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl bg-[#1A1A1A] cursor-pointer hover:border-[#E35053]/50 transition-colors" onClick={() => setSelectedImage(imgGobPolygon)}>
+                                        <div className="group rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl bg-[#1A1A1A] cursor-pointer hover:border-white/25 transition-colors" onClick={() => setSelectedImage(imgGobPolygon)}>
                                             <div className="aspect-[4/3] relative">
                                                 <ImageWithFallback src={imgGobPolygon} alt="Create New Polygon" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                                             </div>
@@ -1329,7 +1336,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                                                 <p className="text-xs text-white/50">Mapa de calor para tramos carreteros peligrosos.</p>
                                             </div>
                                         </div>
-                                        <div className="group rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl bg-[#1A1A1A] cursor-pointer hover:border-[#E35053]/50 transition-colors" onClick={() => setSelectedImage(imgGobFraude)}>
+                                        <div className="group rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl bg-[#1A1A1A] cursor-pointer hover:border-white/25 transition-colors" onClick={() => setSelectedImage(imgGobFraude)}>
                                             <div className="aspect-[4/3] relative">
                                                 <ImageWithFallback src={imgGobFraude} alt="Fraude Fiscal" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                                             </div>
@@ -1343,8 +1350,8 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
 
                                 {/* Dashboard */}
                                 <div>
-                                    <h4 className="text-white font-bold mb-6 text-xl">Dashboard Administrativo</h4>
-                                    <div className="rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl bg-[#1A1A1A] cursor-pointer group hover:border-[#E35053]/50 transition-colors" onClick={() => setSelectedImage(imgGobDashboard)}>
+                                    <h4 className="text-white font-medium mb-6 text-xl">Dashboard Administrativo</h4>
+                                    <div className="rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl bg-[#1A1A1A] cursor-pointer group hover:border-white/25 transition-colors" onClick={() => setSelectedImage(imgGobDashboard)}>
                                          <div className="aspect-video relative">
                                             <ImageWithFallback src={imgGobDashboard} alt="Dashboard Pagos" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                                         </div>
@@ -1360,7 +1367,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
 
                         {(isBegoApp || isSprintia) && (
                             <div className="mt-8 mb-12">
-                                <h4 className="text-white font-bold mb-4 text-lg">Metodología</h4>
+                                <h4 className="text-white font-medium mb-4 text-lg">Metodología</h4>
                                 <p className="opacity-80 leading-relaxed text-[17px] mb-6">
                                 {isBegoApp 
                                     ? "Bajo la directriz del liderazgo del equipo, se adoptó una gestión metodológica adaptativa combinando SCRUM para la ejecución de sprints rápidos enfocados en UI y optimización, con Design Thinking para abordar flujos complejos que requerían mayor tiempo de investigación y definición. Esta estrategia híbrida permitió acelerar el delivery en tareas tácticas mientras se aseguraba la profundidad analítica en los retos estratégicos del producto."
@@ -1390,8 +1397,8 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                                     }
                                 ].map((card, idx) => (
                                     <div key={idx} className="bg-white/5 border border-white/10 p-5 rounded-xl hover:bg-white/10 transition-all duration-300 hover:scale-[1.02] cursor-default group">
-                                    <div className={`mb-4 p-2 rounded-lg w-fit transition-colors ${isSprintia ? 'bg-[springgreen]/10 group-hover:bg-[springgreen]/20' : 'bg-[#FFEE00]/10 group-hover:bg-[#FFEE00]/20'}`}>
-                                        <card.icon className={`w-6 h-6 ${isSprintia ? 'text-[springgreen]' : 'text-[#FFEE00]'}`} />
+                                    <div className={`mb-4 p-2 rounded-lg w-fit transition-colors ${isSprintia ? 'bg-white/10 group-hover:bg-white/20' : 'bg-white/10 group-hover:bg-white/20'}`}>
+                                        <card.icon className={`w-6 h-6 ${isSprintia ? 'text-white/70' : 'text-white/70'}`} />
                                     </div>
                                     <h5 className="font-semibold text-white mb-2">{card.title}</h5>
                                     <p className="text-sm leading-relaxed text-white/70 group-hover:text-white/90 transition-colors">{card.desc}</p>
@@ -1399,7 +1406,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                                 ))}
                                 </div>
                                 <div className="mt-8">
-                                    <DesignProcessGraphic accentColor={isSprintia ? '#00FF7F' : '#FFEE00'} imageSrc={isBegoApp ? imgBegoUserFlowNew : undefined} />
+                                    <DesignProcessGraphic accentColor={isSprintia ? '#00FF7F' : '#FFFFFF'} imageSrc={isBegoApp ? imgBegoUserFlowNew : undefined} />
                                 </div>
                             </div>
                         )}
@@ -1407,7 +1414,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                         {isBegoApp && (
                             <div className="mt-16">
                                 <h4 className="flex items-center gap-3 text-lg font-medium mb-6 opacity-90 text-[rgba(255,255,255,0.8)]">
-                                   <Layout className="w-5 h-5 text-[#FFEE00]" />
+                                   <Layout className="w-5 h-5 text-white/70" />
                                    Wireframes & Estructura
                                 </h4>
                                 <div 
@@ -1437,7 +1444,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
 
                         {isBegoWeb && (
                             <div className="mt-8 mb-12">
-                                <h4 className="text-white font-bold mb-4 text-lg">Arquitectura de la Información</h4>
+                                <h4 className="text-white font-medium mb-4 text-lg">Arquitectura de la Información</h4>
                                 <p className="opacity-80 leading-relaxed text-[17px] mb-6">
                                     En colaboración con marketing, definí una arquitectura de información estratégica y optimizada para SEO, asegurando una navegación intuitiva y un posicionamiento orgánico efectivo.
                                 </p>
@@ -1462,7 +1469,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                              {/* 1. Wireframes & Estructura (Moved to start as requested) */}
                              <div>
                                 <h4 className="flex items-center gap-3 text-lg font-medium mb-6 opacity-90 text-[rgba(255,255,255,0.8)]">
-                                   <Layout className="w-5 h-5 text-[springgreen]" />
+                                   <Layout className="w-5 h-5 text-white/70" />
                                    Wireframes & Estructura
                                 </h4>
                                 <p className="opacity-80 leading-relaxed text-[17px] mb-6">
@@ -1497,7 +1504,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
 
 
                             <h4 className="flex items-center gap-3 text-lg font-medium mb-6 opacity-90 text-[rgba(255,255,255,0.8)]">
-                               <GitBranch className="w-5 h-5 text-[#FFEE00]" />
+                               <GitBranch className="w-5 h-5 text-white/70" />
                                Prototipos
                             </h4>
                             <p className="opacity-80 leading-relaxed mb-8">
@@ -1533,7 +1540,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                             
                                 <div id="testing" className="scroll-mt-32">
                                     <h4 className="flex items-center gap-3 text-lg font-medium mb-6 opacity-90 text-[rgba(255,255,255,0.8)]">
-                                       <Beaker className="w-5 h-5 text-[#FFEE00]" />
+                                       <Beaker className="w-5 h-5 text-white/70" />
                                        Testing
                                     </h4>
                                     <p className="opacity-80 leading-relaxed mb-6">
@@ -1568,7 +1575,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                                     {/* Bego Heatmap Analysis */}
                                     <div className="mt-12">
                                         <h4 className="flex items-center gap-3 text-lg font-medium mb-6 opacity-90 text-[rgba(255,255,255,0.8)]">
-                                            <Smartphone className="w-5 h-5 text-[#FFEE00]" />
+                                            <Smartphone className="w-5 h-5 text-white/70" />
                                             Análisis de Mapas de Calor
                                         </h4>
                                         <p className="opacity-80 leading-relaxed text-[17px] mb-8">
@@ -1577,7 +1584,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                                         <HeatmapAnalysis 
                                             slides={begoSlides}
                                             hotspots={begoHotspots}
-                                            accentColor="#FFEE00"
+                                            accentColor="#FFFFFF"
                                             metrics={{ clarityScore: 70, focusScore: 96 }}
                                             appName="Bego Insight"
                                         />
@@ -1586,8 +1593,8 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                                 </div>
 
                             <h4 className="flex items-center gap-3 text-lg font-medium mb-6 opacity-90 text-[rgba(255,255,255,0.8)] mt-24">
-                               <div className="w-5 h-5 rounded-full border border-[#FFEE00] flex items-center justify-center">
-                                   <div className="w-3 h-3 bg-[#FFEE00] rounded-full"></div>
+                               <div className="w-5 h-5 rounded-full border border-white/25 flex items-center justify-center">
+                                   <div className="w-3 h-3 bg-white rounded-full"></div>
                                </div>
                                Light Mode / Dark Mode
                             </h4>
@@ -1666,7 +1673,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                               ].map((slide, idx) => (
                                 <div
                                   key={idx}
-                                  className="rounded-xl overflow-hidden border border-white/10 relative group cursor-pointer hover:border-[#E30613]/50 transition-colors shadow-lg bg-black"
+                                  className="rounded-xl overflow-hidden border border-white/10 relative group cursor-pointer hover:border-white/25 transition-colors shadow-lg bg-black"
                                   onClick={() => setSelectedImage(slide.img)}
                                 >
                                   <ImageWithFallback src={slide.img} alt={slide.label} className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105" />
@@ -1680,8 +1687,8 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                               ))}
                             </div>
 
-                            <div className="bg-[#E30613]/5 border border-[#E30613]/20 rounded-xl p-6 md:p-8">
-                              <h5 className="font-bold text-[#E30613] mb-4 flex items-center gap-3 text-xl">
+                            <div className="bg-white/5 border border-white/25/20 rounded-xl p-6 md:p-8">
+                              <h5 className="font-bold text-white/70 mb-4 flex items-center gap-3 text-xl">
                                 <Zap className="w-6 h-6" /> Hallazgo Crítico
                               </h5>
                               <p className="text-white/80 leading-relaxed text-[17px] mb-4">
@@ -1710,16 +1717,16 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                                    Se utilizó la herramienta Maze para realizar pruebas de usabilidad, heatmaps y encuestas en varios flujos.
                                 </p>
                                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[200px]">
-                                   <div className="md:row-span-2 rounded-xl overflow-hidden border border-white/10 relative group bg-[#060606] cursor-pointer hover:border-[#E35053]/50 transition-colors" onClick={() => setSelectedImage(imgMazeHeatmap)}>
+                                   <div className="md:row-span-2 rounded-xl overflow-hidden border border-white/10 relative group bg-[#060606] cursor-pointer hover:border-white/25 transition-colors" onClick={() => setSelectedImage(imgMazeHeatmap)}>
                                        <ImageWithFallback src={imgMazeHeatmap} alt="Heatmap Analysis" className="w-full h-full object-contain md:object-cover object-right group-hover:scale-105 transition-transform duration-500" />
                                    </div>
-                                   <div className="rounded-xl overflow-hidden border border-white/10 relative group bg-[#060606] cursor-pointer hover:border-[#E35053]/50 transition-colors" onClick={() => setSelectedImage(imgMazePaths)}>
+                                   <div className="rounded-xl overflow-hidden border border-white/10 relative group bg-[#060606] cursor-pointer hover:border-white/25 transition-colors" onClick={() => setSelectedImage(imgMazePaths)}>
                                        <ImageWithFallback src={imgMazePaths} alt="Mission Paths" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                                    </div>
-                                   <div className="rounded-xl overflow-hidden border border-white/10 relative group bg-[#060606] cursor-pointer hover:border-[#E35053]/50 transition-colors" onClick={() => setSelectedImage(imgMazeStats)}>
+                                   <div className="rounded-xl overflow-hidden border border-white/10 relative group bg-[#060606] cursor-pointer hover:border-white/25 transition-colors" onClick={() => setSelectedImage(imgMazeStats)}>
                                        <ImageWithFallback src={imgMazeStats} alt="Testing Stats" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                                    </div>
-                                   <div className="col-span-1 md:col-span-2 rounded-xl overflow-hidden border border-white/10 relative group bg-[#060606] cursor-pointer hover:border-[#E35053]/50 transition-colors overflow-hidden">
+                                   <div className="col-span-1 md:col-span-2 rounded-xl overflow-hidden border border-white/10 relative group bg-[#060606] cursor-pointer hover:border-white/25 transition-colors overflow-hidden">
                                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1400px] h-[920px] transform scale-[0.25] md:scale-[0.4] origin-center pointer-events-none">
                                             <MazeScreens />
                                        </div>
@@ -1735,7 +1742,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                         </p>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                            <div className="bg-white/5 border border-white/10 rounded-xl p-8 hover:bg-white/10 transition-colors group">
-                              <h5 className="font-bold text-[springgreen] mb-6 flex items-center gap-3 text-xl">
+                              <h5 className="font-bold text-white/70 mb-6 flex items-center gap-3 text-xl">
                                  <Search className="w-6 h-6" /> Hallazgos Clave
                               </h5>
                               <ul className="space-y-4">
@@ -1745,14 +1752,14 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                                     "Los usuarios demandaron mayor control sobre la privacidad de sus datos de contacto en los perfiles públicos."
                                  ].map((item, i) => (
                                     <li key={i} className="flex items-start gap-3 text-white/80 text-[17px]">
-                                       <span className="w-2 h-2 rounded-full bg-[springgreen] mt-2 shrink-0 opacity-60 group-hover:opacity-100 transition-opacity"></span>
+                                       <span className="w-2 h-2 rounded-full bg-white mt-2 shrink-0 opacity-60 group-hover:opacity-100 transition-opacity"></span>
                                        {item}
                                     </li>
                                  ))}
                               </ul>
                            </div>
                            <div className="bg-white/5 border border-white/10 rounded-xl p-8 hover:bg-white/10 transition-colors group">
-                              <h5 className="font-bold text-[springgreen] mb-6 flex items-center gap-3 text-xl">
+                              <h5 className="font-bold text-white/70 mb-6 flex items-center gap-3 text-xl">
                                  <Target className="w-6 h-6" /> Iteraciones de Diseño
                               </h5>
                               <ul className="space-y-4">
@@ -1762,7 +1769,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                                     "Rediseño de las tarjetas de jugador para priorizar la información de reputación y disponibilidad."
                                  ].map((item, i) => (
                                     <li key={i} className="flex items-start gap-3 text-white/80 text-[17px]">
-                                       <span className="w-2 h-2 rounded-full bg-[springgreen] mt-2 shrink-0 opacity-60 group-hover:opacity-100 transition-opacity"></span>
+                                       <span className="w-2 h-2 rounded-full bg-white mt-2 shrink-0 opacity-60 group-hover:opacity-100 transition-opacity"></span>
                                        {item}
                                     </li>
                                  ))}
@@ -1772,7 +1779,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
 
                         <div className="mt-16">
                             <h4 className="flex items-center gap-3 text-lg font-medium mb-6 opacity-90 text-[rgba(255,255,255,0.8)]">
-                               <Smartphone className="w-5 h-5 text-[springgreen]" />
+                               <Smartphone className="w-5 h-5 text-white/70" />
                                Mapas de Calor
                             </h4>
                             <p className="opacity-80 leading-relaxed text-[17px] mb-8">
@@ -1794,7 +1801,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                     {/* 6. Resultados */}
                     <Section id="results" title="Resultados" icon={Sparkles}>
                        <div className="mb-10">
-                         <div className={`p-6 bg-gradient-to-r from-white/5 to-transparent border-l-4 rounded-r-xl ${isSprintia ? 'border-[springgreen]' : isCandadosFlow ? 'border-[#006470]' : isCandados ? 'border-[#E35053]' : isClaro ? 'border-[#E30613]' : 'border-[#FFEE00]'}`}>
+                         <div className={`p-6 bg-gradient-to-r from-white/5 to-transparent border-l-4 rounded-r-xl ${isSprintia ? 'border-white/25' : isCandadosFlow ? 'border-white/25' : isCandados ? 'border-white/25' : isClaro ? 'border-white/25' : 'border-white/25'}`}>
                             <p className="text-lg md:text-xl text-white/90 text-[24px]">
                               {isBegoApp ? "El rediseño mejoró notablemente la experiencia de usuario mediante una paleta de alto contraste que reduce la fatiga visual de los transportistas, optimizando la funcionalidad y puliendo cada componente." :
                                isBegoWeb ? "El rediseño fue una mejora notable y actualmente está en proceso de desarrollo, manteniendo iteraciones en tiempo real para abordar áreas de oportunidad junto al departamento de desarrollo." :
@@ -1811,7 +1818,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                        ) : isCandadosFlow ? (
                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                {[imgCandadosLogin, imgCandadosOrders, imgCandadosFilter, imgCandadosMap].map((img, idx) => (
-                                   <div key={idx} className="group rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl bg-[#006470]/5 cursor-pointer" onClick={() => setSelectedImage(img)}>
+                                   <div key={idx} className="group rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl bg-white/5 cursor-pointer" onClick={() => setSelectedImage(img)}>
                                       <ImageWithFallback src={img} alt={`Candados Screen ${idx + 1}`} className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105" />
                                    </div>
                                ))}
@@ -1836,8 +1843,8 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                                    </div>
                                    
                                    {/* Gobierno Side */}
-                                   <div className="group rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl bg-[#E35053]/5 cursor-pointer" onClick={() => setSelectedImage(comparisonIndex === 0 ? imgGobiernoDashboardLight : comparisonIndex === 1 ? imgGobiernoTagsLight : imgGobiernoMapLight)}>
-                                      <div className="absolute top-4 left-4 z-10 bg-[#E35053]/80 backdrop-blur px-3 py-1 rounded-full border border-white/10 text-xs font-medium text-white">Adaptación</div>
+                                   <div className="group rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl bg-white/5 cursor-pointer" onClick={() => setSelectedImage(comparisonIndex === 0 ? imgGobiernoDashboardLight : comparisonIndex === 1 ? imgGobiernoTagsLight : imgGobiernoMapLight)}>
+                                      <div className="absolute top-4 left-4 z-10 bg-white/80 backdrop-blur px-3 py-1 rounded-full border border-white/10 text-xs font-medium text-white">Adaptación</div>
                                       <div className="grid grid-cols-1 grid-rows-1">
                                           <div className={`col-start-1 row-start-1 transition-opacity duration-500 ${comparisonIndex === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
                                             <ImageWithFallback src={imgGobiernoDashboardLight} alt="Gobierno Dashboard" className="w-full h-auto object-cover" />
@@ -1939,7 +1946,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                           const goNext = () => setClaroSlide((p) => (p === claroSlides.length - 1 ? 0 : p + 1));
                           return (
                             <div className="mt-16">
-                              <h3 className="text-2xl font-bold text-white mb-2">Entregables clave</h3>
+                              <h3 className="text-[1.25rem] font-medium text-white mb-2">Entregables clave</h3>
                               <p className="opacity-60 mb-8 max-w-2xl">Tres piezas de trabajo, de la evidencia al rediseño.</p>
 
                               <div className="group/block relative w-full h-[460px] md:h-[600px] rounded-[32px] overflow-hidden bg-black shadow-2xl">
@@ -2008,8 +2015,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
 
                     {/* 7. Lecciones */}
                     <Section id="lessons" title="Lecciones Aprendidas" icon={Lightbulb}>
-                       <div className={`${isSprintia ? 'bg-[springgreen]/5 border-[springgreen]/10' : isCandadosFlow ? 'bg-[#006470]/5 border-[#006470]/10' : isCandados ? 'bg-[#E35053]/5 border-[#E35053]/10' : isClaro ? 'bg-[#E30613]/5 border-[#E30613]/10' : 'bg-[#FFEE00]/5 border-[#FFEE00]/10'} p-8 rounded-2xl border backdrop-blur-sm relative overflow-hidden`}>
-                          <div className={`absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 ${isSprintia ? 'bg-[springgreen]' : isCandadosFlow ? 'bg-[#006470]' : isCandados ? 'bg-[#E35053]' : isClaro ? 'bg-[#E30613]' : 'bg-[#FFEE00]'} opacity-10 rounded-full blur-2xl`}></div>
+                       <div className={`${isSprintia ? 'bg-white/5 border-white/25/10' : isCandadosFlow ? 'bg-white/5 border-white/25/10' : isCandados ? 'bg-white/5 border-white/25/10' : isClaro ? 'bg-white/5 border-white/25/10' : 'bg-white/5 border-white/25/10'} p-8 rounded-2xl border backdrop-blur-sm relative overflow-hidden`}>
                           <p className="text-lg leading-relaxed opacity-90 relative z-10">
                             {isBegoApp ? "Aprendí que existen múltiples caminos para lograr un objetivo y que cada proyecto requiere metodologías diferentes. Es crucial diseñar aplicaciones nativas basándose en la investigación para evitar sesgos y tomar decisiones acertadas." :
                              isBegoWeb ? "Perder el miedo a diseñar directamente en alta fidelidad fue una decisión estratégica. Aunque conlleva riesgos, en cronogramas exigentes esta metodología demostró ser altamente funcional para cumplir los objetivos de negocio." :
@@ -2028,7 +2034,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                       {isSprintia ? (
                         <div className="flex flex-col sm:flex-row gap-4">
                           <div className="relative">
-                            <button onClick={() => setShowDemoAlert(true)} className="px-8 py-4 bg-[springgreen] text-black font-bold rounded-xl hover:opacity-90 transition-all hover:scale-105 flex items-center justify-center gap-2 w-full sm:w-auto">
+                            <button onClick={() => setShowDemoAlert(true)} className="px-8 py-4 bg-white text-black font-bold rounded-xl hover:opacity-90 transition-all hover:scale-105 flex items-center justify-center gap-2 w-full sm:w-auto">
                               <Smartphone className="w-5 h-5" /> Prototipo
                             </button>
                             
@@ -2043,8 +2049,8 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                                 >
                                   <div className="bg-[#111] border border-white/10 rounded-2xl p-6 md:p-8 max-w-sm w-full shadow-2xl" onClick={e => e.stopPropagation()}>
                                     <div className="flex items-center gap-3 mb-4">
-                                      <Smartphone className="w-6 h-6 text-[springgreen]" />
-                                      <h3 className="text-xl font-bold text-white">Experiencia Móvil</h3>
+                                      <Smartphone className="w-6 h-6 text-white/70" />
+                                      <h3 className="text-xl font-medium text-white">Experiencia Móvil</h3>
                                     </div>
                                     <p className="text-white/80 leading-relaxed mb-6">
                                       Es recomendable previsualizar esta demo desde tu celular para apreciar correctamente la interacción y el diseño nativo.
@@ -2055,7 +2061,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         onClick={() => setShowDemoAlert(false)}
-                                        className="w-full py-3 bg-[springgreen] text-black font-bold rounded-lg hover:opacity-90 transition-colors flex items-center justify-center gap-2"
+                                        className="w-full py-3 bg-white text-black font-bold rounded-lg hover:opacity-90 transition-colors flex items-center justify-center gap-2"
                                       >
                                         Continuar a Demo <ArrowRight className="w-4 h-4" />
                                       </a>
@@ -2078,7 +2084,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                              href="https://bego.ai/es"
                              target="_blank"
                              rel="noopener noreferrer"
-                             className="flex-1 py-4 px-6 rounded-xl bg-[#FFEE00] hover:bg-[#e6d600] text-black transition-all duration-300 text-sm font-bold shadow-[0_0_20px_rgba(255,238,0,0.15)] hover:shadow-[0_0_30px_rgba(255,238,0,0.3)] flex items-center justify-center gap-2"
+                             className="flex-1 py-4 px-6 rounded-xl bg-white hover:bg-[#e6d600] text-black transition-all duration-300 text-sm font-bold shadow-[0_0_20px_rgba(255,238,0,0.15)] hover:shadow-[0_0_30px_rgba(255,238,0,0.3)] flex items-center justify-center gap-2"
                            >
                              Rediseño
                              <ArrowRight className="w-4 h-4" />
@@ -2102,7 +2108,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                                   setIsDevModalOpen(true);
                                 }
                               }}
-                             className="flex-1 py-4 px-6 rounded-xl bg-[#FFEE00] hover:bg-[#e6d600] text-black transition-all duration-300 text-sm font-bold shadow-[0_0_20px_rgba(255,238,0,0.15)] hover:shadow-[0_0_30px_rgba(255,238,0,0.3)] flex items-center justify-center gap-2 cursor-pointer"
+                             className="flex-1 py-4 px-6 rounded-xl bg-white hover:bg-[#e6d600] text-black transition-all duration-300 text-sm font-bold shadow-[0_0_20px_rgba(255,238,0,0.15)] hover:shadow-[0_0_30px_rgba(255,238,0,0.3)] flex items-center justify-center gap-2 cursor-pointer"
                            >
                              Re diseño
                              <ArrowRight className="w-4 h-4" />
@@ -2193,13 +2199,13 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                   className="bg-[#111] border border-white/10 p-8 rounded-2xl max-w-md w-full text-center relative overflow-hidden shadow-2xl"
                   onClick={(e) => e.stopPropagation()}
                 >
-                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#FFEE00] to-transparent opacity-50"></div>
+                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-white/60 to-transparent opacity-50"></div>
                     
-                    <div className="mx-auto w-16 h-16 bg-[#FFEE00]/10 rounded-full flex items-center justify-center mb-6 border border-[#FFEE00]/20">
-                        {isBegoWeb ? <Sparkles className="w-8 h-8 text-[#FFEE00]" /> : <GitBranch className="w-8 h-8 text-[#FFEE00]" />}
+                    <div className="mx-auto w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mb-6 border border-white/25/20">
+                        {isBegoWeb ? <Sparkles className="w-8 h-8 text-white/70" /> : <GitBranch className="w-8 h-8 text-white/70" />}
                     </div>
                     
-                    <h3 className="text-2xl font-bold text-white mb-2 text-[32px]">{isBegoWeb ? "Demo en Iteración" : "En Desarrollo"}</h3>
+                    <h3 className="text-[1.25rem] font-medium text-white mb-2 text-[32px]">{isBegoWeb ? "Demo en Iteración" : "En Desarrollo"}</h3>
                     <p className="text-white/60 mb-8 leading-relaxed">
                         {isBegoWeb 
                           ? "Esta demostración se encuentra en un proceso de iteración activo por parte del equipo de desarrollo. Podrías encontrar actualizaciones en tiempo real mientras navegas."
@@ -2212,7 +2218,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                                 href="https://feature-new-interface-home.d2d2tvhzw8et7y.amplifyapp.com/es"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="w-full py-3 bg-[#FFEE00] text-black font-bold rounded-xl hover:bg-[#e6d600] transition-colors flex items-center justify-center gap-2"
+                                className="w-full py-3 bg-white text-black font-bold rounded-xl hover:bg-[#e6d600] transition-colors flex items-center justify-center gap-2"
                                 onClick={() => setIsDevModalOpen(false)}
                             >
                                 Continuar a Demo <ArrowRight className="w-4 h-4" />
