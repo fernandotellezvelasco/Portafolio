@@ -29,7 +29,7 @@ const projects: Project[] = [
   {
     id: '7',
     title: 'CLARO',
-    category: 'UX Audit & Producto',
+    category: 'Productos',
     year: '2026',
     image: imgClaroCover,
     description: 'Auditoría UX del Portal de Pagos de Claro Colombia mediante Microsoft Clarity, identificando fricciones críticas de conversión, y propuesta de rediseño del widget "Resumen en Vivo" para la experiencia de gestión de dispositivos y planes.',
@@ -87,7 +87,7 @@ const projects: Project[] = [
   {
     id: '4',
     title: 'CANDADOS',
-    category: 'Web',
+    category: 'SaaS',
     year: '2025',
     image: imgCandados,
     description: 'Una aplicación web enfocada en seguridad que prioriza la privacidad del usuario y la protección de datos. Candados demuestra nuestro compromiso de construir confianza a través de diseño reflexivo y arquitectura robusta.',
