@@ -429,7 +429,11 @@ export function HeroParticles({
           onClick={handleStart}
           disabled={!interactive}
           tabIndex={interactive ? 0 : -1}
-          className={`bg-transparent border border-white text-white px-8 py-3 rounded-full text-base font-medium tracking-wide transition-all duration-300 hover:bg-white hover:text-black hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.2)] active:scale-95 delay-500 ${interactive ? 'pointer-events-auto' : 'pointer-events-none'} ${mounted ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}
+          /* Botón secundario de Porsche: píldora completa, contorno fino y
+             relleno al pasar el cursor. Sin el `scale` de antes — sus botones
+             no crecen, cambian de relleno; el crecimiento delataba que era
+             otro sistema. */
+          className={`rounded-full border border-white/60 bg-transparent px-7 py-2.5 text-base font-medium tracking-wide text-white transition-colors duration-200 hover:border-white hover:bg-white hover:text-black focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white delay-500 ${interactive ? 'pointer-events-auto' : 'pointer-events-none'} ${mounted ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}
         >
           Descubrir
         </button>
