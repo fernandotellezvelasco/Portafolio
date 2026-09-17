@@ -1,0 +1,373 @@
+/**
+ * CARDS APILADAS — estilos
+ *
+ * La ranura (`slot`) reserva el hueco en el flujo y no se transforma nunca.
+ * La tarjeta de adentro es la que se mueve. De ahí que la altura del bloque
+ * sea estable aunque las tarjetas estén clavadas.
+ *
+ * EL VIDRIO
+ *
+ * No es un relleno gris translúcido: es `backdrop-filter`, que desenfoca de
+ * verdad lo que queda detrás. Por eso, cuando una tarjeta se monta sobre otra,
+ * la de abajo se ve difuminada a través de ella en vez de simplemente taparse.
+ * Un relleno plano nunca da eso — se nota enseguida porque el borde de la
+ * tarjeta de atrás sigue perfectamente nítido.
+ */
+
+.scroll-stack {
+  /* Todas las tarjetas miden exactamente esto. Alto fijo, no mínimo: si cada
+     una creciera con su texto, el asomo del montón quedaría desigual.
+     El valor lo manda la más cargada —Mi rol, con chips y viñetas— medida en
+     los seis proyectos; las demás respiran de más y eso está bien.
+     Cambia por tramo porque al estrecharse la columna de texto las viñetas
+     pasan de tres líneas a cinco, y ahí es donde se desbordaba. */
+  --alto-card: 460px;
+  --radio-card: 28px;
+
+  /* Las dos caras del mismo vidrio: la traslúcida, que desenfoca lo de atrás,
+     y el color ya resuelto que queda al aplicar esa mezcla sobre el fondo del
+     modal. Se ven igual; sólo una cuesta. */
+  --card-vidrio: rgb(255 255 255 / 4%);
+  --card-solido: #151515;
+
+  position: relative;
+  margin-bottom: 4rem;
+}
+
+/* Tramo intermedio: la columna del icono se estrecha para dejarle sitio al
+   texto, que es lo que de verdad necesita el ancho. */
+@media (max-width: 1439px) {
+  .scroll-stack {
+    --alto-card: 520px;
+  }
+}
+
+/* Por debajo de 1024 el icono se va arriba: en dos columnas el texto quedaba
+   tan estrecho que las viñetas ocupaban el doble de líneas. */
+@media (max-width: 1023px) {
+  .scroll-stack {
+    --alto-card: 560px;
+  }
+}
+
+/* 600 px sale de medir los seis proyectos a 320 px de ancho, que es donde las
+   viñetas ocupan más líneas. Cabe en la pantalla más pequeña que probamos:
+   80 px de tope de apilado + 600 = 680, contra 700 de alto de ventana. */
+@media (max-width: 767px) {
+  .scroll-stack {
+    --alto-card: 600px;
+    --radio-card: 22px;
+  }
+}
+
+.scroll-stack-slot {
+  position: relative;
+  /* La separación entre ranuras ES el recorrido de scroll por tarjeta */
+  margin-bottom: 3.5rem;
+}
+
+.scroll-stack-slot:last-of-type {
+  margin-bottom: 0;
+}
+
+.scroll-stack-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  align-items: center;
+  gap: 1.5rem;
+  height: var(--alto-card);
+  padding: 2rem 3rem;
+  overflow: hidden;
+  border-radius: var(--radio-card);
+  border: 1px solid rgb(255 255 255 / 6%);
+
+  /* El vidrio va en todas, no sólo en la de arriba: así, cuando una tarjeta se
+     monta sobre otra, lo que asoma detrás también es traslúcido y el montón
+     tiene varias capas de profundidad en vez de una sola. */
+  background: var(--card-vidrio);
+  -webkit-backdrop-filter: blur(36px) saturate(120%);
+  backdrop-filter: blur(36px) saturate(120%);
+
+  transform-origin: top center;
+  /* Aviso al navegador de que esto se va a mover: se promueve a su propia capa
+     y el apilado deja de repintar el caso de estudio entero. */
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+/* Ya cubierta y desvanecida: el mismo color, sin el coste del desenfoque */
+.scroll-stack-card.esta-tapada {
+  background: var(--card-solido);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+@media (max-width: 1439px) {
+  .scroll-stack-card {
+    grid-template-columns: 0.6fr 1.4fr;
+    padding: 2rem 2.5rem;
+  }
+}
+
+@media (max-width: 1023px) {
+  .scroll-stack-card {
+    grid-template-columns: 1fr;
+    align-content: center;
+    gap: 1.5rem;
+    padding: 2rem 2.25rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .scroll-stack-card {
+    gap: 1.5rem;
+    padding: 1.75rem;
+    -webkit-backdrop-filter: blur(24px) saturate(120%);
+    backdrop-filter: blur(24px) saturate(120%);
+  }
+}
+
+/* Con "reducir movimiento" no hay apilado: tarjetas normales, una tras otra */
+.scroll-stack--quieto .scroll-stack-card {
+  will-change: auto;
+  transform: none !important;
+  opacity: 1 !important;
+}
+
+.scroll-stack--quieto .scroll-stack-slot {
+  margin-bottom: 1.25rem;
+}
+
+/* ---------- Foco detrás del icono ---------- */
+
+.scroll-stack-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    42% 52% at 34% 44%,
+    rgb(255 255 255 / 11%) 0%,
+    rgb(255 255 255 / 4%) 42%,
+    transparent 72%
+  );
+}
+
+@media (max-width: 767px) {
+  .scroll-stack-glow {
+    background: radial-gradient(
+      60% 34% at 50% 26%,
+      rgb(255 255 255 / 10%) 0%,
+      rgb(255 255 255 / 3%) 45%,
+      transparent 75%
+    );
+  }
+}
+
+/* ---------- Icono ---------- */
+
+.scroll-stack-figure {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scroll-stack-icon {
+  width: auto;
+  height: 104px;
+  /* Sombra suave para despegarlo del vidrio, como en la referencia */
+  filter: drop-shadow(0 12px 28px rgb(0 0 0 / 45%));
+}
+
+@media (max-width: 1439px) {
+  .scroll-stack-icon {
+    height: 88px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .scroll-stack-icon {
+    height: 76px;
+  }
+}
+
+@media (max-width: 767px) {
+  .scroll-stack-icon {
+    height: 64px;
+  }
+}
+
+/* ---------- Texto ---------- */
+
+.scroll-stack-text {
+  position: relative;
+  min-width: 0;
+}
+
+.scroll-stack-eyebrow {
+  margin: 0 0 0.85rem;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.3;
+  color: rgb(255 255 255 / 45%);
+}
+
+.scroll-stack-statement {
+  margin: 0;
+  font-size: 1.625rem;
+  font-weight: 400;
+  line-height: 1.28;
+  letter-spacing: -0.015em;
+  color: #fff;
+  text-wrap: pretty;
+}
+
+@media (max-width: 1439px) {
+  .scroll-stack-statement {
+    font-size: 1.375rem;
+  }
+}
+
+@media (max-width: 1023px) {
+  .scroll-stack-statement {
+    font-size: 1.3125rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .scroll-stack-eyebrow {
+    font-size: 0.8125rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .scroll-stack-statement {
+    font-size: 1.1875rem;
+    line-height: 1.32;
+  }
+}
+
+/* Fichas de rol */
+.scroll-stack-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.1rem;
+}
+
+.scroll-stack-chip {
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  border: 1px solid rgb(255 255 255 / 12%);
+  background: rgb(255 255 255 / 5%);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: rgb(255 255 255 / 85%);
+}
+
+/* Detalle en viñetas, sólo en la card de Mi rol */
+.scroll-stack-list {
+  display: grid;
+  gap: 0.55rem;
+  margin: 1.1rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  color: rgb(255 255 255 / 62%);
+}
+
+.scroll-stack-list li {
+  display: flex;
+  gap: 0.65rem;
+}
+
+.scroll-stack-list li::before {
+  content: '';
+  flex: none;
+  width: 4px;
+  height: 4px;
+  margin-top: 0.62em;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 38%);
+}
+
+@media (max-width: 767px) {
+  .scroll-stack-chips {
+    margin-top: 0.85rem;
+  }
+
+  .scroll-stack-list {
+    margin-top: 0.85rem;
+    gap: 0.45rem;
+    font-size: 0.8125rem;
+    line-height: 1.4;
+  }
+}
+
+.scroll-stack-meta {
+  margin: 1.25rem 0 0;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.4;
+  color: rgb(255 255 255 / 38%);
+}
+
+@media (max-width: 767px) {
+  .scroll-stack-meta {
+    margin-top: 0.9rem;
+    font-size: 0.8125rem;
+  }
+}
+
+/* ---------- Cierre del bloque ---------- */
+
+/* Marca dónde se despega el montón. Sin altura propia: sólo una referencia. */
+.scroll-stack-end {
+  height: 1px;
+}
+
+/* ---------- Capa Porsche ---------- */
+
+/* Sus tokens `frosted` son exactamente esto: un gris muy transparente que sólo
+   funciona porque debajo hay desenfoque. */
+.pds .scroll-stack {
+  --card-vidrio: var(--p-frosted-soft);
+  /* El mismo #41414627 ya mezclado sobre el fondo del modal */
+  --card-solido: #131314;
+}
+
+.pds .scroll-stack-card {
+  border-color: var(--p-frosted);
+  box-shadow: var(--p-shadow-md);
+}
+
+.pds .scroll-stack-eyebrow {
+  color: var(--p-contrast-medium);
+}
+
+.pds .scroll-stack-statement {
+  color: var(--p-primary);
+}
+
+.pds .scroll-stack-meta {
+  color: var(--p-contrast-low);
+}
+
+.pds .scroll-stack-list {
+  color: var(--p-contrast-medium);
+}
+
+.pds .scroll-stack-chip {
+  border-color: var(--p-frosted-strong);
+  background: var(--p-frosted-soft);
+  color: var(--p-contrast-higher);
+}
+
+/* Los iconos son de relleno sólido: la regla de trazo fino de la capa Porsche
+   no les aplica y, si la heredaran, les dibujaría un contorno. */
+.pds .scroll-stack-icon,
+.pds .scroll-stack-icon path {
+  stroke: none;
+  stroke-width: 0;
+}

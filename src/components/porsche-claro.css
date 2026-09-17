@@ -1,0 +1,155 @@
+/**
+ * PRUEBA DE ESTILO — Porsche Design System v4, sólo en el proyecto CLARO.
+ *
+ * Todo cuelga de `.pds`, la clase que el modal pone únicamente cuando el
+ * proyecto es CLARO. Así la prueba es reversible: se quita la clase y el caso
+ * de estudio vuelve al estilo del resto del portafolio, sin tocar nada más.
+ *
+ * Los valores son los tokens reales de designsystem.porsche.com/v4 en su modo
+ * oscuro, leídos del propio sitio. La única licencia que nos tomamos es la
+ * tipografía: se queda en Montserrat, como pidió Fernando.
+ *
+ * Qué define el look de Porsche, en orden de importancia visual:
+ *   1. Botones en píldora completa (sus botones son radio total, 36 px de alto)
+ *   2. Tarjetas casi cuadradas — 8 a 16 px, contra los 20-32 del portafolio
+ *   3. Iconos de trazo fino y geométrico
+ *   4. Superficies "frosted" con desenfoque de fondo en vez de rellenos planos
+ *   5. Una escala de contraste de cinco pasos para el texto, no opacidades sueltas
+ */
+
+.pds {
+  /* Tokens tomados del modo oscuro de Porsche v4 */
+  --p-canvas: #010205;
+  --p-surface: #19191a;
+  --p-frosted: #6b6b703a;
+  --p-frosted-soft: #41414627;
+  --p-frosted-strong: #9c9c9f4d;
+
+  --p-primary: #fafbff;
+  --p-contrast-higher: #f6f6f8c7;
+  --p-contrast-high: #f6f6f8ab;
+  --p-contrast-medium: #f6f6f88f;
+  --p-contrast-low: #f6f6f873;
+  --p-contrast-lower: #9c9c9f4d;
+
+  --p-radius-sm: 4px;
+  --p-radius-lg: 8px;
+  --p-radius-xl: 12px;
+  --p-radius-2xl: 16px;
+
+  --p-shadow-sm: 0 3px 8px #00000029;
+  --p-shadow-md: 0 4px 16px #00000029;
+}
+
+/* ---------- Superficies ---------- */
+
+.pds .bg-white\/\[0\.03\],
+.pds .bg-white\/\[0\.02\],
+.pds .bg-white\/\[0\.035\],
+.pds .bg-white\/5,
+.pds .bg-\[\#0A0A0A\],
+.pds .bg-\[\#060606\],
+.pds .bg-\[\#1A1A1A\] {
+  background-color: var(--p-surface);
+}
+
+/* El "glass" de Porsche no es un relleno translúcido: es desenfoque de fondo.
+   Por eso se ve como vidrio de verdad y no como un velo gris. */
+.pds .backdrop-blur-md,
+.pds .backdrop-blur-lg,
+.pds .backdrop-blur-sm,
+.pds .backdrop-blur-xl {
+  background-color: var(--p-frosted);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  backdrop-filter: blur(24px) saturate(140%);
+  border-color: var(--p-frosted-strong);
+}
+
+/* ---------- Radios: lo que más cambia la personalidad ---------- */
+
+.pds .rounded-\[26px\],
+.pds .rounded-\[22px\],
+.pds .rounded-\[20px\],
+.pds .rounded-3xl,
+.pds .rounded-2xl {
+  border-radius: var(--p-radius-2xl);
+}
+
+.pds .rounded-xl,
+.pds .rounded-lg {
+  border-radius: var(--p-radius-lg);
+}
+
+/* Las miniaturas y sellos pequeños bajan un escalón más */
+.pds .rounded-md,
+.pds .rounded {
+  border-radius: var(--p-radius-sm);
+}
+
+/* ---------- Bordes ---------- */
+
+.pds .border-white\/\[0\.08\],
+.pds .border-white\/10,
+.pds .border-white\/5,
+.pds .border-white\/\[0\.07\] {
+  border-color: var(--p-contrast-lower);
+}
+
+.pds .border-white\/20,
+.pds .border-white\/25 {
+  border-color: var(--p-frosted-strong);
+}
+
+/* ---------- Botones: píldora completa, como los suyos ---------- */
+
+.pds button:not([aria-label^="Ver proyecto"]):not(.scroll-stack-card button),
+.pds a[class*="px-"][class*="py-"] {
+  border-radius: 9999px;
+}
+
+/* Su botón estándar mide 36 px de alto y respira a los lados */
+.pds button[class*="px-6"],
+.pds button[class*="px-8"],
+.pds a[class*="px-5"] {
+  padding-top: 0.45rem;
+  padding-bottom: 0.45rem;
+}
+
+/* ---------- Iconos: trazo fino y geométrico ---------- */
+
+/* Porsche usa iconos de relleno sólido sobre una retícula de 24. Lucide es de
+   trazo, así que la aproximación honesta es adelgazarlo y cuadrar los remates:
+   se lee igual de técnico sin fingir que son sus iconos. */
+.pds svg:not(.edge-light svg) {
+  stroke-width: 1.5;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+}
+
+.pds .text-white\/70 svg,
+.pds svg.text-white\/70 {
+  color: var(--p-contrast-high);
+}
+
+/* ---------- Texto: su escala de contraste ---------- */
+
+.pds .text-white\/80 { color: var(--p-contrast-higher); }
+.pds .text-white\/70 { color: var(--p-contrast-high); }
+.pds .text-white\/60 { color: var(--p-contrast-medium); }
+.pds .text-white\/50,
+.pds .text-white\/45 { color: var(--p-contrast-low); }
+.pds .text-white\/40,
+.pds .text-white\/35 { color: var(--p-contrast-lower); }
+
+/* ---------- Sombras ---------- */
+
+.pds [class*="shadow-2xl"],
+.pds [class*="shadow-xl"] {
+  box-shadow: var(--p-shadow-md);
+}
+
+.pds [class*="shadow-lg"],
+.pds [class*="shadow-md"],
+.pds [class*="shadow-sm"] {
+  box-shadow: var(--p-shadow-sm);
+}

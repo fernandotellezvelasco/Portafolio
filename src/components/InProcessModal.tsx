@@ -1,5 +1,17 @@
 import { motion, AnimatePresence } from 'motion/react';
-import { Construction, ArrowRight, X } from 'lucide-react';
+import { ArrowRight, X } from 'lucide-react';
+import BorderGlow from './BorderGlow';
+import { IconoObra } from './iconos/porsche';
+import './porsche-claro.css';
+
+/**
+ * AVISO DE PROYECTO EN OBRA
+ *
+ * Monocromática, con el icono de relleno a dos tonos de las cards y el
+ * resplandor de contorno de las tarjetas de Gobierno. Antes cada variante traía
+ * su propio color de marca —rojo para CLARO, amarillo para el resto— y eso
+ * hacía que el mismo aviso se viera como dos componentes distintos.
+ */
 
 interface InProcessModalProps {
   isOpen: boolean;
@@ -16,13 +28,11 @@ export function InProcessModal({
   onConfirm,
   title = '¡Estamos remodelando!',
   message = 'Este proyecto está en proceso de adaptación al nuevo estilo visual del portafolio. Ya integré la nueva identidad y parte del proceso de diseño, pero algunas secciones siguen en el "taller".\n\n¿Te gustaría ver el avance actual?',
-  variant = 'default'
 }: InProcessModalProps) {
-  const isClaro = variant === 'claro';
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
+        <div className="pds fixed inset-0 z-[60] flex items-center justify-center p-4">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -30,52 +40,70 @@ export function InProcessModal({
             onClick={onClose}
             className="absolute inset-0 bg-black/80 backdrop-blur-sm"
           />
-          
+
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="relative w-full max-w-md bg-[#111] border border-white/10 rounded-2xl p-6 shadow-2xl overflow-hidden"
+            className="relative w-full max-w-md"
+            role="dialog"
+            aria-modal="true"
+            aria-label={title}
           >
-            {/* Background Gradient */}
-            <div className={`absolute top-0 right-0 w-64 h-64 ${isClaro ? 'bg-[#E30613]/5' : 'bg-[#FFEE00]/5'} blur-3xl rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none`} />
-            
-            <button 
-                onClick={onClose}
-                className="absolute top-4 right-4 p-2 text-white/40 hover:text-white transition-colors z-10"
+            {/* `animated`: el resplandor recorre el contorno al abrir, que es lo
+                que hace que el aviso se note sin necesidad de un color de alerta */}
+            <BorderGlow
+              edgeSensitivity={28}
+              glowColor="0 0 100"
+              backgroundColor="#0D0D0D"
+              borderRadius={20}
+              glowRadius={36}
+              glowIntensity={0.85}
+              coneSpread={25}
+              colors={['#ffffff', '#d4d4d8', '#a1a1aa']}
+              fillOpacity={0.3}
+              animated
             >
-                <X className="w-5 h-5" />
-            </button>
+              <div className="relative p-7">
+                <button
+                  onClick={onClose}
+                  className="absolute top-4 right-4 p-2 text-white/40 transition-colors hover:text-white"
+                  aria-label="Cerrar"
+                >
+                  <X className="w-5 h-5" />
+                </button>
 
-            <div className="relative z-10 flex flex-col items-center text-center">
-                <div className={`w-16 h-16 rounded-full flex items-center justify-center mb-6 border ${isClaro ? 'bg-[#E30613]/10 border-[#E30613]/20' : 'bg-[#FFEE00]/10 border-[#FFEE00]/20'}`}>
-                    <Construction className={`w-8 h-8 ${isClaro ? 'text-[#E30613]' : 'text-[#FFEE00]'}`} />
-                </div>
-                
-                <h3 className="text-2xl font-bold text-white mb-3 text-[36px]">
+                <div className="flex flex-col items-center text-center">
+                  <IconoObra className="mb-6 h-[72px] w-auto" />
+
+                  <h3 className="mb-3 text-[1.75rem] font-medium leading-tight text-white">
                     {title}
-                </h3>
+                  </h3>
 
-                <p className="text-white/70 mb-8 leading-relaxed whitespace-pre-line">
+                  <p className="mb-8 whitespace-pre-line leading-relaxed text-white/65">
                     {message}
-                </p>
-                
-                <div className="flex gap-3 w-full">
+                  </p>
+
+                  <div className="flex w-full gap-3">
                     <button
-                        onClick={onClose}
-                        className="flex-1 py-3 px-4 rounded-xl border border-white/10 text-white/60 hover:text-white hover:bg-white/5 transition-all font-medium text-sm"
+                      onClick={onClose}
+                      className="flex-1 rounded-full border border-white/15 px-4 py-2.5 text-sm font-medium
+                                 text-white/60 transition-all hover:bg-white/5 hover:text-white"
                     >
-                        Mejor luego
+                      Mejor luego
                     </button>
                     <button
-                        onClick={onConfirm}
-                        className={`flex-1 py-3 px-4 rounded-xl font-bold transition-all flex items-center justify-center gap-2 text-sm shadow-lg ${isClaro ? 'bg-[#E30613] text-white hover:bg-[#E30613]/90 shadow-[#E30613]/20' : 'bg-[#FFEE00] text-black hover:bg-[#FFEE00]/90 shadow-[#FFEE00]/10'}`}
+                      onClick={onConfirm}
+                      className="flex flex-1 items-center justify-center gap-2 rounded-full bg-white px-4 py-2.5
+                                 text-sm font-medium text-[#0B0B0B] transition-all hover:bg-white/90"
                     >
-                        Ver adelanto
-                        <ArrowRight className="w-4 h-4" />
+                      Ver adelanto
+                      <ArrowRight className="w-4 h-4" />
                     </button>
+                  </div>
                 </div>
-            </div>
+              </div>
+            </BorderGlow>
           </motion.div>
         </div>
       )}

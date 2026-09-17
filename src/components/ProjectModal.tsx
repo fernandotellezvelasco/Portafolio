@@ -1,6 +1,10 @@
 import { motion, AnimatePresence } from 'motion/react';
 import BorderGlow from './BorderGlow';
-import { X, Play, Search, Layout, Palette, CheckCircle, GitBranch, BarChart3, Layers, Smartphone, Users, Sparkles, ArrowRight, BookOpen, Target, Lightbulb, Link as LinkIcon, Moon, Sun, ChevronLeft, ChevronRight, Lock, Beaker, Zap, Eye, MousePointerClick, Shield, Wifi } from 'lucide-react';
+import './porsche-claro.css';
+import { X, Play, Search, Layout, Palette, CheckCircle, GitBranch, BarChart3, Layers, Smartphone, Users, Sparkles, ArrowRight, BookOpen, Target, Lightbulb, Link as LinkIcon, Moon, Sun, ChevronLeft, ChevronRight, Beaker, Zap, Eye, MousePointerClick, Shield, Wifi } from 'lucide-react';
+import { ScrollStack } from './ScrollStack';
+import { resumenDe, type ClaveProyecto } from './resumenProyectos';
+import { IconoInterfaz, IconoCandado } from './iconos/porsche';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import type { Project } from './ProjectCard';
 import imgPortada1 from "figma:asset/1fe2690b9ec451502e9ec00eab0096f3097a5f8d.png";
@@ -112,7 +116,8 @@ interface ProjectModalProps {
 export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
   const [gobiernoStep, setGobiernoStep] = useState<'interfaces' | 'candados' | null>(null);
-  const [activeSection, setActiveSection] = useState<string>('duration');
+  /* La primera sección del cuerpo desde que Rol y Objetivo se fueron a las cards */
+  const [activeSection, setActiveSection] = useState<string>('research');
   
   useEffect(() => {
     if (isOpen) {
@@ -170,11 +175,9 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
   const isCandadosFlow = isCandados && gobiernoStep === 'candados';
   const isInterfacesFlow = isCandados && gobiernoStep === 'interfaces';
 
-  // Navigation Items
+  /* Rol y Objetivo salieron de la navegación: ahora viven en las cards
+     apiladas del principio, y repetirlos abajo era decir dos veces lo mismo. */
   const navItems = [
-    { id: 'duration', label: 'Duración' },
-    { id: 'role', label: 'Rol' },
-    { id: 'objective', label: 'Objetivo' },
     { id: 'research', label: 'Investigación' },
     { id: 'process', label: 'Proceso' },
     ...(isSprintia || isBegoApp || isCandados || isClaro ? [{ id: 'testing', label: 'Testeo' }] : []),
@@ -183,6 +186,25 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
     // Conditionally add links
     { id: 'links', label: 'Enlaces' }
   ];
+
+  /* Qué juego de cards le toca a este proyecto. Los dos módulos de Gobierno
+     comparten modal pero son casos distintos, así que se distinguen por el
+     paso elegido. */
+  const claveResumen: ClaveProyecto | null = isClaro
+    ? 'claro'
+    : isBegoApp
+    ? 'begoApp'
+    : isBegoWeb
+    ? 'begoWeb'
+    : isSprintia
+    ? 'sprintia'
+    : isCandadosFlow
+    ? 'candados'
+    : isCandados
+    ? 'gobierno'
+    : null;
+
+  const resumen = resumenDe(claveResumen);
 
   // Helper component for sections
   const Section = ({ id, title, icon: Icon, children, className = "" }: { id: string, title: string, icon?: any, children: React.ReactNode, className?: string }) => {
@@ -202,7 +224,10 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
     );
   };
 
-  // Timeline Component (Reused for Bego App & Web)
+  /* Sin uso desde que se quitó la sección de Duración. Se conserva porque el
+     cronograma de actividades UX es contenido reutilizable si algún día quiere
+     volver, por ejemplo dentro de Proceso. */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const TimelineGrid = () => (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
       {[
@@ -678,7 +703,10 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 50 }}
             transition={{ duration: 0.4, ease: 'easeOut' }}
-            className="fixed inset-0 z-[101] overflow-y-auto bg-[#0B0B0B] hide-scrollbar"
+            /* La capa Porsche dejó de ser una prueba: va en los seis casos de
+               estudio. Sobre mí y Contacto se quedan fuera a propósito — ahí
+               manda la identidad del portafolio, no la del sistema prestado. */
+            className="pds fixed inset-0 z-[101] overflow-y-auto bg-[#0B0B0B] hide-scrollbar"
           >
             {/* Close button */}
             <motion.button
@@ -711,7 +739,10 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                             >
                               <BorderGlow edgeSensitivity={28} glowColor="0 0 100" backgroundColor="#0D0D0D" borderRadius={20} glowRadius={36} glowIntensity={0.8} coneSpread={25} colors={['#ffffff', '#d4d4d8', '#a1a1aa']} fillOpacity={0.3} className="h-full">
                               <div className="flex flex-col h-full p-6 md:p-8">
-                                <Layout className="w-10 h-10 md:w-12 md:h-12 text-white/70 mb-4 md:mb-6" />
+                                {/* Icono de relleno a dos tonos, el mismo sistema que las cards.
+                                    Más grande que el de trazo que había antes: el tono
+                                    oscuro necesita superficie para leerse sobre el negro. */}
+                                <IconoInterfaz className="h-14 md:h-16 w-auto mb-4 md:mb-6" />
                                 <h3 className="text-[1.5rem] md:text-[2rem] leading-tight font-medium text-white mb-2 md:mb-4">Interfaces Gobierno</h3>
                                 <p className="text-sm md:text-base text-white/60 leading-relaxed">Adaptación integral de la arquitectura Bego para el sector público, optimizando procesos gubernamentales mediante una experiencia digital escalable.</p>
                                 <div className="mt-auto pt-6 md:pt-8 flex items-center text-white/70 font-medium opacity-100 md:opacity-0 group-hover:opacity-100 transition-all transform md:translate-y-2 group-hover:translate-y-0 text-sm md:text-base">
@@ -727,7 +758,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                             >
                               <BorderGlow edgeSensitivity={28} glowColor="0 0 100" backgroundColor="#0D0D0D" borderRadius={20} glowRadius={36} glowIntensity={0.8} coneSpread={25} colors={['#ffffff', '#d4d4d8', '#a1a1aa']} fillOpacity={0.3} className="h-full">
                               <div className="flex flex-col h-full p-6 md:p-8">
-                                <Lock className="w-10 h-10 md:w-12 md:h-12 text-white/70 mb-4 md:mb-6" />
+                                <IconoCandado className="h-14 md:h-16 w-auto mb-4 md:mb-6" />
                                 <h3 className="text-[1.5rem] md:text-[2rem] leading-tight font-medium text-white mb-2 md:mb-4">Candados</h3>
                                 <p className="text-sm md:text-base text-white/60 leading-relaxed">Plataforma de seguridad inteligente para el ecosistema gubernamental, especializada en la gestión crítica de permisos y control de accesos de alta confidencialidad.</p>
                                 <div className="mt-auto pt-6 md:pt-8 flex items-center text-white/70 font-medium opacity-100 md:opacity-0 group-hover:opacity-100 transition-all transform md:translate-y-2 group-hover:translate-y-0 text-sm md:text-base">
@@ -805,282 +836,54 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                   
                   {/* Sticky Sidebar Navigation (Desktop) */}
                   <aside className="hidden lg:block h-fit sticky top-8">
-                    <nav className="flex flex-col gap-1 relative border-l border-white/10 pl-6">
-                      {navItems.map((item) => (
-                         <button
-                           key={item.id}
-                           onClick={() => scrollToSection(item.id)}
-                           className={`text-left py-2 text-sm transition-all duration-300 hover:text-white ${activeSection === item.id ? (isSprintia ? 'text-white/70 font-medium translate-x-1' : isCandadosFlow ? 'text-white/70 font-medium translate-x-1' : isCandados ? 'text-white/70 font-medium translate-x-1' : isClaro ? 'text-white/70 font-medium translate-x-1' : 'text-white/70 font-medium translate-x-1') : 'text-white/40'}`}
-                         >
-                           {item.label}
-                         </button>
-                      ))}
+                    <nav className="flex flex-col gap-1 relative border-l border-white/10 pl-3">
+                      {navItems.map((item) => {
+                        const activo = activeSection === item.id;
+                        return (
+                          <button
+                            key={item.id}
+                            onClick={() => scrollToSection(item.id)}
+                            aria-current={activo ? 'true' : undefined}
+                            /* El hover tiene su propia superficie, no sólo un
+                               cambio de color: sobre fondo casi negro un gris
+                               que aclara se nota poco, y en una lista de siete
+                               entradas hace falta saber cuál se va a pulsar. */
+                            className={`group relative rounded-lg px-3 py-2 text-left text-sm transition-colors duration-200
+                                        hover:bg-white/[0.06] hover:text-white
+                                        focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/60
+                                        ${activo ? 'bg-white/[0.04] text-white font-medium' : 'text-white/45'}`}
+                          >
+                            {/* Marca de la sección activa, sobre la línea del borde */}
+                            <span
+                              aria-hidden="true"
+                              className={`absolute -left-3 top-1/2 h-4 w-px -translate-y-1/2 transition-colors
+                                          ${activo ? 'bg-white' : 'bg-transparent group-hover:bg-white/30'}`}
+                            />
+                            {item.label}
+                          </button>
+                        );
+                      })}
                     </nav>
                   </aside>
 
                   {/* Content Column */}
                   <div className="flex-1">
                     
-                    {isBegoApp && (
-                      <div className="mb-12">
-                        <h2 className="text-[1.5rem] md:text-[1.75rem] font-medium text-white mb-4">Descripción del Proyecto</h2>
-                        <p className="text-base md:text-lg opacity-80 leading-relaxed max-w-3xl">
-                          BeGo Driver es una app móvil para transportistas que permite encontrar y aceptar cargas, gestionar viajes y dar seguimiento a servicios de transporte de forma digital, ayudando a reducir tiempos muertos y optimizar la operación logística.
-                        </p>
+                    {/* Todo caso de estudio abre con las mismas cinco cards:
+                        de qué va, qué hice, para qué, con quién y con qué.
+                        Sustituyen al párrafo suelto de descripción y a las
+                        secciones de Rol y Objetivo que antes iban abajo. */}
+                    {resumen && (
+                      <div className="mb-16">
+                        <ScrollStack cards={resumen} />
                       </div>
                     )}
 
-                    {isSprintia && (
-                      <div className="mb-12">
-                        <h2 className="text-[1.5rem] md:text-[1.75rem] font-medium text-white mb-4">Descripción del Proyecto</h2>
-                        <p className="text-base md:text-lg opacity-80 leading-relaxed max-w-3xl">
-                          Sprintia es una plataforma digital enfocada en el fútbol amateur que conecta jugadores, equipos y ligas mediante matchmaking inteligente, reputación deportiva y filtros por nivel y disponibilidad, con el objetivo de reducir conflictos y mejorar la organización y experiencia de juego.
-                        </p>
-                      </div>
-                    )}
 
-                    {isClaro && (
-                      <div className="mb-12">
-                        <h2 className="text-[1.5rem] md:text-[1.75rem] font-medium text-white mb-4">Descripción del Proyecto</h2>
-                        <p className="text-base md:text-lg opacity-80 leading-relaxed max-w-3xl">
-                          Auditoría de experiencia digital del Portal de Pagos de Claro Colombia (claro.com.co) apoyada en Microsoft Clarity, seguida de una propuesta de rediseño del widget "Resumen en Vivo" para la gestión de dispositivos y planes, explorando variantes de tema claro, oscuro y de marca.
-                        </p>
-                      </div>
-                    )}
-
-                    {/* 1. Duración */}
-                    <Section id="duration" title="Duración del Proyecto" icon={CheckCircle}>
-                      {(isBegoApp || isBegoWeb || isHeyMovil) ? (
-                        <>
-                           <p className="opacity-70 mb-4 max-w-2xl">
-                             Una visión general del cronograma de actividades UX ejecutadas durante el desarrollo del proyecto.
-                           </p>
-                           <TimelineGrid />
-                        </>
-                      ) : (
-                        <div className="p-6 bg-white/5 border border-white/10 rounded-xl">
-                          <p className="opacity-80">
-                            {isCandados 
-                              ? (isCandadosFlow 
-                                  ? "El proyecto tuvo una duración de 6 meses, abarcando desde el descubrimiento y análisis de seguridad hasta la implementación de los dashboards de control." 
-                                  : "El proyecto se encuentra actualmente en proceso, enfocado en la traducción de la experiencia Bego hacia los lineamientos de identidad gubernamental para la presentación de la alianza.")
-                              : "El proyecto sigue en proceso de desarrollo, iterando constantemente en el diseño y la implementación de nuevas funcionalidades."
-                            }
-                          </p>
-                        </div>
-                      )}
-                    </Section>
-
-                    {/* 2. Tu Rol */}
-                    <Section id="role" title="Mi Rol" icon={Users}>
-                      <div className="prose prose-invert max-w-none mb-8">
-                         {isBegoApp ? (
-                           <div className="space-y-6 text-lg leading-relaxed text-white/80">
-                             <div className="flex flex-wrap gap-3">
-                                {['UX Design', 'UI Design', 'UX Writer'].map((role) => (
-                                  <div key={role} className="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm font-medium text-white/90 backdrop-blur-sm shadow-sm hover:bg-white/10 transition-colors cursor-default">
-                                    {role}
-                                  </div>
-                                ))}
-                              </div>
-                              <ul className="space-y-4">
-                                {[
-                                  "Colaboré en el rediseño UX/UI optimizando flujos clave mediante metodologías ágiles para una experiencia más intuitiva y centrada en el usuario.",
-                                  "Desarrollé prototipos de baja y alta fidelidad para validar iteraciones y asegurar una implementación técnica precisa y eficiente.",
-                                  "Co-creé el Design System desde cero utilizando Atomic Design, garantizando escalabilidad, consistencia visual y orden en la aplicación.",
-                                  "Implementé componentes booleanos avanzados para optimizar estados y estilos, agilizando el mantenimiento y la colaboración en el equipo de diseño."
-                                ].map((item, index) => (
-                                  <li key={index} className="flex items-start gap-3 group">
-                                    <CheckCircle className="w-5 h-5 text-white/70 shrink-0 mt-0.5 opacity-80 group-hover:opacity-100 transition-opacity" />
-                                    <span className="text-[17px] text-white/80 group-hover:text-white/95 transition-colors">{item}</span>
-                                  </li>
-                                ))}
-                              </ul>
-                           </div>
-                         ) : (
-                           isSprintia ? (
-                             <div className="space-y-6 text-lg leading-relaxed text-white/80">
-                               <div className="flex flex-wrap gap-3">
-                                 {[
-                                   { title: 'Product Vision Lead', desc: 'Definición de visión, estrategia y liderazgo de producto.' },
-                                   { title: 'Desarrollador IA', desc: 'Frontend con Make y Horizon impulsado por IA.' },
-                                   { title: 'Product Designer', desc: 'UX/UI, branding, Design System y arquitectura de info.' }
-                                 ].map((card, i) => (
-                                   <div key={i} className="flex-1 min-w-[200px] p-4 bg-white/5 border border-white/10 rounded-xl backdrop-blur-sm hover:bg-white/5 hover:border-white/25/20 transition-all group">
-                                     <h4 className="font-medium text-white mb-1 group-hover:text-white/70 transition-colors">{card.title}</h4>
-                                     <p className="text-xs text-white/60">{card.desc}</p>
-                                   </div>
-                                 ))}
-                               </div>
-                               <ul className="space-y-4 pt-2">
-                                 {[
-                                   "Dirigí la consultoría integral para Sprintia liderando un equipo multidisciplinario, definiendo la visión estratégica, la experiencia de usuario y la dirección del producto.",
-                                    "Estructuré un modelo de negocio híbrido Freemium/Premium impulsado por mecánicas de gamificación, maximizando la retención de usuarios y optimizando las estrategias de monetización.",
-                                   "Diseñé y optimicé flujos UX/UI con enfoque en usabilidad y escalabilidad, creando un Design System robusto y adaptable.",
-                                   "Desarrollé el frontend utilizando herramientas de IA para acelerar el proceso, implementando código limpio y componentes reutilizables.",
-                                   "Trabajé desde la creación de contenido multimedia hasta la construcción del branding e identidad visual, integrando diseño, negocio y tecnología."
-                                 ].map((item, index) => (
-                                   <li key={index} className="flex items-start gap-3 group">
-                                     <CheckCircle className="w-5 h-5 text-white/70 shrink-0 mt-0.5 opacity-80 group-hover:opacity-100 transition-opacity" />
-                                     <span className="text-[17px] text-white/80 group-hover:text-white/95 transition-colors">{item}</span>
-                                   </li>
-                                 ))}
-                               </ul>
-                             </div>
-                           ) : isClaro ? (
-                              <div className="space-y-6 text-lg leading-relaxed text-white/80">
-                                 <div className="flex flex-wrap gap-3">
-                                   {['UX Research', 'Análisis de Datos', 'UI Design'].map((role) => (
-                                     <div key={role} className="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm font-medium text-white/90 backdrop-blur-sm shadow-sm hover:bg-white/10 transition-colors cursor-default">
-                                       {role}
-                                     </div>
-                                   ))}
-                                 </div>
-                                 <ul className="space-y-4">
-                                    {[
-                                      "Ejecuté una auditoría de experiencia digital del Portal de Pagos usando Microsoft Clarity, analizando 40 sesiones de usuarios reales durante mayo de 2026.",
-                                      "Identifiqué la causa raíz de las fricciones críticas: un error JS activo desde el segundo 0:01 de carga que bloqueaba el CTA principal 'Pagar mi factura Claro'.",
-                                      "Cuantifiqué el impacto: 10.42% de sesiones con dead clicks y 29.66% de rage clicks concentrados en un solo elemento del Hero, priorizando recomendaciones por severidad.",
-                                      "Propuse un rediseño del widget 'Resumen en Vivo' de gestión de dispositivos y planes, explorando tres variantes de tema (claro, oscuro y de marca)."
-                                    ].map((item, index) => (
-                                      <li key={index} className="flex items-start gap-3 group">
-                                        <CheckCircle className="w-5 h-5 text-white/70 shrink-0 mt-0.5 opacity-80 group-hover:opacity-100 transition-opacity" />
-                                        <span className="text-[17px] text-white/80 group-hover:text-white/95 transition-colors">{item}</span>
-                                      </li>
-                                    ))}
-                                 </ul>
-                              </div>
-                           ) : isHeyMovil ? (
-                              <div className="space-y-6 text-lg leading-relaxed text-white/80">
-                                 <div className="flex flex-wrap gap-3">
-                                   {['UX Research', 'UI Design', 'Prototyping'].map((role) => (
-                                     <div key={role} className="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm font-medium text-white/90 backdrop-blur-sm shadow-sm hover:bg-white/10 transition-colors cursor-default">
-                                       {role}
-                                     </div>
-                                   ))}
-                                 </div>
-                                 <ul className="space-y-4">
-                                    {[
-                                      "Lideré el proceso de diseño end-to-end, desde la investigación de mercado hasta la entrega final de los mockups en alta fidelidad.",
-                                      "Estructuré la arquitectura de información para priorizar la propuesta de valor y los planes tarifarios, facilitando la comprensión del servicio.",
-                                      "Diseñé una interfaz limpia y moderna que transmite confianza institucional sin perder el dinamismo de una startup tecnológica."
-                                    ].map((item, index) => (
-                                      <li key={index} className="flex items-start gap-3 group">
-                                        <CheckCircle className="w-5 h-5 text-white/70 shrink-0 mt-0.5 opacity-80 group-hover:opacity-100 transition-opacity" />
-                                        <span className="text-[17px] text-white/80 group-hover:text-white/95 transition-colors">{item}</span>
-                                      </li>
-                                    ))}
-                                 </ul>
-                              </div>
-                           ) : isCandadosFlow ? (
-                              <div className="space-y-6">
-                                 <p className="opacity-80 text-[24px]">Colaboré en el diseño integral desde cero, iterando estratégicamente en UX y UI para garantizar una adaptación responsive óptima en móvil y escritorio.</p>
-                                 <div className="bg-[#003d44]/20 p-6 rounded-xl border border-[#003d44]/30">
-                                    <h4 className="text-white/70 font-semibold mb-2 flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-white"></div> CANDADOS</h4>
-                                    <p className="text-sm opacity-90">Plataforma inteligente para la gestión de seguridad, monitoreo de dispositivos y control de accesos críticos en tiempo real.</p>
-                                 </div>
-                                <div className="flex flex-wrap gap-3 pt-2">
-                                 {['UX design', 'UI design', 'Prototyping'].map((role) => (
-                                   <div key={role} className="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm font-medium text-white/90 backdrop-blur-sm shadow-sm hover:bg-white/10 transition-colors cursor-default">
-                                     {role}
-                                   </div>
-                                 ))}
-                               </div>
-                             </div>
-                           ) : isCandados ? (
-                              <div className="space-y-6">
-                                 <p className="opacity-80 text-[24px]">Colaboré en el Reskinning Sistemático de la suite de servicios Bego para su integración gubernamental.</p>
-                                 <div className="bg-[#751E25]/20 p-6 rounded-xl border border-[#751E25]/30">
-                                    <h4 className="text-white/70 font-semibold mb-2 flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-white"></div> INTERFACES GOBIERNO</h4>
-                                    <p className="text-sm opacity-90">Ante la directriz de 'no investigación' para esta fase de demo, mi rol se centró en la traducción fiel de los flujos operativos existentes hacia una nueva interfaz institucional.</p>
-                                 </div>
-                                <div className="flex flex-wrap gap-3 pt-2">
-                                 {['UI Adaptation', 'Visual Translation'].map((role) => (
-                                   <div key={role} className="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm font-medium text-white/90 backdrop-blur-sm shadow-sm hover:bg-white/10 transition-colors cursor-default">
-                                     {role}
-                                   </div>
-                                 ))}
-                               </div>
-                             </div>
-                           ) : (
-                             <p className="leading-relaxed text-white/80 text-[17px]">
-                               {isBegoWeb ? "Como Diseñador UX, Diseñador UI y UX Writer, mi trabajo se centró en transformar la operación logística en una experiencia digital clara, eficiente e intuitiva." :
-                                isCandados ? "Responsable del diseño integral de la experiencia de usuario y la interfaz visual para la plataforma gubernamental." :
-                                project.role}
-                             </p>
-                           )
-                         )}
-                      </div>
-
-                      {/* Bego Web Specific Cards */}
-                      {isBegoWeb && (
-                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {[
-                              { icon: GitBranch, title: "Simplificación", desc: "Optimicé el registro y seguimiento para reducir fricciones." },
-                              { icon: BarChart3, title: "Data Driven", desc: "Interfaces claras para visualizar métricas logísticas." },
-                              { icon: Smartphone, title: "Responsivo", desc: "Experiencias fluidas para operación en carretera." }
-                            ].map((card, i) => (
-                              <motion.div 
-                                key={i}
-                                whileHover={{ y: -5 }}
-                                className="p-6 rounded-xl bg-white/5 border border-white/10 relative overflow-hidden group"
-                              >
-                                <card.icon className="w-8 h-8 mb-4 text-white/70" />
-                                <h4 className="font-semibold mb-2 text-lg">{card.title}</h4>
-                                <p className="text-sm opacity-60 leading-relaxed">{card.desc}</p>
-                              </motion.div>
-                            ))}
-                         </div>
-                      )}
-                    </Section>
-
-                    {/* 3. Objetivo */}
-                    <Section id="objective" title="Objetivo" icon={Target}>
-                       <div className="relative pl-8 border-l-2 py-2 border-white">
-                          {isBegoWeb ? (
-                            <div className="space-y-6">
-                              <p className="italic opacity-80 text-[24px]">"Transformar la gestión logística mediante un ecosistema digital transparente que optimice el flujo de mercancías y centralice el control operativo." {/*��*/}</p>
-                              <p className="text-base opacity-80 leading-relaxed">El objetivo principal fue mejorar la experiencia de usuario y la claridad del producto, ya que la versión anterior presentaba problemas de usabilidad, navegación poco intuitiva y una propuesta de valor difícil de comprender para el usuario final.</p>
-                            </div>
-                          ) : isBegoApp ? (
-                            <div className="space-y-8">
-                              <p className="italic opacity-80 text-[24px]">"Conectar cargadores con transportistas usando inteligencia artificial para optimizar las operaciones logísticas en una plataforma nativa."</p>
-                              
-                              <div>
-                                <h4 className="text-white font-medium mb-3 text-lg">Definiendo el problema</h4>
-                                <p className="opacity-80 leading-relaxed text-[17px]">
-                                  La falta de visibilidad en seguridad y los retornos en vacío generaban ineficiencias críticas. Además, una interfaz poco intuitiva complicaba la operación para los transportistas, frenando la adopción y el flujo logístico.
-                                </p>
-                                <h4 className="text-white font-medium mb-3 text-lg mt-6">Posible solución</h4>
-                                <p className="opacity-80 leading-relaxed text-[17px]">
-                                  Rediseño UX/UI centrado en roles que optimiza la visibilidad operativa y toma de decisiones en tiempo real. Se reestructuró la arquitectura para facilitar el monitoreo de viajes y seguridad.
-                                </p>
-                              </div>
-                            </div>
-                          ) : isCandadosFlow ? (
-                             <div className="space-y-6">
-                                <p className="italic opacity-80 text-[24px]">"Garantizar la integridad de la cadena de custodia mediante una plataforma de monitoreo en tiempo real que permita la gestión eficiente de candados inteligentes y alertas de seguridad."</p>
-                                <p className="text-base opacity-80 leading-relaxed">
-                                  El objetivo central fue crear una interfaz que permitiera a los operadores visualizar el estado de miles de dispositivos simultáneamente, con un sistema de filtrado y alertas críticas que redujera el tiempo de respuesta ante incidentes de seguridad.
-                                </p>
-                            </div>
-                          ) : isCandados ? (
-                             <div className="space-y-6">
-                                <p className="italic opacity-80 text-[24px]">"Demostrar la viabilidad técnica y operativa de los servicios de Bego dentro del ecosistema gubernamental, adaptando una plataforma validada a una nueva identidad institucional."</p>
-                                <div className="bg-[#751E25]/20 p-6 rounded-xl border border-[#751E25]/30">
-                                   <h4 className="text-white/70 font-semibold mb-2 flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-white"></div> ALIANZA ESTRATÉGICA</h4>
-                                   <p className="text-sm opacity-90">El objetivo fue adaptar la plataforma existente para cumplir con la normativa visual federal, facilitando así la negociación de una alianza estratégica sin incurrir en costos de desarrollo de nuevas funcionalidades.</p>
-                                </div>
-                             </div>
-                           ) : isSprintia ? (
-                            <p className="italic opacity-80 text-[24px]">"Diseñar y desarrollar una plataforma digital que conecte jugadores, equipos y ligas de fútbol amateur mediante matchmaking inteligente con IA, enfocada en mejorar la transparencia, reducir conflictos dentro del deporte y fortalecer la reputación de los jugadores a través de un sistema de reseñas y perfiles digitales, optimizando la experiencia de búsqueda, conexión y participación deportiva."</p>
-                          ) : isClaro ? (
-                            <p className="italic opacity-80 text-[24px]">"Detectar, cuantificar y priorizar las fricciones que impiden a los usuarios completar el pago de su factura en el Portal Claro, y traducir esos hallazgos en una propuesta de rediseño accionable para el widget de gestión de dispositivos y planes."</p>
-                          ) : (
-                            <p className="italic opacity-80 text-[24px]">{project.description}</p>
-                          )}
-                       </div>
-                    </Section>
+                    {/* Mi Rol y Objetivo ya no van aquí: su contenido —chips,
+                        viñetas y la cita del objetivo— vive en las cards
+                        apiladas de arriba. Repetirlo era decir dos veces lo
+                        mismo con distinto formato. */}
 
                     {/* 4. Investigación */}
                     <Section id="research" title="Investigación" icon={Search}>
