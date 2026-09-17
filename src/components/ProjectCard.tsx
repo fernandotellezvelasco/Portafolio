@@ -117,7 +117,7 @@ export function ProjectCard({ project, index, onExplore, onVisible }: ProjectCar
 
             {/* Title */}
             <h2 className="mb-4 md:mb-6 tracking-tight">
-              {project.title === 'CANDADOS' ? 'GOBIERNO DE MEXICO' : project.title}
+              {project.title}
             </h2>
 
             {/* Meta information */}

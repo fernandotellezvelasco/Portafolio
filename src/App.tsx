@@ -18,7 +18,8 @@ import imgBegoApp from "figma:asset/d1374282898f5472e24c2dc24988e6dc9d913c65.png
 import imgMockupSprintia from "figma:asset/713d795dee7cfcab489ee588e192dd8cf5a6934a.png";
 import imgWireframes1 from "figma:asset/2cc6d581963c8b0c3108196450ca02982bd83eb7.png";
 import imgGrafico from "figma:asset/85630eaced7b58cdfc80052d4fa7810161e36ab1.png";
-import imgCandados from "figma:asset/c151b13501bf9a5361423e642e23bcf45375225c.png";
+import imgCandadosMapa from "figma:asset/22c796e56b223de63e257f73a86ca82630398030.png";
+import imgCandadosMovil from "figma:asset/08df9ea0e03726fa00e2cc0821813bb475d66cee.png";
 import imgClaroCover from "./assets/claro/cover.gif";
 import imgClaroCard from "./assets/claro/opt/cover_card.webp";
 import imgClaroBlanco from "./assets/claro/opt/resumen_blanco.webp";
@@ -86,15 +87,18 @@ const projects: Project[] = [
   },
   {
     id: '4',
-    title: 'CANDADOS',
+    title: 'CANDADOS INTELIGENTES',
     category: 'SaaS',
     year: '2025',
-    image: imgCandados,
-    description: 'Una aplicación web enfocada en seguridad que prioriza la privacidad del usuario y la protección de datos. Candados demuestra nuestro compromiso de construir confianza a través de diseño reflexivo y arquitectura robusta.',
+    // La portada es una interfaz del propio producto, no un mockup de escritorio
+    image: imgCandadosMapa,
+    cardImage: imgCandadosMovil,
+    description: 'Iniciativa independiente de Bego: una plataforma de seguridad para la gestión y el monitoreo de candados satelitales, con control de accesos críticos y alertas en tiempo real.',
     role: 'Diseñador',
     credits: 'Diseño y Desarrollo: Sprintia Studio / Consultoría de Seguridad: CyberSafe',
     galleryImages: [
-      imgCandados,
+      imgCandadosMapa,
+      imgCandadosMovil,
     ],
   },
   {

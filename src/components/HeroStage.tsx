@@ -7,6 +7,7 @@ import {
   useSpring,
   useMotionTemplate,
   useMotionValueEvent,
+  useReducedMotion,
   MotionValue,
 } from 'motion/react';
 import { HeroParticles } from './HeroParticles';
@@ -93,7 +94,10 @@ function useRingMetrics() {
          protagonice, dejando ver apenas el canto de las vecinas.
          El tope por altura evita que en pantallas bajas se salga de cuadro. */
       const porAncho = movil ? vw * 0.76 : vw < 1024 ? 320 : 410;
-      const porAlto = (vh * (movil ? 0.66 : 0.72)) / CARD_RATIO;
+      /* 0.66 en escritorio —antes 0.72— para dejar abajo el sitio del contador
+         y el indicador de scroll. Con 0.72 la card terminaba a 11 px del
+         contador en una ventana de 900 px, y a 2 px en una de 800. */
+      const porAlto = (vh * 0.66) / CARD_RATIO;
       const cardW = Math.round(Math.min(porAncho, porAlto));
       const cardH = cardW * CARD_RATIO;
 
@@ -658,6 +662,7 @@ function CarouselCounter({
   const pad = (n: number) => String(n).padStart(2, '0');
 
   return (
+    <>
     <motion.div
       style={{ opacity }}
       className="absolute inset-x-0 bottom-[7vh] z-20 flex flex-col items-center gap-2
@@ -687,6 +692,59 @@ function CarouselCounter({
         </span>
         <span className="text-[#0B0B0B]/30 ml-1.5">/ {pad(total)}</span>
       </span>
+    </motion.div>
+
+    {/* Va aparte, anclado al borde inferior, y no dentro del bloque del
+        contador: metido ahí lo hacía más alto y, como el bloque se ancla por
+        abajo, su parte de arriba subía hacia las cards. */}
+    <motion.div
+      style={{ opacity }}
+      className="absolute inset-x-0 bottom-[1.2vh] z-20 flex justify-center
+                 pointer-events-none select-none"
+      aria-hidden="true"
+    >
+      <IndicadorScroll progress={progress} />
+    </motion.div>
+    </>
+  );
+}
+
+/**
+ * INDICADOR DE DESPLAZAMIENTO
+ *
+ * El carrusel avanza con el scroll, no con flechas, y eso no se adivina: la
+ * página no se mueve como una página normal, así que hace falta decir que hay
+ * que seguir bajando.
+ *
+ * Es el mismo ratón de la pantalla de bienvenida, con los tonos invertidos
+ * porque aquí el fondo es claro. Repetir la forma que el usuario ya vio al
+ * entrar es más barato que enseñarle un símbolo nuevo a mitad de camino.
+ *
+ * Se apaga al llegar al último proyecto: seguir invitando a avanzar cuando ya
+ * no queda nada por delante es mentir.
+ *
+ * Con "reducir movimiento" el punto se queda quieto en su sitio. La WCAG
+ * (2.2.2) pide poder detener el movimiento que se repite solo, y una animación
+ * infinita en el pie de la pantalla es justo eso.
+ */
+function IndicadorScroll({ progress }: { progress: MotionValue<number> }) {
+  const reducido = useReducedMotion();
+  const [alFinal, setAlFinal] = useState(false);
+
+  useMotionValueEvent(progress, 'change', v => setAlFinal(v > 0.94));
+
+  return (
+    <motion.div
+      animate={{ opacity: alFinal ? 0 : 1 }}
+      transition={{ duration: 0.4 }}
+    >
+      <div className="flex h-[32px] w-[20px] justify-center rounded-full border border-[#0B0B0B]/20 p-1">
+        <motion.div
+          className="h-1 w-1 rounded-full bg-[#0B0B0B]/45"
+          animate={reducido ? undefined : { y: [0, 12, 0], opacity: [0, 1, 0] }}
+          transition={reducido ? undefined : { duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+        />
+      </div>
     </motion.div>
   );
 }
@@ -733,7 +791,7 @@ function CardFace({ project }: { project: Project }) {
           {project.category}
         </div>
         <div className="text-white text-lg font-bold leading-tight">
-          {project.title === 'CANDADOS' ? 'GOBIERNO DE MÉXICO' : project.title}
+          {project.title}
         </div>
       </div>
     </>

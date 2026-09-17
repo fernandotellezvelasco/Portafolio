@@ -18,7 +18,7 @@ import {
  * del rol, la cita del objetivo y los créditos ya estaban escritos más abajo.
  * Aquí se reordenan, no se inventan. Las únicas líneas deducidas son las de
  * Herramientas, y se apoyan en lo que cada caso muestra: Microsoft Clarity en
- * CLARO, Maze en BEGO APP y en los proyectos de Gobierno, Make y Horizon en
+ * CLARO, Maze en BEGO APP y en CANDADOS INTELIGENTES, Make y Horizon en
  * SPRINTIA.
  *
  * Vive fuera de ProjectModal porque ese archivo ya pasa de las dos mil líneas y
@@ -31,8 +31,7 @@ export type ClaveProyecto =
   | 'begoApp'
   | 'begoWeb'
   | 'sprintia'
-  | 'candados'
-  | 'gobierno';
+  | 'candados';
 
 const RESUMENES: Record<ClaveProyecto, ScrollStackCard[]> = {
   claro: [
@@ -213,8 +212,8 @@ const RESUMENES: Record<ClaveProyecto, ScrollStackCard[]> = {
       eyebrow: 'Descripción',
       icon: IconoLibro,
       statement:
-        'Plataforma de seguridad para la gestión y el monitoreo de candados satelitales, con control de accesos críticos en tiempo real.',
-      meta: 'SaaS / Seguridad · 2025',
+        'Iniciativa independiente de Bego: una plataforma de seguridad para la gestión y el monitoreo de candados satelitales, con control de accesos críticos en tiempo real.',
+      meta: 'Bego · SaaS / Seguridad · 2025',
     },
     {
       eyebrow: 'Mi rol',
@@ -251,48 +250,6 @@ const RESUMENES: Record<ClaveProyecto, ScrollStackCard[]> = {
     },
   ],
 
-  gobierno: [
-    {
-      eyebrow: 'Descripción',
-      icon: IconoLibro,
-      statement:
-        'Adaptación de la suite de servicios Bego a la identidad institucional del Gobierno Federal, como demostración para una alianza estratégica.',
-      meta: 'SaaS · 2025',
-    },
-    {
-      eyebrow: 'Mi rol',
-      icon: IconoPersona,
-      statement:
-        'Reskinning sistemático: traducir los flujos operativos existentes a una interfaz institucional.',
-      chips: ['UI Adaptation', 'Visual Translation'],
-      bullets: [
-        'Deconstrucción de los componentes de Bego para mapearlos uno a uno a la nueva identidad.',
-        'Aplicación de los lineamientos visuales federales sin alterar los flujos ya validados.',
-        'Por directriz del liderazgo, esta fase no contempló descubrimiento de usuarios.',
-      ],
-    },
-    {
-      eyebrow: 'Objetivo',
-      icon: IconoDiana,
-      statement:
-        'Demostrar la viabilidad de los servicios de Bego dentro del ecosistema gubernamental, sin incurrir en desarrollo de nuevas funcionalidades.',
-      meta: 'Normativa visual federal',
-    },
-    {
-      eyebrow: 'Equipo',
-      icon: IconoEquipo,
-      statement:
-        'Trabajé de la mano y de punta a punta con el equipo de desarrollo, Marketing y los stakeholders, con consultoría de seguridad de CyberSafe.',
-      meta: 'Desarrollo · Marketing · Stakeholders · CyberSafe',
-    },
-    {
-      eyebrow: 'Herramientas',
-      icon: IconoEngrane,
-      statement:
-        'Figma para la adaptación de componentes, sobre los lineamientos de identidad del Gobierno Federal.',
-      meta: 'Figma · Identidad federal',
-    },
-  ],
 };
 
 export function resumenDe(clave: ClaveProyecto | null): ScrollStackCard[] | null {

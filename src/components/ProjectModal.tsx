@@ -9,10 +9,8 @@ import { AsesorVelocidad } from './claro/AsesorVelocidad';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import type { Project } from './ProjectCard';
 import imgPortada1 from "figma:asset/1fe2690b9ec451502e9ec00eab0096f3097a5f8d.png";
-import imgBegoAppVideo from "figma:asset/913d51bf1b050eb32ba44ed9ef3eeb087afae04a.png";
 import imgWireframes1 from "figma:asset/2cc6d581963c8b0c3108196450ca02982bd83eb7.png";
 import imgWireframesNew from "figma:asset/9b2a9159d45cccd916d8be896f0a982b2f18ecbd.png";
-import imgBegoMockups from "figma:asset/b0a74d983f855f1ff22c27b5b6930bc537e64178.png";
 import imgBegoAppResult from "figma:asset/453ba25f6c0818bd2c1c52b6a008ca5712308c13.png";
 import imgBegoResultadosCollage from "../assets/opt/bego_resultados_collage_v4.webp";
 import imgClarity01 from "../assets/claro/opt/clarity_01_portada_kpis.webp";
@@ -26,7 +24,6 @@ import imgClaroWifiBefore01 from "../assets/claro/opt/wifi_before_01_seis_catego
 import imgClaroWifiAfter01 from "../assets/claro/opt/wifi_after_01_tu_hogar.webp";
 import imgClaroWifiAfter02 from "../assets/claro/opt/wifi_after_02_dispositivos_contador.webp";
 import imgSprintiaAI from "figma:asset/f650179d481a73cdf367a2cf4be4cc843b739da3.png";
-import imgSprintiaProfile from "figma:asset/3224556a98df4eae05ea136d1ce744ef9da725d1.png";
 import imgSprintiaMatches from "figma:asset/f0e38f1149c5dd91b64c4f426e8792522df8ff60.png";
 import imgSprintiaEmpatizar from "figma:asset/c16f4a099358b4f2cf1f2dfe67216b7276da8754.png";
 import imgWebsite from "figma:asset/fde052730caf12fcae0fa9113fed84a5b35b15a0.png";
@@ -61,46 +58,27 @@ import imgCandadosOrders from "figma:asset/304b5d32d002dcc8c45c27fb5bb4bdc7c36a3
 import imgCandadosFilter from "figma:asset/8ff595b32998f9d6a7c005501975a2eeda80bbb9.png";
 import imgCandadosMap from "figma:asset/22c796e56b223de63e257f73a86ca82630398030.png";
 import imgCandadosMobile from "figma:asset/08df9ea0e03726fa00e2cc0821813bb475d66cee.png";
-import imgGobPolygon from "figma:asset/90c9c403430b55927546bf4befba63042f9747f0.png";
-import imgGobFraude from "figma:asset/ac509da947da08975760264a2367beb5aaa243be.png";
-import imgGobDashboard from "figma:asset/9cb376f3af32213d9644ce7865d1f6b3b3d5e0cd.png";
-import imgGobDesignSystem from "figma:asset/0b470923ede7578b1353977f4ca2e1ef5c8621ea.png";
-import imgGobiernoMobile from "figma:asset/ff05b0ffe6ded0bccc6fe4b055201920c98b9edb.png";
-import imgGobiernoDesktop from "figma:asset/81c2f4066164f9f74358826d9c6e30097f486b72.png";
 import imgBegoWeb1 from "figma:asset/308418fb34b0d54b6459240f13a6c447f901b623.png";
 import imgBegoWeb2 from "figma:asset/8e64ee5463608062eb678199e4743e325bc70119.png";
 import imgBegoWeb3 from "figma:asset/1844fdcef4db2201e445d0da6478339d96a28cca.png";
 import imgBegoWeb4 from "figma:asset/90e068228818593975cb10afbc06b9fadf4324fb.png";
-import imgBegoWeb5 from "figma:asset/eca5108e495cc584cb5a0d284f02ee94650c934d.png";
 import imgBegoMobile1 from "figma:asset/83ae86c18c4cbc6f11c7dcbc64cab85feb93ce48.png";
 import imgBegoMobile2 from "figma:asset/0491915bd0bc4d775cd24db3ddb42e5be64fc7e8.png";
 import imgBegoMobile3 from "figma:asset/e409e5f2a7e2ee9c0efda663c70d8ebb706c2f25.png";
-import imgBegoMobile4 from "figma:asset/4e653ab56e1b66934bbd5efce265a1c0fd28570a.png";
 import imgBegoMobile5 from "figma:asset/92cd9dd317909d011bea421d0eb19a479c057c56.png";
 import imgBegoWeb6 from "figma:asset/409284335cb45c66ecb973578be4dc838dfc6c43.png";
 import imgBegoMobile6 from "figma:asset/c09df16b77586207c7ec5eaef69c78689f6e6362.png";
-import imgPrototipoFlow from "figma:asset/ac2751011fd4dcd3d1df10532591744684a17dd1.png";
 import imgBegoUserFlowNew from "figma:asset/17b85e598c37b3149d01375230f635e2cf05821a.png";
-import imgGobComponents from "figma:asset/624469a79c14f2d482c3d1789a1d1d93171aeae9.png";
-import imgGobIcons from "figma:asset/03ae919ef26bd0b87db4ef2011bea3c1b5a65d42.png";
 import imgLayoutGuide from "figma:asset/70e93de3ca4ec1f320bedc3f0ffc835733c43cc4.png";
 import imgTesting from "figma:asset/f21e5f1602700b7770deab10a8ebb1f41d888c5f.png";
 import imgMazeReport from "figma:asset/4f0ec3cd61c3ab0ee6db12cc9bd6c0d179d33d0c.png";
-import imgHeatmap1 from "figma:asset/540307d14690dff54fa8a133c1675201e2f25766.png";
 import imgHeatmapMobileNew from "figma:asset/cfd1db2c08a45478aa273a988564909c2cab0546.png";
-import imgHeatmap2 from "figma:asset/013a334491ac1639ae3401fd1585065d78d660ac.png";
 import imgSprintiaHeatmap from "figma:asset/b7a0bf1be350285cdb079627ed95e569c1a98fce.png";
 import imgSprintiaFocus from "figma:asset/f5876840ced0ab3b7186764056544b45b1f261e3.png";
 import imgSprintiaContrast from "figma:asset/2a5fa461ab81997d6e3529006508b728fe39da0f.png";
 import imgBegoHeatmap from "figma:asset/bc33124dec1a945ec3f27cf1e296101c0a47cc0c.png";
 import imgBegoHeatmapIterated from "figma:asset/ee99d47229f4c2be465a44afe74423bc37d874d1.png";
 import imgBegoUI from "figma:asset/9cd3a199c722a53744b258352d68148452011850.png";
-import imgBegoDashboardDark from "figma:asset/e2e2d58e8775febd2be6b557d10b0587b82c053f.png";
-import imgGobiernoDashboardLight from "figma:asset/03406aa138ae60af75f0ad4a04e5f741da32476d.png";
-import imgGobiernoTagsLight from "figma:asset/af8a21a0b2118e33e813e70daa65abe0741dc84b.png";
-import imgBegoTagsDark from "figma:asset/62b8b12ab027a60630165f10f6eca7651972b5aa.png";
-import imgGobiernoMapLight from "figma:asset/e710c7fd4e99880cdd28e241e9efecb7b74cc563.png";
-import imgBegoMapDark from "figma:asset/c5567f42a1197db6a066b557df71692f6f4fc630.png";
 import imgMazeHeatmap from "figma:asset/b257ecb63b21e7404eecf539c70ace364135bf42.png";
 import imgMazePaths from "figma:asset/25695d7fd03a9d2c2d94a8bfd2734d002591758c.png";
 import imgMazeStats from "figma:asset/b4390da853fdc670fca4d2962b58291e31152a9a.png";
@@ -116,16 +94,9 @@ interface ProjectModalProps {
 
 export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
-  const [gobiernoStep, setGobiernoStep] = useState<'interfaces' | 'candados' | null>(null);
   /* La primera sección del cuerpo desde que Rol y Objetivo se fueron a las cards */
   const [activeSection, setActiveSection] = useState<string>('research');
   
-  useEffect(() => {
-    if (isOpen) {
-        setGobiernoStep(null);
-    }
-  }, [isOpen]);
-
   const [showDemoAlert, setShowDemoAlert] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [isDarkModeMockup, setIsDarkModeMockup] = useState(true);
@@ -145,7 +116,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
 
   const isBegoApp = project.title === 'BEGO APP';
   const isBegoWeb = project.title === 'BEGO WEB';
-  const isCandados = project.title === 'CANDADOS';
+  const isCandados = project.title === 'CANDADOS INTELIGENTES';
   const isSprintia = project.title === 'SPRINTIA';
   const isHeyMovil = project.title === 'HEY MOVIL';
   const isClaro = project.title === 'CLARO';
@@ -173,8 +144,6 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
     { x: 50, y: 80, label: "Neomorfismo y Carga Visual", description: "La aplicación de neomorfismo introduce ruido visual que eleva la carga cognitiva, obstaculizando la identificación del CTA como elemento interactivo prioritario.", icon: MousePointerClick }
   ];
 
-  const isCandadosFlow = isCandados && gobiernoStep === 'candados';
-  const isInterfacesFlow = isCandados && gobiernoStep === 'interfaces';
 
   /* Enlaces sólo donde hay algo que enseñar: el portal auditado en CLARO, el
      prototipo de SPRINTIA y el rediseño de BEGO WEB. En los demás la sección
@@ -193,9 +162,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
     ...(tieneEnlaces ? [{ id: 'links', label: 'Enlaces' }] : []),
   ];
 
-  /* Qué juego de cards le toca a este proyecto. Los dos módulos de Gobierno
-     comparten modal pero son casos distintos, así que se distinguen por el
-     paso elegido. */
+  /* Qué juego de cards le toca a este proyecto */
   const claveResumen: ClaveProyecto | null = isClaro
     ? 'claro'
     : isBegoApp
@@ -204,10 +171,8 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
     ? 'begoWeb'
     : isSprintia
     ? 'sprintia'
-    : isCandadosFlow
-    ? 'candados'
     : isCandados
-    ? 'gobierno'
+    ? 'candados'
     : null;
 
   const resumen = resumenDe(claveResumen);
@@ -247,11 +212,11 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
           whileHover={{ y: -5 }}
           className="bg-white/5 rounded-xl p-6 border border-white/5 flex flex-col items-center text-center group hover:bg-white/10 transition-colors"
         >
-          <div className={`mb-4 p-3 bg-white/5 rounded-full transition-colors ${isSprintia ? 'group-hover:bg-white/20' : isCandadosFlow ? 'group-hover:bg-white/20' : isCandados ? 'group-hover:bg-white/20' : 'group-hover:bg-white/20'}`}>
-            <phase.icon className={`w-6 h-6 text-white transition-colors ${isSprintia ? 'group-hover:text-white/70' : isCandadosFlow ? 'group-hover:text-white/70' : isCandados ? 'group-hover:text-white/70' : 'group-hover:text-white/70'}`} />
+          <div className={`mb-4 p-3 bg-white/5 rounded-full transition-colors ${isSprintia ? 'group-hover:bg-white/20' : isCandados ? 'group-hover:bg-white/20' : isCandados ? 'group-hover:bg-white/20' : 'group-hover:bg-white/20'}`}>
+            <phase.icon className={`w-6 h-6 text-white transition-colors ${isSprintia ? 'group-hover:text-white/70' : isCandados ? 'group-hover:text-white/70' : isCandados ? 'group-hover:text-white/70' : 'group-hover:text-white/70'}`} />
           </div>
           <h3 className="mb-2 font-medium opacity-90">{phase.title}</h3>
-          <div className={`mb-4 text-sm font-bold ${isSprintia ? 'text-white/70' : isCandadosFlow ? 'text-white/70' : isCandados ? 'text-white/70' : 'text-white/70'}`}>{(isSprintia || isBegoWeb || isCandados) && phase.title === 'Pruebas' ? 'En proceso' : phase.time}</div>
+          <div className={`mb-4 text-sm font-bold ${isSprintia ? 'text-white/70' : isCandados ? 'text-white/70' : isCandados ? 'text-white/70' : 'text-white/70'}`}>{(isSprintia || isBegoWeb || isCandados) && phase.title === 'Pruebas' ? 'En proceso' : phase.time}</div>
           <div className="flex flex-wrap gap-2 justify-center">
             {phase.tags.filter(tag => !(isBegoWeb && (tag === 'Flujos de usuario' || tag === 'Wireframes'))).map(tag => (
               <span key={tag} className="px-2 py-0.5 rounded-full bg-white/5 text-[0.7rem] text-white/60 border border-white/10">
@@ -270,22 +235,22 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
       {/* Typography Section */}
       <div className="space-y-4">
         <div className="flex items-center gap-2">
-            <Palette className={`w-5 h-5 ${isSprintia ? 'text-white/70' : isCandadosFlow ? 'text-white/70' : isInterfacesFlow ? 'text-white/70' : isCandados ? 'text-white/70' : 'text-white/70'}`} />
+            <Palette className={`w-5 h-5 text-white/70`} />
             <div className="text-xs font-bold tracking-widest text-[rgb(255,255,249)] uppercase text-[24px]">Diseño</div>
         </div>
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 items-start">
           {/* Typography Display */}
           <div className="bg-white/[0.03] rounded-[20px] p-8 relative overflow-hidden border border-white/[0.08] group hover:border-white/20 transition-colors">
           <div className="relative">
-            <div className={`text-sm uppercase tracking-widest opacity-40 mb-4 ${isCandadosFlow ? 'font-[Poppins]' : 'font-[Gotham]'}`}>Tipografía</div>
+            <div className={`text-sm uppercase tracking-widest opacity-40 mb-4 ${isCandados ? 'font-[Poppins]' : 'font-[Gotham]'}`}>Tipografía</div>
             <div className="mb-6">
-              <div className={`text-[2rem] sm:text-[3.5rem] leading-none tracking-tight mb-2 font-bold text-white ${isSprintia ? 'font-[Montserrat]' : isCandadosFlow ? 'font-[Poppins]' : 'font-[Gotham]'} break-words`}>
-                {isSprintia ? 'MONTSERRAT' : isCandadosFlow ? 'POPPINS' : 'GOTHAM'}
+              <div className={`text-[2rem] sm:text-[3.5rem] leading-none tracking-tight mb-2 font-bold text-white ${isSprintia ? 'font-[Montserrat]' : isCandados ? 'font-[Poppins]' : 'font-[Gotham]'} break-words`}>
+                {isSprintia ? 'MONTSERRAT' : isCandados ? 'POPPINS' : 'GOTHAM'}
               </div>
               <div className="flex items-center gap-3 text-sm opacity-60 font-mono">
-                <span className={isSprintia ? 'font-[Montserrat]' : isCandadosFlow ? 'font-[Poppins]' : 'font-[Gotham]'}>Regular</span><span>•</span>
-                <span className={isSprintia ? 'font-[Montserrat]' : isCandadosFlow ? 'font-[Poppins]' : 'font-[Gotham]'}>Medium</span><span>•</span>
-                <span className={isSprintia ? 'font-[Montserrat]' : isCandadosFlow ? 'font-[Poppins]' : 'font-[Gotham]'}>Semibold</span><span>•</span><span className={isSprintia ? 'font-[Montserrat]' : isCandadosFlow ? 'font-[Poppins]' : 'font-[Gotham]'}>Light</span>
+                <span className={isSprintia ? 'font-[Montserrat]' : isCandados ? 'font-[Poppins]' : 'font-[Gotham]'}>Regular</span><span>•</span>
+                <span className={isSprintia ? 'font-[Montserrat]' : isCandados ? 'font-[Poppins]' : 'font-[Gotham]'}>Medium</span><span>•</span>
+                <span className={isSprintia ? 'font-[Montserrat]' : isCandados ? 'font-[Poppins]' : 'font-[Gotham]'}>Semibold</span><span>•</span><span className={isSprintia ? 'font-[Montserrat]' : isCandados ? 'font-[Poppins]' : 'font-[Gotham]'}>Light</span>
               </div>
             </div>
           </div>
@@ -315,16 +280,11 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                {c: '#00FF7F', l: 'Brand'}, // SpringGreen
                {c: '#F5F5F5', l: 'Light'}, 
                {c: '#A5A5A5', l: 'Grey'}
-             ] : isCandadosFlow ? [
+             ] : isCandados ? [
                {c: '#0B0B0B', l: 'Dark'}, 
                {c: '#006470', l: 'Brand'}, // Teal
                {c: '#F5F5F5', l: 'Light'}, 
                {c: '#A5A5A5', l: 'Grey'}
-             ] : isInterfacesFlow ? [
-               {c: '#611232', l: 'Principal'}, // Guinda Principal
-               {c: '#9F2141', l: 'Resaltado'}, // Guinda Resaltado
-               {c: '#C59349', l: 'Principal'}, // Dorado Principal
-               {c: '#FFDEAC', l: 'Resaltado'}  // Dorado Resaltado
              ] : isCandados ? [
                {c: '#0B0B0B', l: 'Dark'}, 
                {c: '#006470', l: 'Brand'}, // Green
@@ -351,7 +311,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
            <div className="text-sm uppercase tracking-widest opacity-40 mb-6">Glassmorphism</div>
            <div className="flex justify-center gap-4 relative z-10">
               <div className="w-20 h-24 rounded-lg bg-white/5 backdrop-blur-md border border-white/10 transform -rotate-6 translate-y-2"></div>
-              <div className={`w-20 h-24 rounded-lg backdrop-blur-md transform z-10 shadow-xl ${isSprintia ? 'bg-white/10 border-white/25/20' : isCandadosFlow ? 'bg-white/10 border-white/25/20' : isInterfacesFlow ? 'bg-white/10 border-white/25/20' : isCandados ? 'bg-white/10 border-white/25/20' : 'bg-white/10 border-white/25/20'}`}></div>
+              <div className={`w-20 h-24 rounded-lg backdrop-blur-md transform z-10 shadow-xl bg-white/10 border-white/25/20`}></div>
               <div className="w-20 h-24 rounded-lg backdrop-blur-md border border-white/10 transform rotate-6 translate-y-2" style={{ backgroundImage: "linear-gradient(237.924deg, rgba(237, 237, 237, 0.12) 10.815%, rgba(237, 237, 237, 0.1) 42.163%, rgba(237, 237, 237, 0.02) 89.185%)" }}></div>
            </div>
            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent pointer-events-none"></div>
@@ -419,28 +379,8 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                      </div>
                  </div>
             </div>
-        ) : isInterfacesFlow ? (
-            <div className="mt-12 space-y-8">
-                <div className="rounded-xl overflow-hidden border border-white/10 shadow-lg">
-                   <ImageWithFallback src={imgGobDesignSystem} alt="Gobierno Design System" className="w-full h-auto" />
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="rounded-xl overflow-hidden border border-white/10 shadow-lg bg-white/5">
-                        <div className="p-4 border-b border-white/5">
-                            <h5 className="text-white font-medium text-sm uppercase tracking-wider opacity-70">Componentes</h5>
-                        </div>
-                        <ImageWithFallback src={imgGobComponents} alt="Gobierno Components" className="w-full h-auto" />
-                    </div>
-                    <div className="rounded-xl overflow-hidden border border-white/10 shadow-lg bg-white/5">
-                        <div className="p-4 border-b border-white/5">
-                            <h5 className="text-white font-medium text-sm uppercase tracking-wider opacity-70">Iconografía</h5>
-                        </div>
-                        <ImageWithFallback src={imgGobIcons} alt="Gobierno Icons" className="w-full h-auto" />
-                    </div>
-                </div>
-            </div>
         ) : (
-            <AtomicDesignVisual accentColor={isSprintia ? '#00FF7F' : isInterfacesFlow ? '#FFFFFF' : isCandados ? '#FFFFFF' : '#FFFFFF'} />
+            <AtomicDesignVisual accentColor={isSprintia ? '#00FF7F' : '#FFFFFF'} />
         )}
       </div>
 
@@ -489,18 +429,6 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
 
                  {isCandados ? (
                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center py-8">
-                         {isInterfacesFlow ? (
-                            <>
-                               <div className="flex justify-center transform scale-90 md:scale-100 origin-center">
-                                   <MockupPhone image={imgGobiernoMobile} label="Mobile App" accentColor="#FFFFFF">
-                                       <Group162565 />
-                                   </MockupPhone>
-                               </div>
-                               <div className="w-full">
-                                   <MockupDesktop image={imgGobiernoDesktop} label="Desktop Platform" delay={0.2} accentColor="#FFFFFF" />
-                               </div>
-                            </>
-                         ) : (
                             <>
                                  <div className="flex justify-center transform scale-90 md:scale-100 origin-center">
                                      <MockupPhone image={imgCandadosMobile} label="Mobile App" accentColor="#FFFFFF" />
@@ -512,12 +440,11 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                                              <div className="w-2.5 h-2.5 rounded-full bg-[#FFBD2E]"></div>
                                              <div className="w-2.5 h-2.5 rounded-full bg-[#27C93F]"></div>
                                          </div>
-                                         <div className="mx-auto w-1/2 h-5 bg-white/5 rounded-md text-[10px] flex items-center justify-center text-white/20 font-mono">candados.gob.mx</div>
+                                         <div className="mx-auto w-1/2 h-5 bg-white/5 rounded-md text-[10px] flex items-center justify-center text-white/20 font-mono">candados.bego.ai</div>
                                      </div>
                                      <ImageWithFallback src={imgCandadosMap} alt="Desktop Platform" className="w-full h-auto" />
                                  </div>
                             </>
-                         )}
                      </div>
                  ) : (
                  <div className="relative w-full aspect-[16/10] rounded-[14px] overflow-hidden bg-[#080c0f] border border-white/5">
@@ -730,54 +657,6 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
 
             {/* Content Container */}
             <div className="min-h-screen">
-              {isCandados && !gobiernoStep ? (
-                <div className="min-h-screen flex flex-col items-center justify-center p-6 md:p-8 animate-in fade-in duration-500 py-20 md:py-8">
-                    <div className="max-w-4xl w-full">
-                        <h2 className="text-[1.75rem] md:text-[2.5rem] font-medium text-center mb-4 text-white">Gobierno de México</h2>
-                        <p className="text-white/60 text-center mb-8 md:mb-12 text-base md:text-lg max-w-3xl mx-auto">
-                          Como parte de una estrategia de alianza futura, colaboré en la adaptación de interfaces y el desarrollo de dos iniciativas clave. CANDADOS destaca como el proyecto más avanzado y robusto. Selecciona el módulo que deseas explorar.
-                        </p>
-                        
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                            <button 
-                                onClick={() => setGobiernoStep('interfaces')}
-                                className="group relative text-left h-full w-full"
-                            >
-                              <BorderGlow edgeSensitivity={28} glowColor="0 0 100" backgroundColor="#0D0D0D" borderRadius={20} glowRadius={36} glowIntensity={0.8} coneSpread={25} colors={['#ffffff', '#d4d4d8', '#a1a1aa']} fillOpacity={0.3} className="h-full">
-                              <div className="flex flex-col h-full p-6 md:p-8">
-                                {/* Icono de relleno a dos tonos, el mismo sistema que las cards.
-                                    Más grande que el de trazo que había antes: el tono
-                                    oscuro necesita superficie para leerse sobre el negro. */}
-                                <IconoInterfaz className="h-14 md:h-16 w-auto mb-4 md:mb-6" />
-                                <h3 className="text-[1.5rem] md:text-[2rem] leading-tight font-medium text-white mb-2 md:mb-4">Interfaces Gobierno</h3>
-                                <p className="text-sm md:text-base text-white/60 leading-relaxed">Adaptación integral de la arquitectura Bego para el sector público, optimizando procesos gubernamentales mediante una experiencia digital escalable.</p>
-                                <div className="mt-auto pt-6 md:pt-8 flex items-center text-white/70 font-medium opacity-100 md:opacity-0 group-hover:opacity-100 transition-all transform md:translate-y-2 group-hover:translate-y-0 text-sm md:text-base">
-                                    Explorar <ArrowRight className="w-4 h-4 ml-2" />
-                                </div>
-                              </div>
-                              </BorderGlow>
-                            </button>
-
-                            <button 
-                                onClick={() => setGobiernoStep('candados')}
-                                className="group relative text-left h-full w-full"
-                            >
-                              <BorderGlow edgeSensitivity={28} glowColor="0 0 100" backgroundColor="#0D0D0D" borderRadius={20} glowRadius={36} glowIntensity={0.8} coneSpread={25} colors={['#ffffff', '#d4d4d8', '#a1a1aa']} fillOpacity={0.3} className="h-full">
-                              <div className="flex flex-col h-full p-6 md:p-8">
-                                <IconoCandado className="h-14 md:h-16 w-auto mb-4 md:mb-6" />
-                                <h3 className="text-[1.5rem] md:text-[2rem] leading-tight font-medium text-white mb-2 md:mb-4">Candados</h3>
-                                <p className="text-sm md:text-base text-white/60 leading-relaxed">Plataforma de seguridad inteligente para el ecosistema gubernamental, especializada en la gestión crítica de permisos y control de accesos de alta confidencialidad.</p>
-                                <div className="mt-auto pt-6 md:pt-8 flex items-center text-white/70 font-medium opacity-100 md:opacity-0 group-hover:opacity-100 transition-all transform md:translate-y-2 group-hover:translate-y-0 text-sm md:text-base">
-                                    Explorar <ArrowRight className="w-4 h-4 ml-2" />
-                                </div>
-                              </div>
-                              </BorderGlow>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-              ) : (
-                <>
               {/* Hero Section */}
               <div className="relative w-full h-[50vh] md:h-[60vh] lg:h-[70vh]">
                  {isSprintia ? (
@@ -798,8 +677,8 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                         </motion.div>
                       </div>
                     </div>
-                  ) : isCandadosFlow ? (
-                    <ImageWithFallback src={imgCandadosMap} alt="Candados Map View" className="w-full h-full object-cover" />
+                  ) : isCandados ? (
+                    <ImageWithFallback src={imgCandadosMap} alt="Plataforma de monitoreo de Candados Inteligentes" className="w-full h-full object-cover" />
                   ) : (
                     <ImageWithFallback src={project.image} alt={project.title} className={`w-full h-full ${project.title === 'GRAFICO Y MULTIMEDIA' ? 'object-contain' : 'object-cover'}`} />
                   )}
@@ -814,7 +693,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                     animate={{ opacity: 1, y: 0 }}
                     className="text-[2rem] md:text-[3rem] font-medium mb-8 tracking-tight"
                   >
-                    {isCandadosFlow ? 'CANDADOS' : isCandados ? 'INTERFACES GOBIERNO' : project.title}
+                    {project.title}
                   </motion.h1>
 
                   {/* Meta Stats */}
@@ -825,7 +704,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                      {[
                        { label: 'Rol', val: (isBegoApp || isBegoWeb || isCandados) ? 'Diseñador UX/UI' : project.role },
                        { label: 'Año', val: project.year },
-                       { label: 'Categoría', val: isCandadosFlow ? 'SAAS / SEGURIDAD' : isBegoWeb ? 'WEB RESPONSIVO' : project.category }
+                       { label: 'Categoría', val: isCandados ? 'SAAS / SEGURIDAD' : isBegoWeb ? 'WEB RESPONSIVO' : project.category }
                      ].map((stat, i) => (
                        <div key={i}>
                          <div className="text-xs uppercase tracking-widest opacity-50 mb-1">{stat.label}</div>
@@ -966,7 +845,6 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                             )}
                           </div>
                        ) : isCandados ? (
-                          isCandadosFlow ? (
                              <div className="space-y-8">
                                <p className="opacity-80 leading-relaxed text-[17px]">
                                  Para abordar la inseguridad crítica en el transporte de carga, lideré una investigación profunda sobre los vectores de ataque en la logística aduanera. El análisis reveló que la vulnerabilidad principal residía en la desconexión operativa entre los dispositivos de seguridad física y los sistemas de monitoreo digital, generando puntos ciegos aprovechados por la delincuencia.
@@ -992,13 +870,6 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                                  </div>
                                </div>
                              </div>
-                           ) : (
-                             <div className="bg-white/5 p-8 rounded-xl border border-white/10">
-                                <p className="opacity-80 leading-relaxed">
-                                   Por definición estratégica del liderazgo, este proyecto no contempló una fase de descubrimiento de usuarios. La 'investigación' se reorientó hacia el análisis de los lineamientos de identidad del Gobierno Federal y la deconstrucción de los componentes de Bego para su mapeo directo.
-                                </p>
-                             </div>
-                           )
                        ) : isClaro ? (
                           <div className="space-y-6">
                             <p className="opacity-80 leading-relaxed text-[17px]">
@@ -1038,8 +909,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                            {isHeyMovil ? "Seguí un proceso iterativo ágil, comenzando con wireframes de baja fidelidad para validar la estructura de la información, evolucionando hacia un diseño de alta fidelidad que integra la identidad visual de la marca." :
                             isBegoApp ? "Rediseñé la experiencia visual priorizando la accesibilidad y la consistencia sistémica, garantizando una interacción fluida y escalable para el usuario final." :
                             isBegoWeb ? "Estructuré un lenguaje visual que fusiona confianza corporativa con innovación tecnológica, optimizando la carga cognitiva y la usabilidad en cada flujo." :
-                            isCandadosFlow ? "Diseñé un sistema de monitoreo de alta densidad de información, priorizando la legibilidad de estados críticos y la eficiencia en la gestión de alertas de seguridad." :
-                            isCandados ? "Implementé una estrategia de 'Reskinning Sistemático', mapeando átomo por átomo los componentes de Bego hacia el Design System gubernamental, asegurando la integridad de los flujos de negocio." :
+                            isCandados ? "Diseñé un sistema de monitoreo de alta densidad de información, priorizando la legibilidad de estados críticos y la eficiencia en la gestión de alertas de seguridad." :
                             isSprintia ? "Optimicé el ciclo de diseño integrando Inteligencia Artificial para acelerar la iteración y validación. Este enfoque redujo tiempos operativos, permitiendo priorizar la investigación estratégica y la funcionalidad robusta del producto." :
                             isClaro ? "A partir de los hallazgos de la auditoría, propuse un rediseño del widget 'Resumen en Vivo' de gestión de dispositivos y planes, explorando tres direcciones de tema para evaluar cuál comunica mejor la marca sin sacrificar legibilidad ni jerarquía del CTA." :
                             "Evolucion�� la solución desde bocetos conceptuales hasta un diseño de alta fidelidad validado, centrando cada iteración en las necesidades reales del usuario."}
@@ -1155,47 +1025,6 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                              </div>
                         )}
 
-                        {isInterfacesFlow && (
-                            <div className="mt-8 mb-16 space-y-12">
-                                {/* Pantallas Principales */}
-                                <div>
-                                    <h4 className="text-white font-medium mb-6 text-xl">Arquitectura y Visualización de Datos</h4>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        <div className="group rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl bg-[#1A1A1A] cursor-pointer hover:border-white/25 transition-colors" onClick={() => setSelectedImage(imgGobPolygon)}>
-                                            <div className="aspect-[4/3] relative">
-                                                <ImageWithFallback src={imgGobPolygon} alt="Create New Polygon" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                                            </div>
-                                            <div className="p-4 bg-[#111]">
-                                                <h5 className="text-white font-medium text-sm mb-1">Geolocalización de Riesgos</h5>
-                                                <p className="text-xs text-white/50">Mapa de calor para tramos carreteros peligrosos.</p>
-                                            </div>
-                                        </div>
-                                        <div className="group rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl bg-[#1A1A1A] cursor-pointer hover:border-white/25 transition-colors" onClick={() => setSelectedImage(imgGobFraude)}>
-                                            <div className="aspect-[4/3] relative">
-                                                <ImageWithFallback src={imgGobFraude} alt="Fraude Fiscal" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                                            </div>
-                                            <div className="p-4 bg-[#111]">
-                                                <h5 className="text-white font-medium text-sm mb-1">Fraude Fiscal</h5>
-                                                <p className="text-xs text-white/50">Análisis comparativo de redes federales y estatales.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* Dashboard */}
-                                <div>
-                                    <h4 className="text-white font-medium mb-6 text-xl">Dashboard Administrativo</h4>
-                                    <div className="rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl bg-[#1A1A1A] cursor-pointer group hover:border-white/25 transition-colors" onClick={() => setSelectedImage(imgGobDashboard)}>
-                                         <div className="aspect-video relative">
-                                            <ImageWithFallback src={imgGobDashboard} alt="Dashboard Pagos" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                                        </div>
-                                    </div>
-                                    <p className="mt-4 text-sm text-white/60 text-center max-w-2xl mx-auto">
-                                        Visualización clara de métricas financieras y operativas, diseñada para facilitar la toma de decisiones rápidas en la administración pública.
-                                    </p>
-                                </div>
-                            </div>
-                        )}
 
 
 
@@ -1490,7 +1319,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                     </Section>
 
                     {/* Testeo (Sprintia, Candados & Claro) */}
-                    {(isSprintia || isCandadosFlow || isClaro) && (
+                    {(isSprintia || isCandados || isClaro) && (
                       <Section id="testing" title={isCandados ? "Testeo de Usabilidad" : isClaro ? "Auditoría de Comportamiento" : "Testeo & Validación"} icon={CheckCircle}>
                         {isClaro && (
                           <div className="space-y-10">
@@ -1635,12 +1464,11 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                     {/* 6. Resultados */}
                     <Section id="results" title="Resultados" icon={Sparkles}>
                        <div className="mb-10">
-                         <div className={`p-6 bg-gradient-to-r from-white/5 to-transparent border-l-4 rounded-r-xl ${isSprintia ? 'border-white/25' : isCandadosFlow ? 'border-white/25' : isCandados ? 'border-white/25' : isClaro ? 'border-white/25' : 'border-white/25'}`}>
+                         <div className={`p-6 bg-gradient-to-r from-white/5 to-transparent border-l-4 rounded-r-xl ${isSprintia ? 'border-white/25' : isCandados ? 'border-white/25' : isCandados ? 'border-white/25' : isClaro ? 'border-white/25' : 'border-white/25'}`}>
                             <p className="text-lg md:text-xl text-white/90 text-[24px]">
                               {isBegoApp ? "El rediseño mejoró notablemente la experiencia de usuario mediante una paleta de alto contraste que reduce la fatiga visual de los transportistas, optimizando la funcionalidad y puliendo cada componente." :
                                isBegoWeb ? "El rediseño fue una mejora notable y actualmente está en proceso de desarrollo, manteniendo iteraciones en tiempo real para abordar áreas de oportunidad junto al departamento de desarrollo." :
-                               isCandadosFlow ? "Se logró una plataforma unificada que permite la gestión centralizada de candados inteligentes, con una interfaz clara y eficiente para el monitoreo en tiempo real." :
-                               isCandados ? "El diseño se ejecutó exitosamente en colaboración, demostrando la adaptabilidad de la tecnología Bego para operar bajo una identidad institucional con la eficiencia del sector privado." :
+                               isCandados ? "Se logró una plataforma unificada que permite la gestión centralizada de candados inteligentes, con una interfaz clara y eficiente para el monitoreo en tiempo real." :
                                isClaro ? "La auditoría tradujo datos de comportamiento en un plan de acción priorizado (corregir el error JS, asignar acción al subtítulo del Hero, optimizar el tiempo de carga) y en una propuesta visual concreta para el widget de gestión de dispositivos, lista para validar con el equipo de desarrollo." :
                                "Evolucionando hacia un MVP funcional mediante la implementación de Supabase para la persistencia de datos, garantizando una arquitectura escalable antes de la entrega técnica a los desarrolladores."}
                             </p>
@@ -1649,73 +1477,13 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                        
                        {(isBegoApp || isBegoWeb) ? (
                          <PhoneMockupComparison isBegoWeb={isBegoWeb} />
-                       ) : isCandadosFlow ? (
+                       ) : isCandados ? (
                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                {[imgCandadosLogin, imgCandadosOrders, imgCandadosFilter, imgCandadosMap].map((img, idx) => (
                                    <div key={idx} className="group rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl bg-white/5 cursor-pointer" onClick={() => setSelectedImage(img)}>
                                       <ImageWithFallback src={img} alt={`Candados Screen ${idx + 1}`} className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105" />
                                    </div>
                                ))}
-                           </div>
-                       ) : isCandados ? (
-                           <div className="relative group/carousel">
-                               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                   {/* Bego Side */}
-                                   <div className="group rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl bg-[#1A1A1A] cursor-pointer" onClick={() => setSelectedImage(comparisonIndex === 0 ? imgBegoDashboardDark : comparisonIndex === 1 ? imgBegoTagsDark : imgBegoMapDark)}>
-                                      <div className="absolute top-4 left-4 z-10 bg-black/80 backdrop-blur px-3 py-1 rounded-full border border-white/10 text-xs font-medium text-white/80">Bego Original</div>
-                                      <div className="grid grid-cols-1 grid-rows-1">
-                                          <div className={`col-start-1 row-start-1 transition-opacity duration-500 ${comparisonIndex === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
-                                            <ImageWithFallback src={imgBegoDashboardDark} alt="Bego Dashboard" className="w-full h-auto object-cover" />
-                                          </div>
-                                          <div className={`col-start-1 row-start-1 transition-opacity duration-500 ${comparisonIndex === 1 ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
-                                            <ImageWithFallback src={imgBegoTagsDark} alt="Bego Tags" className="w-full h-auto object-cover" />
-                                          </div>
-                                          <div className={`col-start-1 row-start-1 transition-opacity duration-500 ${comparisonIndex === 2 ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
-                                            <ImageWithFallback src={imgBegoMapDark} alt="Bego Map" className="w-full h-auto object-cover" />
-                                          </div>
-                                      </div>
-                                   </div>
-                                   
-                                   {/* Gobierno Side */}
-                                   <div className="group rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl bg-white/5 cursor-pointer" onClick={() => setSelectedImage(comparisonIndex === 0 ? imgGobiernoDashboardLight : comparisonIndex === 1 ? imgGobiernoTagsLight : imgGobiernoMapLight)}>
-                                      <div className="absolute top-4 left-4 z-10 bg-white/80 backdrop-blur px-3 py-1 rounded-full border border-white/10 text-xs font-medium text-white">Adaptación</div>
-                                      <div className="grid grid-cols-1 grid-rows-1">
-                                          <div className={`col-start-1 row-start-1 transition-opacity duration-500 ${comparisonIndex === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
-                                            <ImageWithFallback src={imgGobiernoDashboardLight} alt="Gobierno Dashboard" className="w-full h-auto object-cover" />
-                                          </div>
-                                          <div className={`col-start-1 row-start-1 transition-opacity duration-500 ${comparisonIndex === 1 ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
-                                            <ImageWithFallback src={imgGobiernoTagsLight} alt="Gobierno Tags" className="w-full h-auto object-cover" />
-                                          </div>
-                                          <div className={`col-start-1 row-start-1 transition-opacity duration-500 ${comparisonIndex === 2 ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
-                                            <ImageWithFallback src={imgGobiernoMapLight} alt="Gobierno Map" className="w-full h-auto object-cover" />
-                                          </div>
-                                      </div>
-                                   </div>
-                               </div>
-                               
-                               <button 
-                                 onClick={(e) => { e.stopPropagation(); setComparisonIndex(prev => (prev === 0 ? 2 : prev - 1)); }}
-                                 className="absolute top-1/2 -left-4 md:-left-12 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 border border-white/10 backdrop-blur-md flex items-center justify-center text-white hover:bg-black/70 hover:scale-110 transition-all z-20"
-                               >
-                                 <ChevronLeft className="w-5 h-5" />
-                               </button>
-
-                               <button 
-                                 onClick={(e) => { e.stopPropagation(); setComparisonIndex(prev => (prev === 2 ? 0 : prev + 1)); }}
-                                 className="absolute top-1/2 -right-4 md:-right-12 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 border border-white/10 backdrop-blur-md flex items-center justify-center text-white hover:bg-black/70 hover:scale-110 transition-all z-20"
-                               >
-                                 <ChevronRight className="w-5 h-5" />
-                               </button>
-
-                               <div className="flex justify-center gap-2 mt-6">
-                                  {[0, 1, 2].map((idx) => (
-                                    <button
-                                      key={idx}
-                                      onClick={() => setComparisonIndex(idx)}
-                                      className={`w-2 h-2 rounded-full transition-all ${comparisonIndex === idx ? 'bg-white w-6' : 'bg-white/20'}`}
-                                    />
-                                  ))}
-                               </div>
                            </div>
                        ) : (
                          project.galleryImages && project.galleryImages.length > 0 && (
@@ -1849,12 +1617,12 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
 
                     {/* 7. Lecciones */}
                     <Section id="lessons" title="Lecciones Aprendidas" icon={Lightbulb}>
-                       <div className={`${isSprintia ? 'bg-white/5 border-white/25/10' : isCandadosFlow ? 'bg-white/5 border-white/25/10' : isCandados ? 'bg-white/5 border-white/25/10' : isClaro ? 'bg-white/5 border-white/25/10' : 'bg-white/5 border-white/25/10'} p-8 rounded-2xl border backdrop-blur-sm relative overflow-hidden`}>
+                       <div className={`${isSprintia ? 'bg-white/5 border-white/25/10' : isCandados ? 'bg-white/5 border-white/25/10' : isCandados ? 'bg-white/5 border-white/25/10' : isClaro ? 'bg-white/5 border-white/25/10' : 'bg-white/5 border-white/25/10'} p-8 rounded-2xl border backdrop-blur-sm relative overflow-hidden`}>
                           <p className="text-lg leading-relaxed opacity-90 relative z-10">
                             {isBegoApp ? "Aprendí que existen múltiples caminos para lograr un objetivo y que cada proyecto requiere metodologías diferentes. Es crucial diseñar aplicaciones nativas basándose en la investigación para evitar sesgos y tomar decisiones acertadas." :
                              isBegoWeb ? "Perder el miedo a diseñar directamente en alta fidelidad fue una decisión estratégica. Aunque conlleva riesgos, en cronogramas exigentes esta metodología demostró ser altamente funcional para cumplir los objetivos de negocio." :
                              isSprintia ? "Construir un ecosistema digital desde cero integrando tecnologías de vanguardia fue un desafío que validó mi perfil técnico-creativo. Sin embargo, la evaluación heurística representó el reto más crítico, exigiendo una auditoría profunda de las decisiones de diseño. Este proceso fortaleció mi criterio estratégico, enseñándome a priorizar la usabilidad objetiva sobre la estética y a transformar hallazgos en iteraciones que elevaron la madurez del producto." :
-                             isCandadosFlow ? "La gestión de grandes volúmenes de datos en tiempo real exige una jerarquía visual impecable. Aprendí a equilibrar la densidad de información con la claridad operativa, asegurando que las alertas críticas nunca pasen desapercibidas." :
+                             isCandados ? "La gestión de grandes volúmenes de datos en tiempo real exige una jerarquía visual impecable. Aprendí a equilibrar la densidad de información con la claridad operativa, asegurando que las alertas críticas nunca pasen desapercibidas." :
                              isCandados ? "Aprendí a capitalizar la madurez de un producto existente para saltar etapas de validación. La consistencia de la arquitectura de información de Bego fue clave para permitir una adaptación visual radical sin romper la experiencia." :
                              isClaro ? "Los datos de comportamiento no mienten: lo que parecía un problema de diseño visual resultó ser un error técnico bloqueando la conversión. Aprendí a no asumir causas antes de auditar, y a priorizar hallazgos por severidad e impacto real antes de proponer soluciones visuales." :
                              "Cada proyecto presenta desafíos únicos que fortalecen mi capacidad para resolver problemas de diseño de manera estratégica."}
@@ -1950,14 +1718,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                     {/* Next Project Button */}
                     <div className="max-w-[1400px] mx-auto px-4 md:px-8 pb-24 pt-12 flex justify-end border-t border-white/10 mt-20">
                         <button
-                            onClick={() => {
-                                if (isCandados && !isCandadosFlow) {
-                                    setGobiernoStep('candados');
-                                    if (modalRef.current) modalRef.current.scrollTop = 0;
-                                } else {
-                                    onNext();
-                                }
-                            }}
+                            onClick={onNext}
                             className="group flex items-center gap-4 text-white transition-colors hover:text-white/80"
                         >
                             <div className="text-right">
@@ -1969,8 +1730,6 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                             </div>
                         </button>
                     </div>
-                </>
-              )}
             </div>
           </motion.div>
 
