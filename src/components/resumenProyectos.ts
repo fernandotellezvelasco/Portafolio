@@ -40,8 +40,8 @@ const RESUMENES: Record<ClaveProyecto, ScrollStackCard[]> = {
       eyebrow: 'Descripción',
       icon: IconoLibro,
       statement:
-        'Auditoría de experiencia digital del Portal de Pagos de Claro Colombia y rediseño del widget "Resumen en Vivo" de gestión de dispositivos y planes.',
-      meta: 'claro.com.co · Mayo 2026',
+        'Soluciones digitales para los portales de Claro. La primera: el rediseño del Asesor de Velocidad y Experiencia Wi-Fi de República Dominicana, el flujo que recomienda el plan de Internet Fijo.',
+      meta: 'Claro Rep. Dominicana · Internet Fijo',
     },
     {
       eyebrow: 'Mi rol',
@@ -49,32 +49,32 @@ const RESUMENES: Record<ClaveProyecto, ScrollStackCard[]> = {
       statement: 'UX Researcher y diseñador de producto, de punta a punta.',
       chips: ['UX Research', 'Análisis de datos', 'UI Design'],
       bullets: [
-        'Auditoría del Portal de Pagos con Microsoft Clarity sobre 40 sesiones reales de mayo de 2026.',
-        'Causa raíz de las fricciones: un error JS activo desde el segundo 0:01 que bloqueaba el CTA "Pagar mi factura Claro".',
-        '10.42% de sesiones con dead clicks y 29.66% con rage clicks, concentrados en un solo elemento del Hero.',
-        'Rediseño del widget "Resumen en Vivo" en tres variantes de tema: claro, oscuro y de marca.',
+        'Medí el comportamiento real en el asesor actual con Microsoft Clarity: 30 días de sesiones, escritorio contra móvil y nuevos contra recurrentes.',
+        'Los clics fallidos en escritorio duplican a los de móvil (51% contra 25%): ver más opciones de golpe genera más fricción, no menos.',
+        'Rediseñé los tres pasos con menos carga por pantalla y validación que avisa en el momento, en vez de dejar al usuario atascado.',
+        'Extendí el resultado con el equipo Mesh recomendado y un flujo de contratación que antes no existía.',
       ],
     },
     {
       eyebrow: 'Objetivo',
       icon: IconoDiana,
       statement:
-        'Detectar, cuantificar y priorizar las fricciones que impiden completar el pago de la factura, y convertirlas en un rediseño accionable.',
-      meta: 'Portal de Pagos · Widget Resumen en Vivo',
+        'Que el usuario llegue a un plan que de verdad le sirve sin abandonar a medio camino, y que pueda contratarlo ahí mismo.',
+      meta: 'Internet Fijo · Equipos Mesh',
     },
     {
       eyebrow: 'Equipo',
       icon: IconoEquipo,
       statement:
-        'Auditoría, investigación y propuesta visual en solitario. Los hallazgos se entregan priorizados por severidad para el equipo de desarrollo.',
-      meta: 'Luis Fernando Téllez',
+        'Trabajé de la mano y de punta a punta con el equipo de desarrollo, Marketing y los stakeholders del país, del levantamiento del requerimiento a la entrega para implementación.',
+      meta: 'Desarrollo · Marketing · Stakeholders',
     },
     {
       eyebrow: 'Herramientas',
       icon: IconoEngrane,
       statement:
-        'Microsoft Clarity para leer el comportamiento —grabaciones, mapas de calor, dead y rage clicks— y Figma para el rediseño.',
-      meta: 'Microsoft Clarity · Figma',
+        'Microsoft Clarity para leer el comportamiento, Figma para el rediseño y sus responsive, y una maquetación navegable para que el país y desarrollo lo probaran antes de construirlo.',
+      meta: 'Microsoft Clarity · Figma · Maquetación HTML',
     },
   ],
 
@@ -109,8 +109,8 @@ const RESUMENES: Record<ClaveProyecto, ScrollStackCard[]> = {
       eyebrow: 'Equipo',
       icon: IconoEquipo,
       statement:
-        'Diseño en Sprintia Studio, con el equipo móvil a cargo del desarrollo en iOS y Android.',
-      meta: 'Sprintia Studio · Mobile Team',
+        'Trabajé de la mano y de punta a punta con el equipo de desarrollo móvil, Marketing y los stakeholders del producto, desde la definición hasta la entrega para iOS y Android.',
+      meta: 'Sprintia Studio · Desarrollo · Marketing · Stakeholders',
     },
     {
       eyebrow: 'Herramientas',
@@ -151,8 +151,9 @@ const RESUMENES: Record<ClaveProyecto, ScrollStackCard[]> = {
     {
       eyebrow: 'Equipo',
       icon: IconoEquipo,
-      statement: 'Diseño en Sprintia Studio, desarrollo a cargo de Tech Partners.',
-      meta: 'Sprintia Studio · Tech Partners',
+      statement:
+        'Trabajé de la mano y de punta a punta con el equipo de desarrollo, Marketing y los stakeholders del proyecto, del levantamiento a la entrega para implementación.',
+      meta: 'Sprintia Studio · Desarrollo · Marketing · Stakeholders',
     },
     {
       eyebrow: 'Herramientas',
@@ -194,8 +195,9 @@ const RESUMENES: Record<ClaveProyecto, ScrollStackCard[]> = {
     {
       eyebrow: 'Equipo',
       icon: IconoEquipo,
-      statement: 'Diseño de producto en Sprintia Studio, con estrategia del equipo interno.',
-      meta: 'Sprintia Studio · Equipo interno',
+      statement:
+        'Trabajé de la mano y de punta a punta con el equipo de desarrollo, Marketing y los stakeholders, de la visión de producto a la puesta en marcha.',
+      meta: 'Sprintia Studio · Desarrollo · Marketing · Stakeholders',
     },
     {
       eyebrow: 'Herramientas',
@@ -237,8 +239,8 @@ const RESUMENES: Record<ClaveProyecto, ScrollStackCard[]> = {
       eyebrow: 'Equipo',
       icon: IconoEquipo,
       statement:
-        'Diseño y desarrollo en Sprintia Studio, con consultoría de seguridad de CyberSafe.',
-      meta: 'Sprintia Studio · CyberSafe',
+        'Trabajé de la mano y de punta a punta con el equipo de desarrollo, Marketing y los stakeholders, con consultoría de seguridad de CyberSafe.',
+      meta: 'Desarrollo · Marketing · Stakeholders · CyberSafe',
     },
     {
       eyebrow: 'Herramientas',
@@ -280,8 +282,8 @@ const RESUMENES: Record<ClaveProyecto, ScrollStackCard[]> = {
       eyebrow: 'Equipo',
       icon: IconoEquipo,
       statement:
-        'Diseño y desarrollo en Sprintia Studio, con consultoría de seguridad de CyberSafe.',
-      meta: 'Sprintia Studio · CyberSafe',
+        'Trabajé de la mano y de punta a punta con el equipo de desarrollo, Marketing y los stakeholders, con consultoría de seguridad de CyberSafe.',
+      meta: 'Desarrollo · Marketing · Stakeholders · CyberSafe',
     },
     {
       eyebrow: 'Herramientas',

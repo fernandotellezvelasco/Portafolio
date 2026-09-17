@@ -55,7 +55,7 @@
    texto, que es lo que de verdad necesita el ancho. */
 @media (max-width: 1439px) {
   .scroll-stack {
-    --alto-card: 520px;
+    --alto-card: 540px;
   }
 }
 

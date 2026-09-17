@@ -1,10 +1,11 @@
 import { motion, AnimatePresence } from 'motion/react';
 import BorderGlow from './BorderGlow';
 import './porsche-claro.css';
-import { X, Play, Search, Layout, Palette, CheckCircle, GitBranch, BarChart3, Layers, Smartphone, Users, Sparkles, ArrowRight, BookOpen, Target, Lightbulb, Link as LinkIcon, Moon, Sun, ChevronLeft, ChevronRight, Beaker, Zap, Eye, MousePointerClick, Shield, Wifi } from 'lucide-react';
+import { X, Play, Search, Layout, Palette, CheckCircle, GitBranch, BarChart3, Layers, Smartphone, Users, Sparkles, ArrowRight, BookOpen, Target, Lightbulb, Link as LinkIcon, Moon, Sun, ChevronLeft, ChevronRight, Beaker, Gauge, Zap, Eye, MousePointerClick, Shield, Wifi } from 'lucide-react';
 import { ScrollStack } from './ScrollStack';
 import { resumenDe, type ClaveProyecto } from './resumenProyectos';
 import { IconoInterfaz, IconoCandado } from './iconos/porsche';
+import { AsesorVelocidad } from './claro/AsesorVelocidad';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import type { Project } from './ProjectCard';
 import imgPortada1 from "figma:asset/1fe2690b9ec451502e9ec00eab0096f3097a5f8d.png";
@@ -183,6 +184,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
   /* Rol y Objetivo salieron de la navegación: ahora viven en las cards
      apiladas del principio, y repetirlos abajo era decir dos veces lo mismo. */
   const navItems = [
+    ...(isClaro ? [{ id: 'asesor', label: 'Asesor de Velocidad' }] : []),
     { id: 'research', label: 'Investigación' },
     { id: 'process', label: 'Proceso' },
     ...(isSprintia || isBegoApp || isCandados || isClaro ? [{ id: 'testing', label: 'Testeo' }] : []),
@@ -888,6 +890,31 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                         viñetas y la cita del objetivo— vive en las cards
                         apiladas de arriba. Repetirlo era decir dos veces lo
                         mismo con distinto formato. */}
+
+                    {/* CLARO no es un proyecto sino varias soluciones para
+                        distintos portales del grupo. La primera, y la que abre
+                        el caso, es el Asesor de Velocidad. */}
+                    {isClaro && (
+                      <Section id="asesor" title="Asesor de Velocidad" icon={Gauge}>
+                        <AsesorVelocidad onVerImagen={setSelectedImage} />
+                      </Section>
+                    )}
+
+                    {/* A partir de aquí, la segunda solución del mismo cliente */}
+                    {isClaro && (
+                      <div className="mb-16 border-t border-white/10 pt-12">
+                        <p className="text-xs uppercase tracking-widest text-white/40 mb-3">
+                          Segunda solución
+                        </p>
+                        <h3 className="text-[1.15rem] md:text-[1.5rem] font-medium text-white tracking-tight">
+                          Auditoría del Portal de Pagos · Claro Colombia
+                        </h3>
+                        <p className="mt-3 text-white/60 leading-relaxed max-w-[68ch]">
+                          Otro país, otro portal y otro problema: aquí la fricción no estaba en el
+                          diseño sino en un error técnico que bloqueaba el pago.
+                        </p>
+                      </div>
+                    )}
 
                     {/* 4. Investigación */}
                     <Section id="research" title="Investigación" icon={Search}>
