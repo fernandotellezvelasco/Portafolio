@@ -8,18 +8,19 @@ import antes02 from '../../assets/claro/asesor/antes_02_dispositivos.webp';
 import antes03 from '../../assets/claro/asesor/antes_03_usos.webp';
 import antes04 from '../../assets/claro/asesor/antes_04_resultado.webp';
 
-import nuevo01 from '../../assets/claro/asesor/nuevo_01_hogar.webp';
-import nuevo02 from '../../assets/claro/asesor/nuevo_02_dispositivos.webp';
-import nuevo03 from '../../assets/claro/asesor/nuevo_03_usos.webp';
-import nuevo04 from '../../assets/claro/asesor/nuevo_04_resultado.webp';
-import nuevo05 from '../../assets/claro/asesor/nuevo_05_equipo.webp';
-import nuevo06 from '../../assets/claro/asesor/nuevo_06_compra.webp';
-import nuevo07 from '../../assets/claro/asesor/nuevo_07_datos.webp';
+/* El rediseño se enseña desde los frames de Figma, no desde capturas de la
+   maquetación: es el diseño tal como se entregó, sin el ruido del navegador. */
+import desk1 from '../../assets/claro/asesor/figma_desk_1.webp';
+import desk2 from '../../assets/claro/asesor/figma_desk_2.webp';
+import desk3 from '../../assets/claro/asesor/figma_desk_3.webp';
+import desk4 from '../../assets/claro/asesor/figma_desk_4.webp';
+import desk5 from '../../assets/claro/asesor/figma_desk_5.webp';
+import desk6 from '../../assets/claro/asesor/figma_desk_6.webp';
 
-import movil01 from '../../assets/claro/asesor/movil_01_hogar.webp';
-import movil02 from '../../assets/claro/asesor/movil_02_dispositivos.webp';
-import movil03 from '../../assets/claro/asesor/movil_03_usos.webp';
-import movil04 from '../../assets/claro/asesor/movil_04_resultado.webp';
+import movil1 from '../../assets/claro/asesor/figma_movil_1.webp';
+import movil2 from '../../assets/claro/asesor/figma_movil_2.webp';
+import movil3 from '../../assets/claro/asesor/figma_movil_3.webp';
+import movil4 from '../../assets/claro/asesor/figma_movil_4.webp';
 
 import clarity01 from '../../assets/claro/asesor/clarity_01_escritorio.webp';
 import clarity02 from '../../assets/claro/asesor/clarity_02_movil.webp';
@@ -110,20 +111,19 @@ const ANTES = [
 ];
 
 const NUEVO = [
-  { src: nuevo01, pie: 'Paso 1 · Opciones de superficie a la vista, sin desplegable' },
-  { src: nuevo02, pie: 'Paso 2 · Conteo de dispositivos con la ilustración de apoyo' },
-  { src: nuevo03, pie: 'Paso 3 · Usos en acordeón: una categoría abierta a la vez' },
-  { src: nuevo04, pie: 'Resultado · Plan con velocidad, precio y para qué sirve' },
-  { src: nuevo05, pie: 'Resultado · Equipo Mesh recomendado y qué incluye Ultra Wi-Fi' },
-  { src: nuevo06, pie: 'Contratación · Elegir entre comprar en línea o recibir una llamada' },
-  { src: nuevo07, pie: 'Contratación · Captura de datos y número de solicitud' },
+  { src: desk1, pie: 'Paso 1 · Estructura del hogar; el avance sigue bloqueado hasta completar' },
+  { src: desk2, pie: 'Paso 1 · La superficie del hogar, con sus opciones desplegadas' },
+  { src: desk3, pie: 'Paso 2 · Las seis categorías de dispositivos, en cero' },
+  { src: desk4, pie: 'Paso 2 · Sin dispositivos no se avanza: el botón permanece inactivo' },
+  { src: desk5, pie: 'Paso 2 · Con valores cargados y el aviso de validación en línea' },
+  { src: desk6, pie: 'Paso 3 · Usos en acordeón: una categoría abierta a la vez' },
 ];
 
 const MOVIL = [
-  { src: movil01, pie: 'Paso 1' },
-  { src: movil02, pie: 'Paso 2' },
-  { src: movil03, pie: 'Paso 3' },
-  { src: movil04, pie: 'Resultado' },
+  { src: movil1, pie: 'Paso 1 · Estructura del hogar' },
+  { src: movil2, pie: 'Paso 1 · Superficie, desplegada' },
+  { src: movil3, pie: 'Paso 3 · Usos en acordeón' },
+  { src: movil4, pie: 'Resultado · Plan y equipo Mesh' },
 ];
 
 /** Carrusel sencillo: una imagen grande y el pie que la explica */
@@ -314,15 +314,29 @@ export function AsesorVelocidad({ onVerImagen }: Props) {
           revés.
         </p>
 
-        <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+        {/* Cada frame se ve entero, con su alto real. Llegué a igualarlos
+            recortando desde arriba y quedaba peor: cortaba justo donde está el
+            contenido que se quiere enseñar. Que la retícula quede despareja es
+            preferible a que no se vea la pantalla completa. */}
+        <div className="grid grid-cols-2 items-start gap-4 lg:grid-cols-4">
           {MOVIL.map(m => (
             <figure key={m.pie} className="space-y-3">
-              <div
-                className="overflow-hidden rounded-2xl border border-white/10 bg-[#0A0A0A] cursor-zoom-in"
+              <button
+                type="button"
                 onClick={() => onVerImagen(m.src)}
+                aria-label={`Ver completo: ${m.pie}`}
+                /* `sin-pildora`: es un botón por accesibilidad, no por aspecto.
+                   Sin esto, la capa Porsche le pone radio total y la lámina se
+                   deforma en un óvalo. */
+                className="sin-pildora block w-full overflow-hidden rounded-2xl border border-white/10 bg-[#0A0A0A] cursor-zoom-in
+                           focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/60"
               >
-                <ImageWithFallback src={m.src} alt={`Asesor de velocidad en móvil — ${m.pie}`} className="w-full h-auto" />
-              </div>
+                <ImageWithFallback
+                  src={m.src}
+                  alt={`Asesor de velocidad en móvil — ${m.pie}`}
+                  className="h-auto w-full"
+                />
+              </button>
               <figcaption className="text-xs text-white/60">{m.pie}</figcaption>
             </figure>
           ))}

@@ -102,8 +102,13 @@
 
 /* ---------- Botones: píldora completa, como los suyos ---------- */
 
-.pds button:not([aria-label^="Ver proyecto"]):not(.scroll-stack-card button),
-.pds a[class*="px-"][class*="py-"] {
+/* La píldora es para botones de verdad. Un `button` que envuelve una imagen
+   —lo usamos para que las láminas sean pulsables con teclado— no es un botón
+   en el sentido visual: al aplicarle radio total, una lámina de 240×980 se
+   convertía en un óvalo. De ahí que se excluyan los que llevan imagen dentro,
+   y que exista `.sin-pildora` como salida explícita para el resto de casos. */
+.pds button:not([aria-label^="Ver proyecto"]):not(.scroll-stack-card button):not(.sin-pildora):not(:has(img)),
+.pds a[class*="px-"][class*="py-"]:not(.sin-pildora):not(:has(img)) {
   border-radius: 9999px;
 }
 
