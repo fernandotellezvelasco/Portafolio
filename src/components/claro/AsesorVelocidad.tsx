@@ -75,22 +75,22 @@ const PROCESO = [
   {
     paso: '03',
     titulo: 'Por qué pasaba',
-    dato: '28,54%',
-    etiqueta: 'de los clics, en un solo grupo de casillas',
+    dato: '+20',
+    etiqueta: 'opciones activas en una sola pantalla',
     texto:
-      'El mapa de calor lo confirmó: el grueso de la interacción caía sobre el bloque de casillas de uso, donde se ofrecían todas las categorías y todas sus opciones al mismo tiempo. En escritorio caben más, así que se mostraban más — y ahí es donde más se fallaba.',
+      'El mapa de calor señaló el bloque de casillas de uso, y al contarlas salió el número: seis categorías visibles a la vez, cada una con sus propias casillas, más de veinte opciones activas antes de poder continuar. En escritorio caben más, así que se mostraban más — y ahí es donde más se fallaba.',
     decision:
-      'El diagnóstico fue carga cognitiva, no diseño feo: demasiadas opciones simultáneas para una sola decisión.',
+      'El diagnóstico fue carga cognitiva, no diseño feo: obliga a comparar muchas alternativas en paralelo en un flujo de autoservicio pensado para resolverse en segundos.',
   },
   {
     paso: '04',
     titulo: 'Qué cambié',
-    dato: '+40%',
-    etiqueta: 'de conversión tras el rediseño',
+    dato: '7 ± 2',
+    etiqueta: 'la ley de Miller como criterio',
     texto:
-      'Apliqué la ley de Miller —la memoria de trabajo sostiene un número limitado de elementos a la vez— al flujo entero: el desplegable de metros pasó a opciones visibles de una en una, y los usos se agruparon en acordeón, con una categoría abierta cada vez.',
+      'La ley de Miller (1956) describe la capacidad limitada de la memoria de trabajo: una persona retiene y procesa entre 5 y 9 elementos a la vez antes de que la precisión de sus decisiones se degrade. Apliqué el principio al flujo entero — menos opciones visibles a la vez, agrupadas por relevancia y en pasos más cortos.',
     decision:
-      'El usuario elige opción por opción, no todas de golpe. El esqueleto de tres pasos se mantuvo intacto.',
+      'Profundidad de flujo sobre densidad de pantalla: el usuario elige opción por opción, no todas de golpe. El esqueleto de tres pasos se mantuvo intacto.',
   },
 ];
 
@@ -126,32 +126,85 @@ const MOVIL = [
   { src: movil4, pie: 'Resultado · Plan y equipo Mesh' },
 ];
 
+/**
+ * Marco de navegador. Las láminas del rediseño son pantallas de un sitio, y
+ * verlas como una imagen suelta las confunde con un montaje: el marco dice
+ * "esto vive en la web" sin necesidad de escribirlo.
+ */
+function Navegador({ children, url = 'claro.com.do' }: { children: React.ReactNode; url?: string }) {
+  return (
+    <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#0A0A0A] shadow-2xl">
+      <div className="flex items-center gap-2 border-b border-white/5 bg-[#111] px-4 py-3">
+        <div className="flex gap-1.5" aria-hidden="true">
+          <span className="block h-2.5 w-2.5 rounded-full bg-[#FF5F56]" />
+          <span className="block h-2.5 w-2.5 rounded-full bg-[#FFBD2E]" />
+          <span className="block h-2.5 w-2.5 rounded-full bg-[#27C93F]" />
+        </div>
+        <div className="mx-auto flex h-5 w-1/2 items-center justify-center rounded-md bg-white/5 font-mono text-[11px] text-white/60">
+          {url}
+        </div>
+      </div>
+      {children}
+    </div>
+  );
+}
+
+/** Marco de teléfono, mismo criterio que el navegador */
+function Telefono({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="rounded-[26px] border border-white/12 bg-[#0A0A0A] p-1.5 shadow-2xl">
+      <div className="relative overflow-hidden rounded-[20px] bg-white">
+        {/* La muesca: basta para que se lea como teléfono */}
+        <span
+          aria-hidden="true"
+          className="absolute left-1/2 top-1.5 z-10 h-1 w-10 -translate-x-1/2 rounded-full bg-black/20"
+        />
+        {children}
+      </div>
+    </div>
+  );
+}
+
 /** Carrusel sencillo: una imagen grande y el pie que la explica */
 function Galeria({
   laminas,
   onVerImagen,
   etiqueta,
+  marco = false,
 }: {
   laminas: { src: string; pie: string }[];
   onVerImagen: (src: string) => void;
   etiqueta: string;
+  /** Envuelve la lámina en un marco de navegador */
+  marco?: boolean;
 }) {
   const [i, setI] = useState(0);
   const total = laminas.length;
   const ir = (d: number) => setI(v => (v + d + total) % total);
 
+  const lamina = (
+    <button
+      type="button"
+      onClick={() => onVerImagen(laminas[i].src)}
+      aria-label={`Ver completa: ${laminas[i].pie}`}
+      className="sin-pildora block w-full cursor-zoom-in
+                 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/60"
+    >
+      <ImageWithFallback
+        src={laminas[i].src}
+        alt={laminas[i].pie}
+        className="h-auto w-full object-contain"
+      />
+    </button>
+  );
+
   return (
     <div className="relative" role="group" aria-roledescription="carrusel" aria-label={etiqueta}>
-      <div
-        className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#0A0A0A] cursor-zoom-in"
-        onClick={() => onVerImagen(laminas[i].src)}
-      >
-        <ImageWithFallback
-          src={laminas[i].src}
-          alt={laminas[i].pie}
-          className="w-full h-auto object-contain"
-        />
-      </div>
+      {marco ? (
+        <Navegador>{lamina}</Navegador>
+      ) : (
+        <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#0A0A0A]">{lamina}</div>
+      )}
 
       <div className="mt-4 flex items-start justify-between gap-4">
         <p className="text-sm text-white/65 leading-relaxed max-w-[60ch]" aria-live="polite">
@@ -202,7 +255,7 @@ export function AsesorVelocidad({ onVerImagen }: Props) {
           callejón: recomendaba un plan y ahí se acababa. No había forma de contratarlo desde ahí.
         </p>
 
-        <Galeria laminas={ANTES} onVerImagen={onVerImagen} etiqueta="Versión anterior del asesor" />
+        <Galeria laminas={ANTES} onVerImagen={onVerImagen} etiqueta="Versión anterior del asesor" marco />
 
         {/* Un hallazgo que no vino de los datos sino de recorrer el flujo */}
         <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
@@ -283,10 +336,11 @@ export function AsesorVelocidad({ onVerImagen }: Props) {
         <p className="text-white/70 leading-relaxed max-w-[68ch]">
           Mismo esqueleto de tres pasos —no había razón para reeducar a quien ya lo conocía— pero
           con menos carga por pantalla, validación que avisa en el momento y un final que ahora sí
-          lleva a algún sitio.
+          lleva a algún sitio. El rediseño elevó la conversión por encima del{' '}
+          <strong className="font-medium text-white">40%</strong>.
         </p>
 
-        <Galeria laminas={NUEVO} onVerImagen={onVerImagen} etiqueta="Rediseño del asesor" />
+        <Galeria laminas={NUEVO} onVerImagen={onVerImagen} etiqueta="Rediseño del asesor" marco />
 
         <ul className="grid gap-3 sm:grid-cols-2">
           {[
@@ -321,21 +375,23 @@ export function AsesorVelocidad({ onVerImagen }: Props) {
         <div className="grid grid-cols-2 items-start gap-4 lg:grid-cols-4">
           {MOVIL.map(m => (
             <figure key={m.pie} className="space-y-3">
+              {/* `sin-pildora`: es un botón por accesibilidad, no por aspecto.
+                  Sin esto, la capa Porsche le pone radio total y la lámina se
+                  deforma en un óvalo. */}
               <button
                 type="button"
                 onClick={() => onVerImagen(m.src)}
                 aria-label={`Ver completo: ${m.pie}`}
-                /* `sin-pildora`: es un botón por accesibilidad, no por aspecto.
-                   Sin esto, la capa Porsche le pone radio total y la lámina se
-                   deforma en un óvalo. */
-                className="sin-pildora block w-full overflow-hidden rounded-2xl border border-white/10 bg-[#0A0A0A] cursor-zoom-in
+                className="sin-pildora block w-full cursor-zoom-in
                            focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/60"
               >
-                <ImageWithFallback
-                  src={m.src}
-                  alt={`Asesor de velocidad en móvil — ${m.pie}`}
-                  className="h-auto w-full"
-                />
+                <Telefono>
+                  <ImageWithFallback
+                    src={m.src}
+                    alt={`Asesor de velocidad en móvil — ${m.pie}`}
+                    className="h-auto w-full"
+                  />
+                </Telefono>
               </button>
               <figcaption className="text-xs text-white/60">{m.pie}</figcaption>
             </figure>

@@ -944,59 +944,6 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                              </div>
                         )}
 
-                        {isClaro && (
-                             <div id="wifi-redesign-block" className="mt-4 mb-16">
-                                <h4 className="text-white font-medium mb-4 text-[1.25rem] flex items-center gap-3">
-                                   <Layers className="w-6 h-6 text-white/70" />
-                                   Rediseño — Asesor de Velocidad Wi-Fi (Claro República Dominicana)
-                                </h4>
-                                <p className="opacity-80 leading-relaxed text-[17px] mb-6 max-w-4xl">
-                                   Como segunda pieza dentro de esta colaboración, se abordó el Asesor de Velocidad y Experiencia Wi-Fi del portal de Claro República Dominicana. En su versión original, el paso de selección de dispositivos presentaba hasta seis categorías visibles al mismo tiempo, cada una con varias casillas de uso adicionales — llegando a más de veinte opciones activas en una sola pantalla antes de poder continuar.
-                                </p>
-                                <p className="opacity-80 leading-relaxed text-[17px] mb-6 max-w-4xl">
-                                   Ese patrón eleva la carga cognitiva: obliga a evaluar y comparar muchas alternativas en paralelo antes de avanzar, lo que ralentiza la decisión en un flujo de autoservicio pensado para resolverse en segundos. Para fundamentar el rediseño recurrí a la <span className="text-white font-medium">Ley de Miller</span> (Miller, 1956), que describe la capacidad limitada de la memoria de trabajo humana: en promedio, una persona puede retener y procesar entre 5 y 9 elementos (7 ± 2) a la vez antes de que la precisión de sus decisiones comience a degradarse. Aplicar este principio implica reducir el número de opciones visibles simultáneamente, agrupar por relevancia y avanzar en pasos más cortos — priorizando profundidad de flujo sobre densidad de pantalla.
-                                </p>
-
-                                <div className="text-sm uppercase tracking-widest opacity-50 mb-4">Antes del rediseño</div>
-                                <div className="max-w-2xl">
-                                   <div
-                                     className="rounded-xl overflow-hidden border border-white/10 relative group cursor-pointer hover:border-white/25 transition-colors shadow-lg bg-black"
-                                     onClick={() => setSelectedImage(imgClaroWifiBefore01)}
-                                   >
-                                     <ImageWithFallback src={imgClaroWifiBefore01} alt="Las 6 categorías de dispositivos visibles al mismo tiempo, con más de 20 casillas activas" className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105" />
-                                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
-                                       <Search className="text-white w-8 h-8 drop-shadow-lg scale-90 group-hover:scale-100 transition-transform" />
-                                     </div>
-                                   </div>
-                                   <div className="text-center text-sm opacity-60 mt-3">Las 6 categorías de dispositivos, con más de 20 opciones visibles a la vez</div>
-                                </div>
-
-                                <p className="opacity-80 leading-relaxed text-[17px] mt-10 mb-6 max-w-4xl">
-                                   Para la propuesta, apliqué el mismo principio en dos frentes complementarios. Primero, en la estructura de decisión: en lugar de mostrar las seis categorías de dispositivos abiertas simultáneamente, el paso "Tus Dispositivos" ahora presenta una sola categoría expandida a la vez, con el resto colapsado y accesible con un clic — reduciendo el número de opciones que la persona debe sostener en su memoria de trabajo en cualquier momento dado. Segundo, en la continuidad visual del flujo: se incorporó una imagen contextual distinta en cada uno de los tres pasos (Tu Hogar, Tus Dispositivos, Tus Necesidades), de modo que el usuario reconoce visualmente en qué parte del proceso se encuentra sin tener que releer el indicador de pasos. Esto libera capacidad de memoria de trabajo — que de otro modo se usaría en reorientarse — para lo que realmente importa: decidir.
-                                </p>
-
-                                <div className="text-sm uppercase tracking-widest opacity-50 mb-4">Después del rediseño</div>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                   {[
-                                     { img: imgClaroWifiAfter01, label: 'Paso 1 — Tu Hogar' },
-                                     { img: imgClaroWifiAfter02, label: 'Paso 2 — Tus Dispositivos (una categoría a la vez)' },
-                                   ].map((shot, idx) => (
-                                     <div key={idx}>
-                                       <div
-                                         className="rounded-xl overflow-hidden border border-white/10 relative group cursor-pointer hover:border-white/25 transition-colors shadow-lg bg-black"
-                                         onClick={() => setSelectedImage(shot.img)}
-                                       >
-                                         <ImageWithFallback src={shot.img} alt={shot.label} className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105" />
-                                         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
-                                           <Search className="text-white w-8 h-8 drop-shadow-lg scale-90 group-hover:scale-100 transition-transform" />
-                                         </div>
-                                       </div>
-                                       <div className="text-center text-sm opacity-60 mt-3">{shot.label}</div>
-                                     </div>
-                                   ))}
-                                </div>
-                             </div>
-                        )}
 
                         {isHeyMovil && (
                              <div className="mt-12 mb-16 max-w-[864px] mx-auto">
@@ -1540,7 +1487,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                               image: imgClaroWifiAfter01,
                               title: 'Asesor de Velocidad Wi-Fi',
                               description: 'Rediseño del flujo de selección de dispositivos aplicando la Ley de Miller, Claro República Dominicana.',
-                              target: 'wifi-redesign-block',
+                              target: 'asesor',
                             },
                           ];
                           const slide = claroSlides[claroSlide];
