@@ -1,9 +1,10 @@
 /**
  * CARDS APILADAS — estilos
  *
- * La ranura (`slot`) reserva el hueco en el flujo y no se transforma nunca.
- * La tarjeta de adentro es la que se mueve. De ahí que la altura del bloque
- * sea estable aunque las tarjetas estén clavadas.
+ * El clavado es `position: sticky`, no una transformación calculada a mano:
+ * lo resuelve el compositor —así que no va a remolque del scroll— y la tarjeta
+ * conserva su hueco en el flujo, de modo que la sección siguiente no se le
+ * puede montar encima.
  *
  * EL VIDRIO
  *
@@ -30,8 +31,24 @@
   --card-vidrio: rgb(255 255 255 / 4%);
   --card-solido: #151515;
 
+  /* Dónde se clava la primera y cuánto asoma cada una de las de abajo.
+     Se leen desde JavaScript para calcular el desvanecido, así que viven aquí
+     y no duplicados en los dos sitios. */
+  --tope: 104px;
+  --asomo: 16px;
+
+  /* Separación base entre tarjetas. Es el recorrido de scroll de cada una: al
+     margen de cada tarjeta se le suma el escalonado que iguala el momento en
+     que se sueltan todas. */
+  --separacion: 3.5rem;
+
+  /* Cuánto se queda clavada la última antes de soltar el montón. Es alto real
+     del hueco de cierre, así que también es la separación con la sección
+     siguiente: no puede quedarse corta sin que se note. */
+  --retencion: 240px;
+
   position: relative;
-  margin-bottom: 4rem;
+  margin-bottom: 5rem;
 }
 
 /* Tramo intermedio: la columna del icono se estrecha para dejarle sitio al
@@ -47,6 +64,9 @@
 @media (max-width: 1023px) {
   .scroll-stack {
     --alto-card: 560px;
+    --tope: 88px;
+    --asomo: 13px;
+    --retencion: 200px;
   }
 }
 
@@ -57,21 +77,17 @@
   .scroll-stack {
     --alto-card: 600px;
     --radio-card: 22px;
+    --tope: 80px;
+    --asomo: 11px;
+    --retencion: 160px;
+    margin-bottom: 3.5rem;
   }
 }
 
-.scroll-stack-slot {
-  position: relative;
-  /* La separación entre ranuras ES el recorrido de scroll por tarjeta */
-  margin-bottom: 3.5rem;
-}
-
-.scroll-stack-slot:last-of-type {
-  margin-bottom: 0;
-}
-
 .scroll-stack-card {
-  position: relative;
+  /* El clavado es nativo: el compositor lo resuelve sin pasar por JavaScript,
+     y la tarjeta sigue ocupando su hueco en el flujo. */
+  position: sticky;
   display: grid;
   grid-template-columns: 0.85fr 1.15fr;
   align-items: center;
@@ -90,9 +106,10 @@
   backdrop-filter: blur(36px) saturate(120%);
 
   transform-origin: top center;
-  /* Aviso al navegador de que esto se va a mover: se promueve a su propia capa
-     y el apilado deja de repintar el caso de estudio entero. */
-  will-change: transform, opacity;
+  /* Sólo la opacidad: el clavado ya no pasa por transformaciones, y marcar
+     `transform` obligaría a mantener cinco capas grandes en memoria — en el
+     móvil eso es justo lo que hacía que se sintiera pesado. */
+  will-change: opacity;
   backface-visibility: hidden;
 }
 
@@ -130,13 +147,15 @@
 
 /* Con "reducir movimiento" no hay apilado: tarjetas normales, una tras otra */
 .scroll-stack--quieto .scroll-stack-card {
+  position: static;
   will-change: auto;
   transform: none !important;
   opacity: 1 !important;
+  margin-bottom: 1.25rem !important;
 }
 
-.scroll-stack--quieto .scroll-stack-slot {
-  margin-bottom: 1.25rem;
+.scroll-stack--quieto .scroll-stack-end {
+  display: none;
 }
 
 /* ---------- Foco detrás del icono ---------- */
@@ -322,9 +341,10 @@
 
 /* ---------- Cierre del bloque ---------- */
 
-/* Marca dónde se despega el montón. Sin altura propia: sólo una referencia. */
+/* El hueco que retiene al montón antes de soltarlo. Al ser alto real, la
+   sección siguiente empieza después de él y nunca se superpone. */
 .scroll-stack-end {
-  height: 1px;
+  height: var(--retencion);
 }
 
 /* ---------- Capa Porsche ---------- */

@@ -175,6 +175,11 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
   const isCandadosFlow = isCandados && gobiernoStep === 'candados';
   const isInterfacesFlow = isCandados && gobiernoStep === 'interfaces';
 
+  /* Enlaces sólo donde hay algo que enseñar: el portal auditado en CLARO, el
+     prototipo de SPRINTIA y el rediseño de BEGO WEB. En los demás la sección
+     apuntaba a la app o la web de Bego, que no son el trabajo del caso. */
+  const tieneEnlaces = isClaro || isSprintia || isBegoWeb;
+
   /* Rol y Objetivo salieron de la navegación: ahora viven en las cards
      apiladas del principio, y repetirlos abajo era decir dos veces lo mismo. */
   const navItems = [
@@ -183,8 +188,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
     ...(isSprintia || isBegoApp || isCandados || isClaro ? [{ id: 'testing', label: 'Testeo' }] : []),
     { id: 'results', label: 'Resultados' },
     { id: 'lessons', label: 'Lecciones' },
-    // Conditionally add links
-    { id: 'links', label: 'Enlaces' }
+    ...(tieneEnlaces ? [{ id: 'links', label: 'Enlaces' }] : []),
   ];
 
   /* Qué juego de cards le toca a este proyecto. Los dos módulos de Gobierno
@@ -1832,7 +1836,7 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                     </Section>
 
                     {/* 8. Enlaces */}
-                    {!isCandados && (
+                    {tieneEnlaces && (
                     <Section id="links" title="Enlaces Adicionales" icon={LinkIcon}>
                       {isSprintia ? (
                         <div className="flex flex-col sm:flex-row gap-4">
@@ -1881,41 +1885,32 @@ export function ProjectModal({ project, isOpen, onClose, onNext }: ProjectModalP
                             </AnimatePresence>
                           </div>
                         </div>
-                      ) : isBegoApp ? (
-                         <div className="flex flex-col sm:flex-row gap-4 w-full">
-                           <a 
+                      ) : isBegoWeb ? (
+                         /* Sólo el rediseño: la web anterior ya no existe, así que
+                            el enlace a "Web anterior" llevaba a una página muerta. */
+                         <div className="flex w-full">
+                           <a
                              href="https://bego.ai/es"
                              target="_blank"
                              rel="noopener noreferrer"
-                             className="flex-1 py-4 px-6 rounded-xl bg-white hover:bg-[#e6d600] text-black transition-all duration-300 text-sm font-bold shadow-[0_0_20px_rgba(255,238,0,0.15)] hover:shadow-[0_0_30px_rgba(255,238,0,0.3)] flex items-center justify-center gap-2"
+                             className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-2.5 text-sm font-medium text-[#0B0B0B] transition-colors hover:bg-white/90"
                            >
-                             Rediseño
+                             Ver rediseño
                              <ArrowRight className="w-4 h-4" />
                            </a>
                          </div>
                       ) : (
-                         <div className="flex flex-col sm:flex-row gap-4 w-full">
-                           <a 
-                             href={isBegoWeb ? "https://bego.ai/es" : "https://apps.apple.com/mx/app/bego-driver-busca-carga/id1549583488"}
+                         /* CLARO: el portal auditado */
+                         <div className="flex w-full">
+                           <a
+                             href="https://www.claro.com.co/personas/autogestion/portal-pagos/"
                              target="_blank"
                              rel="noopener noreferrer"
-                             className="flex-1 py-4 px-6 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-300 text-sm font-medium text-white/70 hover:text-white flex items-center justify-center"
+                             className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white/5 px-7 py-2.5 text-sm font-medium text-white/80 transition-colors hover:bg-white/10 hover:text-white"
                            >
-                             {isBegoWeb ? "Web anterior" : "App anterior"}
-                           </a>
-                           <button 
-                             onClick={() => {
-                                if (isBegoWeb || isHeyMovil) {
-                                  window.open('https://bego.ai/es', '_blank');
-                                } else {
-                                  setIsDevModalOpen(true);
-                                }
-                              }}
-                             className="flex-1 py-4 px-6 rounded-xl bg-white hover:bg-[#e6d600] text-black transition-all duration-300 text-sm font-bold shadow-[0_0_20px_rgba(255,238,0,0.15)] hover:shadow-[0_0_30px_rgba(255,238,0,0.3)] flex items-center justify-center gap-2 cursor-pointer"
-                           >
-                             Re diseño
+                             Ver el Portal de Pagos auditado
                              <ArrowRight className="w-4 h-4" />
-                           </button>
+                           </a>
                          </div>
                       )}
                     </Section>
