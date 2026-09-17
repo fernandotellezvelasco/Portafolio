@@ -133,13 +133,28 @@
 
 /* ---------- Texto: su escala de contraste ---------- */
 
+/* SUELO DE LEGIBILIDAD
+ *
+ * Los dos peldaños más bajos de Porsche —`contrast-low` y `contrast-lower`— no
+ * son para texto: `lower` es prácticamente un color de borde. Al mapearles las
+ * clases de texto tenue, las etiquetas de 12 px quedaron en 1.7:1 de contraste,
+ * casi invisibles sobre la superficie oscura. Medido, no estimado.
+ *
+ * Este token es el mínimo con el que un texto pequeño sigue cumpliendo el 4.5:1
+ * que pide la WCAG en nivel AA, con margen: da 5.5:1 sobre `--p-surface`.
+ * La jerarquía la siguen marcando los tres peldaños de arriba; por debajo de
+ * este punto lo único que se gana es que no se lea. */
+.pds {
+  --p-texto-minimo: #f6f6f885;
+}
+
 .pds .text-white\/80 { color: var(--p-contrast-higher); }
 .pds .text-white\/70 { color: var(--p-contrast-high); }
 .pds .text-white\/60 { color: var(--p-contrast-medium); }
 .pds .text-white\/50,
-.pds .text-white\/45 { color: var(--p-contrast-low); }
+.pds .text-white\/45,
 .pds .text-white\/40,
-.pds .text-white\/35 { color: var(--p-contrast-lower); }
+.pds .text-white\/35 { color: var(--p-texto-minimo); }
 
 /* ---------- Sombras ---------- */
 

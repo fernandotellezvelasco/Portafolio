@@ -154,12 +154,12 @@ function Galeria({
       </div>
 
       <div className="mt-4 flex items-start justify-between gap-4">
-        <p className="text-sm text-white/55 leading-relaxed max-w-[60ch]" aria-live="polite">
+        <p className="text-sm text-white/65 leading-relaxed max-w-[60ch]" aria-live="polite">
           {laminas[i].pie}
         </p>
 
         <div className="flex shrink-0 items-center gap-2">
-          <span className="text-xs tabular-nums text-white/35">
+          <span className="text-xs tabular-nums text-white/60">
             {i + 1} / {total}
           </span>
           <button
@@ -206,7 +206,7 @@ export function AsesorVelocidad({ onVerImagen }: Props) {
 
         {/* Un hallazgo que no vino de los datos sino de recorrer el flujo */}
         <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
-          <p className="text-xs uppercase tracking-widest text-white/40 mb-3">
+          <p className="text-xs uppercase tracking-widest text-white/60 mb-3">
             Encontrado al recorrer el flujo
           </p>
           <p className="text-white/80 leading-relaxed">
@@ -241,18 +241,18 @@ export function AsesorVelocidad({ onVerImagen }: Props) {
             >
               <div className="grid gap-6 md:grid-cols-[180px_1fr]">
                 <div>
-                  <div className="text-xs tabular-nums tracking-widest text-white/35">{p.paso}</div>
+                  <div className="text-xs tabular-nums tracking-widest text-white/60">{p.paso}</div>
                   <div className="mt-3 text-[1.75rem] font-medium leading-none text-white">
                     {p.dato}
                   </div>
-                  <div className="mt-2 text-xs uppercase tracking-widest text-white/40">
+                  <div className="mt-2 text-xs uppercase tracking-widest text-white/60">
                     {p.etiqueta}
                   </div>
                 </div>
 
                 <div>
                   <h5 className="text-[1.05rem] font-medium text-white">{p.titulo}</h5>
-                  <p className="mt-2 text-sm leading-relaxed text-white/60">{p.texto}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-white/65">{p.texto}</p>
                   {/* La decisión que salió del dato: sin esto sería sólo una métrica */}
                   <p className="mt-4 border-l-2 border-white/25 pl-4 text-sm leading-relaxed text-white/80">
                     {p.decision}
@@ -323,7 +323,7 @@ export function AsesorVelocidad({ onVerImagen }: Props) {
               >
                 <ImageWithFallback src={m.src} alt={`Asesor de velocidad en móvil — ${m.pie}`} className="w-full h-auto" />
               </div>
-              <figcaption className="text-xs text-white/45">{m.pie}</figcaption>
+              <figcaption className="text-xs text-white/60">{m.pie}</figcaption>
             </figure>
           ))}
         </div>

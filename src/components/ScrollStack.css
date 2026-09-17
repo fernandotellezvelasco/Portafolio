@@ -329,7 +329,9 @@
   font-size: 0.875rem;
   font-weight: 400;
   line-height: 1.4;
-  color: rgb(255 255 255 / 38%);
+  /* 52% es el mínimo con el que este tamaño mantiene el 4.5:1 de la WCAG AA
+     sobre la superficie de la tarjeta. Con 38% se quedaba en 4.27. */
+  color: rgb(255 255 255 / 52%);
 }
 
 @media (max-width: 767px) {
@@ -371,7 +373,7 @@
 }
 
 .pds .scroll-stack-meta {
-  color: var(--p-contrast-low);
+  color: var(--p-texto-minimo);
 }
 
 .pds .scroll-stack-list {
