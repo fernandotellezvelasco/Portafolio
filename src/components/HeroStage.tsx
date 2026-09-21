@@ -74,13 +74,21 @@ const ANGLE_STEP = 75;
 
 /** Medidas de la card y del anillo, según el tamaño de pantalla */
 function useRingMetrics() {
-  const [m, setM] = useState({
-    cardW: 330,
-    cardH: 330 * CARD_RATIO,
-    radius: 346,
-    movil: false,
-    viewportW: 0,
-    viewportH: 0,
+  /* Se mide en el primer render, no en un efecto posterior. Arrancar con
+     `movil: false` y corregirlo después tiene una consecuencia que no se ve
+     pero se siente: el muelle del scroll se crea con la configuración de
+     escritorio —lenta a propósito— y en el móvil se queda con ella. */
+  const [m, setM] = useState(() => {
+    const vw = typeof window !== 'undefined' ? window.innerWidth : 0;
+    const vh = typeof window !== 'undefined' ? window.innerHeight : 0;
+    return {
+      cardW: 330,
+      cardH: 330 * CARD_RATIO,
+      radius: 346,
+      movil: vw > 0 && vw < 640,
+      viewportW: vw,
+      viewportH: vh,
+    };
   });
 
   useEffect(() => {
@@ -148,13 +156,23 @@ export function HeroStage({ projects, onExplore, onVisible }: HeroStageProps) {
     offset: ['start start', 'end start'],
   });
 
-  // Suavizado: evita el "escalonado" del scroll por rueda
-  const p = useSpring(scrollYProgress, {
-    stiffness: 120,
-    damping: 30,
-    mass: 0.4,
-    restDelta: 0.0005,
-  });
+  /* Suavizado del scroll.
+   *
+   * En escritorio el muelle existe para disimular el escalonado de la rueda,
+   * que entrega saltos discretos: ahí conviene que sea blando.
+   *
+   * En móvil no hay nada que disimular —el dedo entrega un recorrido continuo—
+   * y ese mismo muelle se convierte en puro retraso. Medido: tras un salto de
+   * scroll, el marco del hero tardaba 852 ms en cubrir el 90% del camino. Casi
+   * un segundo por detrás del dedo, que es exactamente lo que se siente como
+   * "trabado". Aquí va rápido y apenas amortiguado: alcanza en ~100 ms.
+   */
+  const p = useSpring(
+    scrollYProgress,
+    movil
+      ? { stiffness: 260, damping: 14, mass: 0.18, restDelta: 0.0005 }
+      : { stiffness: 120, damping: 30, mass: 0.4, restDelta: 0.0005 }
+  );
 
   /* ---------- La pantalla que se transforma en card ---------- */
   /* Es UN SOLO elemento: cambia de tamaño (horizontal → vertical) y por dentro

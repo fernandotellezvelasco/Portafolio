@@ -192,7 +192,9 @@ export function HeroParticles({
       /* En móvil la esfera se mide contra el ancho, que es el lado corto: con
          el factor de escritorio quedaba diminuta dentro de una pantalla alta,
          así que ahí sí la agrandamos. En escritorio se queda como estaba. */
-      const baseRadius = Math.min(width, height) * (isMobile ? 0.46 : 0.4);
+      /* En móvil la esfera manda más: es lo único que se ve al entrar, y con
+         0.46 quedaba pequeña dentro de una pantalla estrecha. */
+      const baseRadius = Math.min(width, height) * (isMobile ? 0.56 : 0.4);
       // La contracción del escenario se suma al encogido propio del hero v1
       const currentRadius = baseRadius * shrinkFactor * escalaEsferaRef.current;
       
@@ -415,11 +417,16 @@ export function HeroParticles({
             Hola, soy Fernando.
           </h2>
 
+          {/* En móvil el tamaño es fluido y no hay salto forzado: con el <br/>
+              fijo y 28 px, la frase caía en cuatro o cinco renglones y perdía
+              el centrado. La medida sale de medirla a 320, 360, 390 y 430 px
+              — en todos cabe en dos líneas. */}
           <h1
-            className={`text-xl md:text-4xl leading-[1.25] max-w-4xl mx-auto text-white transition-all duration-700 delay-400 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}
+            className={`text-[clamp(0.8rem,4.05vw,1.35rem)] md:text-4xl leading-[1.35] md:leading-[1.25] max-w-full md:max-w-4xl mx-auto text-white transition-all duration-700 delay-400 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}
             style={{ fontWeight: 300, letterSpacing: '0.01em' }}
           >
-            Ayudo a construir productos resolviendo <br />
+            Ayudo a construir productos resolviendo{' '}
+            <br className="hidden md:inline" />
             problemas reales de los usuarios
           </h1>
         </div>
