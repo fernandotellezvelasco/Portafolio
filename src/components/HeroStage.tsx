@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import {
   motion,
   AnimatePresence,
@@ -16,6 +16,8 @@ import CurvedLoop from './CurvedLoop';
 import './CurvedLoop.css';
 import './HeroStage.css';
 import { ImageWithFallback } from './figma/ImageWithFallback';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ANILLO_INICIO, ANILLO_FIN, irAProyecto } from '../lib/navegacion';
 
 /**
  * BLOQUE 1 (v2)
@@ -331,7 +333,7 @@ export function HeroStage({ projects, onExplore, onVisible }: HeroStageProps) {
      contenedor sticky se despegue (ocurre a falta de 100vh, ≈0.90). Ese margen
      es el que deja la última card centrada y quieta un momento antes de que la
      página siga bajando hacia el footer. */
-  const ringProgress = useTransform(p, [0.43, 0.78], [0, 1]);
+  const ringProgress = useTransform(p, [ANILLO_INICIO, ANILLO_FIN], [0, 1]);
 
   /* ---------- Al abrir un proyecto ---------- */
   /* La card se acerca al espectador mientras la máscara en estrella crece
@@ -400,11 +402,15 @@ export function HeroStage({ projects, onExplore, onVisible }: HeroStageProps) {
             radius={radius}
           />
 
-          {/* Pie: "Explora los proyectos — 01 / 07" */}
+          {/* Pie: flechas a los lados de "Explora los proyectos — 01 / 06".
+              Va como hermano del anillo, no dentro: si estuviera dentro, el
+              toque que pulsa una flecha llegaría también al manejador del
+              anillo y abriría la card que tuviera detrás. */}
           <CarouselCounter
             progress={ringProgress}
             opacity={neighborOpacity}
-            total={projects.length}
+            projects={projects}
+            movil={movil}
           />
 
           {/* El hero, que encoge hasta convertirse en card.
@@ -658,58 +664,158 @@ function ProjectRing({
 }
 
 /**
- * Pie del carrusel: invitación + posición dentro de la serie.
- * Deliberadamente sobrio — una línea, sin caja ni adornos.
+ * PIE DEL CARRUSEL
+ *
+ * "Explora los proyectos — 01 / 06", con una flecha a cada lado. Las flechas
+ * viven aquí, en la misma fila, y no posicionadas por separado: así quedan
+ * junto al texto por construcción, y si el texto cambia de ancho en algún
+ * tamaño de pantalla, lo siguen solas.
+ *
+ * Son para quien no quiere —o no puede— avanzar con el scroll: con un trackpad
+ * torpe, con un dedo que no calcula bien cuánto deslizar, o con teclado. Son
+ * botones de verdad: llegan con Tab y se activan con Enter o Espacio.
+ *
+ * No guardan qué proyecto está al frente: lo leen del mismo progreso que mueve
+ * el anillo y, al pulsarse, llevan el scroll al punto de ese proyecto. Si
+ * alguien alterna flechas y scroll, las dos cosas siempre coinciden.
+ *
+ * Pulsaciones seguidas: el anillo tarda unos cientos de milisegundos en llegar
+ * a cada card, y mientras tanto el progreso todavía marca la anterior. Si cada
+ * clic partiera de ahí, dos clics rápidos acabarían en el mismo proyecto. Por
+ * eso se recuerda el destino pendiente y el siguiente clic parte de él.
  */
 function CarouselCounter({
   progress,
   opacity,
-  total,
+  projects,
+  movil,
 }: {
   progress: MotionValue<number>;
   opacity: MotionValue<number>;
-  total: number;
+  projects: Project[];
+  movil: boolean;
 }) {
-  const [current, setCurrent] = useState(1);
+  const total = projects.length;
+  const aIndice = (v: number) => Math.min(total - 1, Math.max(0, Math.round(v * (total - 1))));
+
+  const [actual, setActual] = useState(() => aIndice(progress.get()));
+  /* Si las flechas están activas se decide con estado y no con el MotionValue:
+     Framer no vuelve a aplicar `pointer-events` cuando cambia un valor
+     animado, y unas flechas invisibles que siguen aceptando toques robarían
+     los de la pantalla de bienvenida. */
+  const [activas, setActivas] = useState(() => opacity.get() > 0.6);
+
+  const pendiente = useRef<number | null>(null);
+  const caducidad = useRef(0);
 
   useMotionValueEvent(progress, 'change', v => {
-    const index = Math.round(v * (total - 1)) + 1;
-    setCurrent(Math.min(total, Math.max(1, index)));
+    const i = aIndice(v);
+    setActual(i);
+    if (pendiente.current === i) pendiente.current = null;
   });
+  useMotionValueEvent(opacity, 'change', v => setActivas(v > 0.6));
 
+  useEffect(() => () => window.clearTimeout(caducidad.current), []);
+
+  const ir = (paso: -1 | 1) => {
+    const base = pendiente.current ?? actual;
+    const destino = Math.min(total - 1, Math.max(0, base + paso));
+    if (destino === base) return;
+    pendiente.current = destino;
+    // Por si el usuario interrumpe con su propio scroll y nunca se llega
+    window.clearTimeout(caducidad.current);
+    caducidad.current = window.setTimeout(() => {
+      pendiente.current = null;
+    }, 1800);
+    irAProyecto(destino, total);
+  };
+
+  const anterior = actual > 0 ? projects[actual - 1] : null;
+  const siguiente = actual < total - 1 ? projects[actual + 1] : null;
   const pad = (n: number) => String(n).padStart(2, '0');
+
+  /* 44 px en móvil, el mínimo cómodo para un dedo; 40 en escritorio, donde
+     apunta un cursor. En los dos casos caben dentro del alto del bloque de
+     texto, así que el pie no crece hacia las cards. */
+  const clases = `flex shrink-0 items-center justify-center rounded-full bg-[#0B0B0B] text-white
+                  shadow-[0_6px_18px_rgba(0,0,0,0.18)] transition-[background-color,opacity,transform] duration-200
+                  hover:bg-[#2a2a2a] active:scale-95 disabled:cursor-default disabled:opacity-25
+                  disabled:hover:bg-[#0B0B0B] disabled:active:scale-100
+                  focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0B0B0B]
+                  ${movil ? 'h-11 w-11' : 'h-10 w-10'}`;
+
+  const estiloBoton: CSSProperties = { pointerEvents: activas ? 'auto' : 'none' };
 
   return (
     <>
     <motion.div
       style={{ opacity }}
-      className="absolute inset-x-0 bottom-[7vh] z-20 flex flex-col items-center gap-2
-                 pointer-events-none select-none"
-      aria-hidden="true"
+      className={`absolute inset-x-0 bottom-[7vh] z-20 flex items-center justify-center
+                  pointer-events-none select-none ${movil ? 'gap-3' : 'gap-6'}`}
+      aria-hidden={!activas}
     >
-      <span className="text-[0.7rem] tracking-[0.35em] uppercase text-[#0B0B0B]/45">
-        Explora los proyectos
-      </span>
+      <button
+        type="button"
+        onClick={() => ir(-1)}
+        disabled={!anterior}
+        tabIndex={activas ? 0 : -1}
+        style={estiloBoton}
+        aria-label={anterior ? `Proyecto anterior: ${anterior.title}` : 'No hay proyecto anterior'}
+        className={clases}
+      >
+        <ChevronLeft className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
+      </button>
 
-      <span className="text-sm tracking-[0.2em] text-[#0B0B0B] tabular-nums flex items-center">
-        {/* El número entra y sale al cambiar de proyecto, para que el cambio
-            se note. La altura fija evita que el renglón salte. */}
-        <span className="relative inline-block w-[2.9ch] h-[1.4em] overflow-hidden">
-          <AnimatePresence initial={false} mode="popLayout">
-            <motion.span
-              key={current}
-              initial={{ y: '90%', opacity: 0 }}
-              animate={{ y: '0%', opacity: 1 }}
-              exit={{ y: '-90%', opacity: 0 }}
-              transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-              className="absolute inset-0 flex items-center justify-center"
-            >
-              {pad(current)}
-            </motion.span>
-          </AnimatePresence>
+      {/* El texto es decorativo: lo que importa para un lector de pantalla
+          lo anuncia la región viva de abajo. */}
+      <div className="flex flex-col items-center gap-2" aria-hidden="true">
+        <span
+          className={`uppercase text-[#0B0B0B]/45 ${
+            movil ? 'text-[0.65rem] tracking-[0.22em]' : 'text-[0.7rem] tracking-[0.35em]'
+          }`}
+        >
+          Explora los proyectos
         </span>
-        <span className="text-[#0B0B0B]/30 ml-1.5">/ {pad(total)}</span>
-      </span>
+
+        <span className="text-sm tracking-[0.2em] text-[#0B0B0B] tabular-nums flex items-center">
+          {/* El número entra y sale al cambiar de proyecto, para que el cambio
+              se note. La altura fija evita que el renglón salte. */}
+          <span className="relative inline-block w-[2.9ch] h-[1.4em] overflow-hidden">
+            <AnimatePresence initial={false} mode="popLayout">
+              <motion.span
+                key={actual}
+                initial={{ y: '90%', opacity: 0 }}
+                animate={{ y: '0%', opacity: 1 }}
+                exit={{ y: '-90%', opacity: 0 }}
+                transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                className="absolute inset-0 flex items-center justify-center"
+              >
+                {pad(actual + 1)}
+              </motion.span>
+            </AnimatePresence>
+          </span>
+          <span className="text-[#0B0B0B]/30 ml-1.5">/ {pad(total)}</span>
+        </span>
+      </div>
+
+      <button
+        type="button"
+        onClick={() => ir(1)}
+        disabled={!siguiente}
+        tabIndex={activas ? 0 : -1}
+        style={estiloBoton}
+        aria-label={siguiente ? `Proyecto siguiente: ${siguiente.title}` : 'No hay proyecto siguiente'}
+        className={clases}
+      >
+        <ChevronRight className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
+      </button>
+
+      {/* Qué proyecto quedó al frente después de cada paso */}
+      {activas && (
+        <p className="sr-only" aria-live="polite">
+          Proyecto {actual + 1} de {total}: {projects[actual]?.title}
+        </p>
+      )}
     </motion.div>
 
     {/* Va aparte, anclado al borde inferior, y no dentro del bloque del

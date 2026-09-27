@@ -76,12 +76,22 @@ const RESTO = 0.15;
 const INICIO_REL = 0.85;
 const FIN_PX = 50;
 
-/** Encuentra el ancestro que realmente hace scroll */
+/**
+ * Encuentra el ancestro que hace scroll.
+ *
+ * Se decide sólo por su `overflow`, no por si ya desborda. Antes exigía además
+ * que el contenido fuera más alto que la ventana, y en pantallas grandes eso
+ * fallaba: al montarse el modal las imágenes todavía no han cargado, el
+ * contenido cabe entero, el modal "no hace scroll" y el componente acababa
+ * escuchando a la ventana — que nunca se mueve, porque el que se desplaza es
+ * el modal. Resultado: las tarjetas se clavaban (eso es CSS) pero nunca se
+ * desvanecían ni encogían.
+ */
 function buscarScroller(desde: HTMLElement): HTMLElement | null {
   let el: HTMLElement | null = desde.parentElement;
   while (el && el !== document.body) {
     const { overflowY } = getComputedStyle(el);
-    if ((overflowY === 'auto' || overflowY === 'scroll') && el.scrollHeight > el.clientHeight) {
+    if (overflowY === 'auto' || overflowY === 'scroll') {
       return el;
     }
     el = el.parentElement;
@@ -106,7 +116,6 @@ export function ScrollStack({ cards, className = '' }: ScrollStackProps) {
     }
 
     const scroller = buscarScroller(contenedor);
-    const objetivo: HTMLElement | Window = scroller ?? window;
 
     let pendiente = false;
     let vivo = true;
@@ -162,7 +171,10 @@ export function ScrollStack({ cards, className = '' }: ScrollStackProps) {
     };
 
     pintar();
-    objetivo.addEventListener('scroll', alScroll, { passive: true });
+    /* Se escucha en captura sobre el documento: el evento `scroll` no sube,
+       pero en captura llega desde cualquier contenedor. Así da igual cuál sea
+       el que se mueve, o si cambia después de montarse. */
+    document.addEventListener('scroll', alScroll, { passive: true, capture: true });
     window.addEventListener('resize', alScroll);
 
     /* Las imágenes y tipografías del caso de estudio cambian la altura después
@@ -172,7 +184,7 @@ export function ScrollStack({ cards, className = '' }: ScrollStackProps) {
 
     return () => {
       vivo = false;
-      objetivo.removeEventListener('scroll', alScroll);
+      document.removeEventListener('scroll', alScroll, { capture: true });
       window.removeEventListener('resize', alScroll);
       observador.disconnect();
     };
